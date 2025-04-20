@@ -12,6 +12,7 @@ import { Logo } from './Logo';
 import { Button } from './Button';
 import { Card } from './Card';
 import { supabase } from '../lib/supabaseClient';
+import LanguageSwitcher from './LanguageSwitcher';
 // Site Visit form will be used in Contact page instead
 
 export function Navbar() {
