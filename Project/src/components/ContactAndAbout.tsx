@@ -91,7 +91,7 @@ export function ContactAndAbout() {
         <div className="absolute top-0 right-0 w-full h-full" style={{background: 'radial-gradient(circle at 85% 30%, rgba(0, 225, 255, 0.5) 0%, rgba(0, 0, 0, 0) 45%)'}} />
       </div>
       
-      <div className="container mx-auto px-6 max-w-6xl relative z-10 mt-[6%]">
+      <div className="container mx-auto px-6 max-w-6xl relative z-10 mt-[3%]">
         <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-12">
           {/* Contact Us Block (Left Column) */}
           <motion.div 

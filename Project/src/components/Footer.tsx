@@ -21,9 +21,9 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li><Link to="/" className="footer-link">Home</Link></li>
-              <li><Link to="/products" className="footer-link">Products</Link></li>
-              <li><Link to="/dashboard" className="footer-link">Dashboard</Link></li>
+              <li><Link to="/privacy-policy" className="footer-link">Privacy Policy</Link></li>
+              <li><Link to="/terms-of-service" className="footer-link">Terms of Service</Link></li>
+              <li><Link to="/terms-and-conditions" className="footer-link">Terms &amp; Conditions</Link></li>
             </ul>
           </div>
 

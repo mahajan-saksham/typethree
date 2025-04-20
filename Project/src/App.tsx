@@ -59,6 +59,9 @@ function App() {
               {/* ROI Calculator route commented out as component is missing */}
               {/* <Route path="roi" element={<ROICalculator />} /> */}
               <Route path="about" element={<About />} />
+              <Route path="privacy-policy" element={React.createElement(React.lazy(() => import('./pages/privacy-policy')))} />
+              <Route path="terms-of-service" element={React.createElement(React.lazy(() => import('./pages/terms-of-service')))} />
+              <Route path="terms-and-conditions" element={React.createElement(React.lazy(() => import('./pages/terms-and-conditions')))} />
               {/* Contact route removed */}
               <Route path="auth" element={<Auth />} />
             </Route>

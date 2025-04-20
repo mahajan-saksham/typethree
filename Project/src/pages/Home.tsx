@@ -395,7 +395,7 @@ function Home() {
                   </div>
                   
                   {/* Overlay with grid texture */}
-                  <div className="absolute inset-0 z-20" style={{
+                  <div className="absolute inset-0 z-20 pointer-events-none" style={{
                     backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0)",
                     backgroundSize: "20px 20px"
                   }}></div>

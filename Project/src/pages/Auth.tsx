@@ -158,8 +158,42 @@ function Auth() {
 
   return (
     <div className="min-h-screen bg-dark flex items-center justify-center relative overflow-hidden pt-16">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
+      {/* Enhanced Animated Background - Home Style */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Radial gradients for color accents */}
+        <div 
+          className="absolute inset-0 pointer-events-none" 
+          style={{
+            background: 'radial-gradient(circle at 30% 50%, rgba(204, 255, 0, 0.16) 0%, rgba(0, 0, 0, 0) 60%)',
+            animation: 'pulse 8s ease-in-out infinite'
+          }}
+        />
+        <div 
+          className="absolute inset-0 pointer-events-none" 
+          style={{
+            background: 'radial-gradient(circle at 70% 30%, rgba(0, 225, 255, 0.10) 0%, rgba(0, 0, 0, 0) 60%)',
+            animation: 'pulse 8s ease-in-out infinite alternate'
+          }}
+        />
+        {/* Subtle glass border overlay */}
+        <div className="absolute inset-0 border-t border-white/10 bg-[#0A0A0A]/80" />
+        {/* Animated glowing circles */}
+        <motion.div
+          animate={{ opacity: [0.3, 0.5, 0.3], y: [0, -15, 0] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/3 -right-20 w-80 h-80 rounded-full border border-primary/20 opacity-20"
+        />
+        <motion.div
+          animate={{ opacity: [0.2, 0.4, 0.2], y: [0, 20, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute bottom-1/4 -left-40 w-96 h-96 rounded-full border border-secondary/20 opacity-20"
+        />
+        {/* Grid pattern overlay for texture */}
+        <div className="absolute inset-0 z-10 pointer-events-none" style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0)',
+          backgroundSize: '30px 30px'
+        }} />
+        {/* Existing animated blurred circle */}
         <motion.div
           animate={{
             scale: [1, 1.2, 1],

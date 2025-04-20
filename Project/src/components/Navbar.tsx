@@ -69,50 +69,54 @@ export function Navbar() {
 
   return (
     <nav 
-      className="fixed w-full z-50 transition-all duration-300 bg-white/10 backdrop-blur-lg"
+      className="fixed w-full z-50 transition-all duration-300 bg-gradient-to-br from-white/10 via-dark-900/60 to-dark-900/90 backdrop-blur-2xl shadow-xl"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="group">
-            <Logo />
+          <Link to="/" className="group transition-transform duration-300 hover:scale-105">
+            <span className="inline-block transition-shadow duration-300 group-hover:shadow-[0_0_16px_2px_rgba(204,255,0,0.25)]">
+              <Logo />
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:gap-6">
-            <Link 
-              to="/" 
-              className={`nav-link group flex flex-col items-center justify-center px-3 py-1.5 transition-colors hover:bg-black/10 rounded-lg ${
-                isActive('/') 
-                  ? 'text-primary' 
-                  : 'text-light/80 hover:text-primary'
-              }`}
-            >
-              <Home className="h-5 w-5" />
-              <span className="text-[10px] mt-0.5">Home</span>
-            </Link>
-            <Link 
-              to="/products" 
-              className={`nav-link group flex flex-col items-center justify-center px-3 py-1.5 transition-colors hover:bg-black/10 rounded-lg ${
-                isActive('/products') 
-                  ? 'text-primary' 
-                  : 'text-light/80 hover:text-primary'
-              }`}
-            >
-              <ShoppingBag className="h-5 w-5" />
-              <span className="text-[10px] mt-0.5">Products</span>
-            </Link>
-            <Link 
-              to="/about" 
-              className={`nav-link group flex flex-col items-center justify-center px-3 py-1.5 transition-colors hover:bg-black/10 rounded-lg ${
-                isActive('/about') 
-                  ? 'text-primary' 
-                  : 'text-light/80 hover:text-primary'
-              }`}
-            >
-              <Info className="h-5 w-5" />
-              <span className="text-[10px] mt-0.5">About</span>
-            </Link>
+          <div className="hidden md:flex md:items-center gap-5">
+            <div className="flex items-center gap-5">
+  <Link 
+    to="/" 
+    className={`nav-link group flex flex-col items-center justify-center px-4 py-2 rounded-md transition-all duration-300 relative ${
+      isActive('/') 
+        ? 'text-primary bg-white/10 shadow-md' 
+        : 'text-light/80 hover:text-primary hover:bg-white/5'
+    }`}
+  >
+    <Home className="h-5 w-5 mb-0.5" />
+    <span className="text-xs font-medium tracking-wide">Home</span>
+  </Link>
+  <Link 
+    to="/products" 
+    className={`nav-link group flex flex-col items-center justify-center px-4 py-2 rounded-md transition-all duration-300 relative ${
+      isActive('/products') 
+        ? 'text-primary bg-white/10 shadow-md' 
+        : 'text-light/80 hover:text-primary hover:bg-white/5'
+    }`}
+  >
+    <ShoppingBag className="h-5 w-5 mb-0.5" />
+    <span className="text-xs font-medium tracking-wide">Products</span>
+  </Link>
+  <Link 
+    to="/about" 
+    className={`nav-link group flex flex-col items-center justify-center px-4 py-2 rounded-md transition-all duration-300 relative ${
+      isActive('/about') 
+        ? 'text-primary bg-white/10 shadow-md' 
+        : 'text-light/80 hover:text-primary hover:bg-white/5'
+    }`}
+  >
+    <Info className="h-5 w-5 mb-0.5" />
+    <span className="text-xs font-medium tracking-wide">About</span>
+  </Link>
+</div>
             {/* Contact tab removed */}
             
             {user ? (
@@ -138,7 +142,7 @@ export function Navbar() {
                 variant="primary"
                 size="md"
                 radius="xl"
-                className="ml-2"
+                className="ml-2 shadow-lg shadow-primary/20 focus:ring-2 focus:ring-primary/40 focus:ring-offset-2 transition-all duration-300"
               >
                 Sign In
               </Button>

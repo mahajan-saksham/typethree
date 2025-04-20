@@ -52,7 +52,7 @@ export const ImageCarousel = () => {
   };
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full z-10 pointer-events-auto">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentIndex}
@@ -71,7 +71,7 @@ export const ImageCarousel = () => {
       </AnimatePresence>
       
       {/* Navigation buttons */}
-      <div className="absolute inset-x-0 top-1/2 flex justify-between items-center px-4 -translate-y-1/2 z-20">
+      <div className="absolute inset-x-0 top-1/2 flex justify-between items-center px-4 -translate-y-1/2 z-30 pointer-events-auto">
         <button 
           onClick={goToPrevious}
           className="p-2 rounded-full bg-black/30 text-white backdrop-blur-sm hover:bg-black/50 transition-colors"
