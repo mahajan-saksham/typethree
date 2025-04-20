@@ -278,6 +278,33 @@ function Home() {
           transition={{ duration: 0.8 }}
           className="relative z-10 container mx-auto px-6 max-w-6xl py-8 md:py-12"
         >
+          {/* ImageCarousel for mobile (top) */}
+          <div className="block md:hidden mb-8 mt-10">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="relative h-56 xs:h-72 sm:h-80 rounded-2xl overflow-hidden flex items-center"
+            >
+              <div className="absolute inset-0 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl shadow-black/5">
+                <div className="absolute inset-0 rounded-2xl p-[2px] overflow-hidden">
+                  <div className="absolute inset-0 rounded-2xl" style={{
+                    background: "linear-gradient(45deg, rgba(204, 255, 0, 0.3) 0%, rgba(0, 225, 255, 0.15) 50%, rgba(204, 255, 0, 0.3) 100%)",
+                    backgroundSize: "200% 200%",
+                    animation: "gradientBorder 8s linear infinite",
+                  }}></div>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-b from-dark/70 via-dark/70 to-dark" />
+                <div className="absolute inset-0 z-0">
+                  <ImageCarousel />
+                </div>
+                <div className="absolute inset-0 z-20 pointer-events-none" style={{
+                  backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0)",
+                  backgroundSize: "20px 20px"
+                }}></div>
+              </div>
+            </motion.div>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <motion.div 
@@ -288,15 +315,13 @@ function Home() {
                 {/* Left side content - Enhanced for mobile */}
                 <div className="text-left">
                   {/* Mobile-optimized heading with better line height and letter spacing */}
-                  <h1 className="text-[3.6rem] sm:text-[3.36rem] md:text-[3.6rem] lg:text-6xl font-extrabold text-primary mb-3 md:mb-6 font-heading leading-[1.15] tracking-tight mt-[5vh] sm:mt-0">
-                    Turn Your Roof<br className="md:hidden" /> Into a<br className="md:hidden" /> <span className="relative inline-block">
-                      Power Station
-                    </span>
+                  <h1 className="text-[3.6rem] sm:text-[3.36rem] md:text-[3.6rem] lg:text-6xl font-extrabold text-primary mb-3 md:mb-6 font-heading leading-[1.15] tracking-tight mt-[2.5vh] sm:mt-0">
+                    अपनी छत को बनाएं कमाई का ज़रिया
                   </h1>
                   
                   {/* Enhanced description with better spacing and line height */}
                   <p className="text-lg sm:text-lg md:text-xl text-light/90 mb-7 leading-relaxed max-w-[95%]">
-                    Start generating your own electricity and slash your power bills by up to <span className="text-primary font-semibold">90%</span> with our premium solar solutions.
+                    Type 3 transforms rooftops into income-generating solar assets.
                   </p>
               
                   {/* Installation highlights - Enhanced for mobile */}
@@ -342,19 +367,19 @@ function Home() {
                       <div className="text-base font-medium text-light/90">Premium quality panels</div>
                     </motion.div>
                   </div>
-                  
-                  {/* Enhanced CTA button with animation */}
-                  <div className="flex justify-center sm:justify-start">
+
+                  {/* Enhanced CTA button with animation - moved further below and full width */}
+                  <div className="flex mt-12">
                     <motion.div
                       whileHover={{ scale: 1.03 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full sm:w-auto"
+                      className="w-full"
                     >
                       <Button 
                         to="/products" 
                         variant="primary" 
                         size="lg" 
-                        className="w-full sm:w-auto shadow-lg shadow-primary/20 font-medium text-base"
+                        className="w-full shadow-lg shadow-primary/20 font-medium text-base"
                       >
                         Explore Products
                       </Button>
@@ -366,42 +391,42 @@ function Home() {
             
             {/* Right side - Dynamic Image Carousel */}
             <div className="hidden md:block">
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="relative h-[550px] rounded-2xl overflow-hidden mt-12 md:mt-0 flex items-center"
-              >
-                {/* Container with glowing border */}
-                <div className="absolute inset-0 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl shadow-black/5" style={{
-                  boxShadow: "0 0 40px 2px rgba(204, 255, 0, 0.1), inset 0 0 20px 0px rgba(0, 0, 0, 0.3)"
-                }}>
-                  
-                  {/* Animated gradient border */}
-                  <div className="absolute inset-0 rounded-2xl p-[2px] overflow-hidden">
-                    <div className="absolute inset-0 rounded-2xl" style={{
-                      background: "linear-gradient(45deg, rgba(204, 255, 0, 0.3) 0%, rgba(0, 225, 255, 0.15) 50%, rgba(204, 255, 0, 0.3) 100%)",
-                      backgroundSize: "200% 200%",
-                      animation: "gradientBorder 8s linear infinite",
-                    }}></div>
-                  </div>
-                  
-                  {/* Inner shadow overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-dark/70 via-dark/70 to-dark" />
-                  
-                  {/* Dynamic image carousel */}
-                  <div className="absolute inset-0 z-0">
-                    <ImageCarousel />
-                  </div>
-                  
-                  {/* Overlay with grid texture */}
-                  <div className="absolute inset-0 z-20 pointer-events-none" style={{
-                    backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0)",
-                    backgroundSize: "20px 20px"
-                  }}></div>
-                </div>
-              </motion.div>
-            </div> 
+               <motion.div
+                 initial={{ opacity: 0, x: 20 }}
+                 animate={{ opacity: 1, x: 0 }}
+                 transition={{ duration: 0.8, delay: 0.3 }}
+                 className="relative h-[550px] rounded-2xl overflow-hidden mt-12 md:mt-0 flex items-center"
+               >
+                 {/* Container with glowing border */}
+                 <div className="absolute inset-0 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl shadow-black/5" style={{
+                   boxShadow: "0 0 40px 2px rgba(204, 255, 0, 0.1), inset 0 0 20px 0px rgba(0, 0, 0, 0.3)"
+                 }}>
+                   
+                   {/* Animated gradient border */}
+                   <div className="absolute inset-0 rounded-2xl p-[2px] overflow-hidden">
+                     <div className="absolute inset-0 rounded-2xl" style={{
+                       background: "linear-gradient(45deg, rgba(204, 255, 0, 0.3) 0%, rgba(0, 225, 255, 0.15) 50%, rgba(204, 255, 0, 0.3) 100%)",
+                       backgroundSize: "200% 200%",
+                       animation: "gradientBorder 8s linear infinite",
+                     }}></div>
+                   </div>
+                   
+                   {/* Inner shadow overlay */}
+                   <div className="absolute inset-0 bg-gradient-to-b from-dark/70 via-dark/70 to-dark" />
+                   
+                   {/* Dynamic image carousel */}
+                   <div className="absolute inset-0 z-0">
+                     <ImageCarousel />
+                   </div>
+                   
+                   {/* Overlay with grid texture */}
+                   <div className="absolute inset-0 z-20 pointer-events-none" style={{
+                     backgroundImage: "radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0)",
+                     backgroundSize: "20px 20px"
+                   }}></div>
+                 </div>
+               </motion.div>
+             </div> 
           </div>
         </motion.div>
       </section>
