@@ -6,6 +6,64 @@ import { Card } from '../components/Card';
 import { supabase } from '../lib/supabaseClient';
 
 function Auth() {
+  // Facebook SDK integration
+  React.useEffect(() => {
+    // Only run on client
+    if (typeof window !== 'undefined') {
+      window.fbAsyncInit = function() {
+        window.FB && window.FB.init({
+          appId      : '{your-app-id}', // TODO: Replace with your Facebook App ID
+          cookie     : true,
+          xfbml      : true,
+          version    : '{api-version}' // TODO: Replace with your API version, e.g., 'v19.0'
+        });
+        window.FB && window.FB.AppEvents && window.FB.AppEvents.logPageView();
+      };
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    }
+  }, []);
+
+  // Google Auth handler
+  const [googleLoading, setGoogleLoading] = React.useState(false);
+  const handleGoogleSignIn = async () => {
+    setGoogleLoading(true);
+    try {
+      await supabase.auth.signInWithOAuth({ provider: 'google' });
+    } catch (err) {
+      // Optionally handle error
+      setGoogleLoading(false);
+    }
+  };
+
+  // Facebook SDK integration
+  React.useEffect(() => {
+    // Only run on client
+    if (typeof window !== 'undefined') {
+      window.fbAsyncInit = function() {
+        window.FB && window.FB.init({
+          appId      : '{your-app-id}', // TODO: Replace with your Facebook App ID
+          cookie     : true,
+          xfbml      : true,
+          version    : '{api-version}' // TODO: Replace with your API version, e.g., 'v19.0'
+        });
+        window.FB && window.FB.AppEvents && window.FB.AppEvents.logPageView();
+      };
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    }
+  }, []);
+
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -214,6 +272,35 @@ function Auth() {
         padding="xl"
         className="relative z-10 max-w-md w-full mx-4 backdrop-blur-xl"
       >
+        {/* Google Auth Button */}
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-white text-dark font-semibold border border-white/20 hover:border-primary/20 shadow transition-all duration-300 mb-6 disabled:opacity-60 disabled:pointer-events-none"
+          disabled={googleLoading}
+        >
+          {/* Google SVG icon - official multicolor G */}
+          <svg className="h-5 w-5" viewBox="0 0 48 48" aria-hidden="true" focusable="false" role="img">
+            <g>
+              <path fill="#4285F4" d="M43.611 20.083h-1.861V20H24v8h11.303c-1.622 4.355-5.789 7.5-11.303 7.5-6.351 0-11.5-5.149-11.5-11.5s5.149-11.5 11.5-11.5c2.525 0 4.847.832 6.728 2.462l6.364-6.364C34.064 5.34 29.337 3.5 24 3.5 12.954 3.5 4 12.454 4 23.5S12.954 43.5 24 43.5c11.045 0 20-8.955 20-20 0-1.341-.138-2.651-.389-3.917z"/>
+              <path fill="#34A853" d="M6.306 14.691l6.571 4.819C14.655 16.037 18.961 13.5 24 13.5c2.525 0 4.847.832 6.728 2.462l6.364-6.364C34.064 5.34 29.337 3.5 24 3.5c-7.798 0-14.483 4.45-17.694 11.191z"/>
+              <path fill="#FBBC05" d="M24 43.5c5.289 0 10.059-1.813 13.795-4.927l-6.364-5.217C29.7 35.126 26.98 36 24 36c-5.5 0-10.166-3.707-11.824-8.715l-6.526 5.034C8.97 39.044 15.886 43.5 24 43.5z"/>
+              <path fill="#EA4335" d="M43.611 20.083h-1.861V20H24v8h11.303c-.697 1.872-2.048 3.619-4.072 4.856l.001-.001 6.364 5.217C39.978 39.044 44 32.5 44 23.5c0-1.341-.138-2.651-.389-3.917z"/>
+            </g>
+          </svg>
+          {googleLoading ? (
+            <span className="ml-2 flex items-center gap-1"><Loader2 className="h-4 w-4 animate-spin" /> Signing in...</span>
+          ) : (
+            <span className="ml-2">Continue with Google</span>
+          )}
+        </button>
+        {/* Divider */}
+        <div className="flex items-center gap-2 mb-6">
+          <span className="flex-1 h-px bg-white/10" />
+          <span className="text-xs text-light/60">or</span>
+          <span className="flex-1 h-px bg-white/10" />
+        </div>
+
         {/* Mode Toggle */}
         {!success && (
           <div className="flex p-1 bg-dark-200 rounded-lg mb-6">
