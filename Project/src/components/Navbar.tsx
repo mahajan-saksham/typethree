@@ -250,6 +250,18 @@ export function Navbar() {
               <span className="text-sm font-medium">Products</span>
               <ShoppingBag className="h-5 w-5" />
             </Link>
+            <Link 
+              to="/about"
+              className={`flex justify-between items-center px-4 py-3 rounded-lg transition-colors ${
+                isActive('/about') 
+                  ? 'text-primary bg-light/5' 
+                  : 'text-light hover:text-primary hover:bg-light/5'
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <span className="text-sm font-medium">About Us</span>
+              <Info className="h-5 w-5" />
+            </Link>
             {/* Contact tab removed from mobile menu */}
 
           </div>

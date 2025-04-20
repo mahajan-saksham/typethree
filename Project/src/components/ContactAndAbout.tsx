@@ -92,7 +92,7 @@ export function ContactAndAbout() {
       </div>
       
       <div className="container mx-auto px-6 max-w-6xl relative z-10 mt-[6%]">
-        <div className="flex flex-col md:flex-row gap-12">
+        <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-12">
           {/* Contact Us Block (Left Column) */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -102,17 +102,17 @@ export function ContactAndAbout() {
             className="w-full md:w-1/2 flex flex-col"
           >
             <div className="bg-gradient-to-b from-dark to-dark-900 rounded-xl overflow-hidden backdrop-blur-lg bg-white/5 border border-white/10 transition-all duration-300 p-6 md:p-8 h-full flex flex-col">
-              <h2 className="text-3xl font-bold text-light mb-2">Contact Us</h2>
+              <h2 className="text-[calc(1.2*theme('fontSize.3xl'))] font-bold text-light mb-2">Contact Us</h2>
               <p className="text-light/60 text-lg mb-8">Ready to go solar? Let's talk.</p>
               
-              <div className="space-y-6 mb-8">
+              <div className="space-y-3 mb-8">
                 <div className="flex items-start gap-4">
                   <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary mt-1">
                     <Phone className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium text-light/80">Phone</h3>
-                    <p className="text-light/60">+91 98765 43210</p>
+                    <h3 className="text-lg font-medium text-light/80 mb-0.5">Phone</h3>
+                    <p className="text-light/60">+91 99999 99999</p>
                   </div>
                 </div>
                 
@@ -121,7 +121,7 @@ export function ContactAndAbout() {
                     <Mail className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium text-light/80">Email</h3>
+                    <h3 className="text-lg font-medium text-light/80 mb-0.5">Email</h3>
                     <p className="text-light/60">hello@type3.energy</p>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ export function ContactAndAbout() {
                     <MapPin className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium text-light/80">Address</h3>
+                    <h3 className="text-lg font-medium text-light/80 mb-0.5">Address</h3>
                     <p className="text-light/60">6/3 South Harsiddhi, Opp. Garden, Indore, MP</p>
                     
                     {/* Google Maps iframe (desktop only) */}
@@ -154,7 +154,7 @@ export function ContactAndAbout() {
                     <Clock className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-medium text-light/80">Hours</h3>
+                    <h3 className="text-lg font-medium text-light/80 mb-0.5">Hours</h3>
                     <p className="text-light/60">Mon–Sat, 10:00 AM – 6:00 PM</p>
                   </div>
                 </div>
@@ -178,7 +178,7 @@ export function ContactAndAbout() {
             className="w-full md:w-1/2 flex flex-col"
           >
             <div className="bg-gradient-to-b from-dark to-dark-900 rounded-xl overflow-hidden backdrop-blur-lg bg-white/5 border border-white/10 transition-all duration-300 p-6 md:p-8 h-full flex flex-col">
-              <h2 className="text-3xl font-bold text-light mb-2">About Type 3</h2>
+              <h2 className="text-[calc(1.2*theme('fontSize.3xl'))] font-bold text-light mb-2">About Type 3</h2>
               
               <div className="space-y-6 mt-6 flex-grow">
                 <p className="text-light/80 leading-relaxed">
