@@ -112,7 +112,7 @@ export function ContactAndAbout() {
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-light/80 mb-0.5">Phone</h3>
-                    <p className="text-light/60">7995657936</p>
+                    <p className="text-light/60">+91-7995657936</p>
                   </div>
                 </div>
                 
@@ -122,7 +122,7 @@ export function ContactAndAbout() {
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-light/80 mb-0.5">Email</h3>
-                    <p className="text-light/60">hello@type3.energy</p>
+                    <p className="text-light/60">support@type3solar.in</p>
                   </div>
                 </div>
                 
