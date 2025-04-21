@@ -112,7 +112,7 @@ export function ContactAndAbout() {
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-light/80 mb-0.5">Phone</h3>
-                    <p className="text-light/60">+91 99999 99999</p>
+                    <p className="text-light/60">7995657936</p>
                   </div>
                 </div>
                 
@@ -162,9 +162,15 @@ export function ContactAndAbout() {
               
               {/* Replace form with Contact Us button */}
               <div className="flex justify-center mt-8">
-                <button className="w-full bg-primary hover:bg-primary/90 text-dark font-medium rounded-lg p-4 flex items-center justify-center transition-colors">
+                <a
+                  href="tel:+917995657936"
+                  role="button"
+                  tabIndex={0}
+                  className="w-full bg-primary hover:bg-primary/90 text-dark font-medium rounded-lg p-4 flex items-center justify-center transition-colors"
+                  data-component-name="ContactAndAbout"
+                >
                   Contact Us
-                </button>
+                </a>
               </div>
             </div>
           </motion.div>

@@ -416,6 +416,17 @@ export default function Products() {
                             <span className="text-sm font-medium">{product.installation_time || '7-10'} days</span>
                           </div>
                         </div>
+                        {product.price > 20000 && (
+                          <div className="mt-4 flex items-center gap-2">
+                            <Wallet size={16} className="text-primary/80" />
+                            <div className="flex flex-1 justify-between">
+                              <span className="text-light/80 text-sm">Easy EMI</span>
+                              <span className="text-sm font-medium">
+                                ₹{Math.round((product.price - (product.subsidy_amount || 0)) / 12).toLocaleString()}/month
+                              </span>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
                     
@@ -606,11 +617,17 @@ export default function Products() {
                               <p className="text-xs text-primary/80 mb-1">Installation</p>
                               <p className="text-base">{products.find(p => p.id === selectedProduct)?.installation_time || 'N/A'}</p>
                             </div>
+                            <div className="border-t border-white/10 pt-3">
+                              <p className="text-xs text-primary/80 mb-1">Easy EMI</p>
+                              <p className="text-base">
+                                ₹{Math.round((products.find(p => p.id === selectedProduct)?.price - (products.find(p => p.id === selectedProduct)?.subsidy_amount || 0)) / 12).toLocaleString()}/month
+                              </p>
+                            </div>
                           </div>
                         </div>
                         
                         {/* Price and CTA */}
-                        <div className="mt-auto pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div className="mt-auto pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
                           <div>
 
                             <div className="flex items-baseline gap-2">
@@ -656,6 +673,9 @@ export default function Products() {
             productSku={siteVisitProduct.sku}
             productName={siteVisitProduct.name}
             productPower={siteVisitProduct.power}
+            price={products.find(p => p.sku === siteVisitProduct.sku)?.price || 0}
+            installationTime={products.find(p => p.sku === siteVisitProduct.sku)?.installation_time || '7-10'}
+            imageUrl={products.find(p => p.sku === siteVisitProduct.sku)?.image_url}
           />
         )}
       </AnimatePresence>

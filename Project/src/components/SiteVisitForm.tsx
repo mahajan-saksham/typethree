@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Calendar, Clock, MapPin, Phone, Mail, User, CheckCircle } from 'lucide-react';
+import { Calendar, MapPin, Phone, Mail, User, CheckCircle, ArrowRight, PanelTop } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import { Button } from './Button';
 import { Card } from './Card';
@@ -15,47 +15,41 @@ interface SiteVisitFormProps {
   productSku: string;
   productName: string;
   productPower: number;
+  price: number;
+  installationTime: string;
+  imageUrl?: string; // optional product image
 }
 
 interface FormValues {
   fullName: string;
   phoneNumber: string;
-  email: string;
   address: string;
   city: string;
   state: string;
   zipCode: string;
-  preferredDate: string;
-  preferredTimeSlot: string;
   additionalNotes: string;
 }
 
 interface FormErrors {
   fullName?: string;
   phoneNumber?: string;
-  email?: string;
   address?: string;
   city?: string;
   state?: string;
   zipCode?: string;
-  preferredDate?: string;
-  preferredTimeSlot?: string;
 }
 
 // Interface removed as we're not using geoLocation state variable
 
-export function SiteVisitForm({ isOpen, onClose, productSku, productName, productPower }: SiteVisitFormProps) {
+export function SiteVisitForm({ isOpen, onClose, productSku, productName, productPower, price, installationTime, imageUrl }: SiteVisitFormProps) {
   // Form state
   const [formValues, setFormValues] = useState<FormValues>({
     fullName: '',
     phoneNumber: '',
-    email: '',
     address: '',
     city: '',
     state: '',
     zipCode: '',
-    preferredDate: '',
-    preferredTimeSlot: '10:00 AM - 12:00 PM',
     additionalNotes: ''
   });
   
@@ -66,14 +60,6 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
   
   // Geolocation state
   const [isGeoLocating, setIsGeoLocating] = useState(false);
-  
-  // Time slot options
-  const timeSlots = [
-    '10:00 AM - 12:00 PM',
-    '12:00 PM - 2:00 PM',
-    '2:00 PM - 4:00 PM',
-    '4:00 PM - 6:00 PM'
-  ];
   
   // List of Indian states
   const indianStates = [
@@ -102,10 +88,6 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
       }
     }
     
-    if (formValues.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email)) {
-      errors.email = 'Please enter a valid email address';
-    }
-    
     if (!formValues.address.trim()) {
       errors.address = 'Address is required';
     }
@@ -114,22 +96,6 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
       errors.zipCode = 'PIN code is required';
     } else if (!/^[1-9][0-9]{5}$/.test(formValues.zipCode.trim())) {
       errors.zipCode = 'Please enter a valid 6-digit Indian PIN code';
-    }
-    
-    if (!formValues.preferredDate) {
-      errors.preferredDate = 'Please select a preferred date';
-    } else {
-      const selectedDate = new Date(formValues.preferredDate);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      
-      if (selectedDate < today) {
-        errors.preferredDate = 'Date cannot be in the past';
-      }
-    }
-    
-    if (!formValues.preferredTimeSlot) {
-      errors.preferredTimeSlot = 'Please select a preferred time slot';
     }
     
     return errors;
@@ -230,13 +196,10 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
       const submissionData = {
         fullName: formValues.fullName,
         phoneNumber: formattedPhone,
-        email: formValues.email,
         address: formValues.address,
         city: formValues.city,
         state: formValues.state,
         zipCode: formValues.zipCode,
-        preferredDate: formValues.preferredDate,
-        preferredTimeSlot: formValues.preferredTimeSlot,
         additionalNotes: formValues.additionalNotes,
         productSku,
         productName,
@@ -292,8 +255,6 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
         phone_number: formattedPhone,
         mobile: formattedPhone,
         
-        email: formValues.email || null,
-        
         // Address fields
         address: formValues.address,
         address_line1: formValues.address,
@@ -303,15 +264,6 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
         zip_code: formValues.zipCode,
         postal_code: formValues.zipCode,
         pincode: formValues.zipCode,
-        
-        // Date and time preferences
-        date: formValues.preferredDate,
-        preferred_date: formValues.preferredDate,
-        visit_date: formValues.preferredDate,
-        
-        time: formValues.preferredTimeSlot,
-        preferred_time: formValues.preferredTimeSlot,
-        time_slot: formValues.preferredTimeSlot,
         
         // Product information
         product: productName || 'Solar Consultation',
@@ -398,14 +350,10 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
             // Map fields to match what RooftopLeads component expects
             name: formValues.fullName,
             contact: formattedPhone, // The admin component expects 'contact' field
-            email: formValues.email,
-            status: 'new',
-            preferred_date: formValues.preferredDate,
             address: formValues.address,
             city: formValues.city,
             state: formValues.state,
             zip_code: formValues.zipCode,
-            preferred_time_slot: formValues.preferredTimeSlot,
             product_sku: productSku,
             product_name: productName,
             product_power: productPower,
@@ -459,13 +407,10 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
         setFormValues({
           fullName: '',
           phoneNumber: '',
-          email: '',
           address: '',
           city: '',
           state: '',
           zipCode: '',
-          preferredDate: '',
-          preferredTimeSlot: '10:00 AM - 12:00 PM',
           additionalNotes: ''
         });
         setIsSuccess(false);
@@ -493,15 +438,6 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
       setError('Failed to submit: ' + errorMessage);
       setIsSubmitting(false);
     }
-  };
-  
-  // Calculate min date for date picker (today)
-  const getMinDate = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
   };
   
   // Modal animation variants
@@ -574,7 +510,7 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
           >
             {/* Modal header using ModalHeader component */}
             <ModalHeader 
-              title="Book a Site Visit"
+              title="Book a Call Back"
               icon={<Calendar className="h-5 w-5" />}
               onClose={onClose}
             />
@@ -611,105 +547,114 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col h-full max-h-[80vh]">
                 {/* Scrollable form content */}
-                <div className="overflow-y-auto custom-scrollbar px-6 py-6 space-y-6">
-                  {/* Product info if available */}
+                <div className="overflow-y-auto custom-scrollbar px-6 py-6 space-y-8">
+                  {/* Product info */}
                   {productName && (
-                    <SectionCard
-                      title="Selected Product"
-                      variant="info"
-                      className="mb-6"
-                    >
-                      <p className="text-white font-medium text-lg">{productName}</p>
-                      {productPower && (
-                        <p className="text-white/80 text-sm mt-1">{productPower}kW System</p>
-                      )}
-                    </SectionCard>
+                    <div className="rounded-xl p-6 border border-white/10 hover:border-primary/30 bg-dark-800/60 backdrop-blur-xl transition-all duration-300 mb-8 relative overflow-hidden">
+                      <div className="absolute -bottom-10 -left-10 w-36 h-36 rounded-full bg-secondary/15 blur-xl" />
+                      <div className="relative z-10">
+                        <div className="flex items-center justify-between mb-4">
+                          <span className="text-xs bg-primary/25 text-primary px-4 py-1.5 rounded-full font-medium tracking-wide">
+                            Selected Product
+                          </span>
+                        </div>
+                        
+                        <div className="flex items-start gap-4">
+                          {imageUrl ? (
+                            <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border border-white/10">
+                              <img 
+                                src={imageUrl} 
+                                alt={productName} 
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ) : (
+                            <div className="flex-shrink-0 w-20 h-20 rounded-lg border border-white/10 flex items-center justify-center bg-dark-800/30">
+                              <PanelTop className="w-8 h-8 text-primary/50" />
+                            </div>
+                          )}
+                          
+                          <div className="flex-1">
+                            <h3 className="text-xl font-bold text-white mb-1">{productName}</h3>
+                            
+                            {/* Price, EMI and Installation info */}
+                            <div className="mt-2 space-y-2">
+                              <div className="flex items-center justify-between">
+                                <span className="text-sm text-light/60">Price:</span>
+                                <span className="text-sm font-medium">₹{price?.toLocaleString()}</span>
+                              </div>
+                              {price > 20000 && (
+                                <div className="flex items-center justify-between">
+                                  <span className="text-sm text-light/60">Easy EMI:</span>
+                                  <span className="text-sm font-medium">
+                                    ₹{Math.round(price / 12).toLocaleString()}/month
+                                  </span>
+                                </div>
+                              )}
+                              <div className="flex items-center justify-between">
+                                <span className="text-sm text-light/60">Installation:</span>
+                                <span className="text-sm font-medium">{installationTime || '7-10'} days</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   )}
-                
-                {/* Error message */}
-                {error && (
-                  <FormError 
-                    message={error}
-                    className="mb-6"
-                  />
-                )}
-                
-                <div className="space-y-5">
-                  {/* Name field */}
-                  <FormField
-                    id="fullName"
-                    name="fullName"
-                    label="Full Name"
-                    type="text"
-                    value={formValues.fullName}
-                    onChange={handleChange}
-                    placeholder="John Doe"
-                    icon={<User className="h-4 w-4" />}
-                    error={formErrors.fullName}
-                    required
-                  />
                   
-                  {/* Contact details */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    {/* Phone number */}
-                    <FormField
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      label="Phone Number"
-                      type="tel"
-                      value={formValues.phoneNumber}
-                      onChange={handleChange}
-                      placeholder="1234567890"
-                      icon={<Phone className="h-4 w-4" />}
-                      error={formErrors.phoneNumber}
-                      required
+                  {/* Error message */}
+                  {error && (
+                    <FormError 
+                      message={error}
+                      className="mb-6"
                     />
-                    
-                    {/* Email */}
-                    <FormField
-                      id="email"
-                      name="email"
-                      label="Email Address"
-                      type="email"
-                      value={formValues.email}
-                      onChange={handleChange}
-                      placeholder="john@example.com"
-                      icon={<Mail className="h-4 w-4" />}
-                      error={formErrors.email}
-                    />
-                  </div>
+                  )}
                   
-                  {/* Address fields */}
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <h3 className="text-white/90 font-medium flex items-center">
-                        <MapPin className="h-4 w-4 mr-2 text-primary" /> Address Details
-                      </h3>
-                      <motion.button
-                        type="button"
-                        onClick={handleGetLocation}
-                        className="text-xs text-primary hover:text-primary/80 flex items-center px-2 py-1 rounded-md hover:bg-primary/5 transition-colors"
-                        disabled={isGeoLocating}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        {isGeoLocating ? 'Getting location...' : 'Use my current location'}
-                      </motion.button>
+                  <div className="space-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <FormField
+                        id="fullName"
+                        name="fullName"
+                        label="Full Name"
+                        type="text"
+                        value={formValues.fullName}
+                        onChange={handleChange}
+                        placeholder="John Doe"
+                        icon={<User className="h-4 w-4" />}
+                        error={formErrors.fullName}
+                        required
+                      />
+                      
+                      <FormField
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        label="Phone Number"
+                        type="tel"
+                        value={formValues.phoneNumber}
+                        onChange={handleChange}
+                        placeholder="+91 98765 43210"
+                        icon={<Phone className="h-4 w-4" />}
+                        error={formErrors.phoneNumber}
+                        required
+                      />
                     </div>
                     
-                    <FormField
-                      id="address"
-                      name="address"
-                      label="Street Address"
-                      type="text"
-                      value={formValues.address}
-                      onChange={handleChange}
-                      placeholder="123 Solar Street"
-                      error={formErrors.address}
-                      required
-                    />
+                    <div className="grid grid-cols-1 gap-8">
+                      <FormField
+                        id="address"
+                        name="address"
+                        label="Address"
+                        type="text"
+                        value={formValues.address}
+                        onChange={handleChange}
+                        placeholder="Street, City"
+                        icon={<MapPin className="h-4 w-4" />}
+                        error={formErrors.address}
+                        required
+                      />
+                    </div>
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                       <FormField
                         id="city"
                         name="city"
@@ -717,8 +662,11 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
                         type="text"
                         value={formValues.city}
                         onChange={handleChange}
-                        placeholder="City"
+                        placeholder="Your City"
+                        error={formErrors.city}
+                        required
                       />
+                      
                       <FormField
                         id="state"
                         name="state"
@@ -733,110 +681,41 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
                           <option key={state} value={state}>{state}</option>
                         ))}
                       </FormField>
-                    </div>
-                    
-                    <FormField
-                      id="zipCode"
-                      name="zipCode"
-                      label="PIN Code"
-                      type="text"
-                      value={formValues.zipCode}
-                      onChange={handleChange}
-                      placeholder="123456"
-                      error={formErrors.zipCode}
-                      required
-                    />
-                  </div>
-                  
-                  {/* Visit scheduling section */}
-                  <div className="space-y-4">
-                    <h3 className="text-white/90 font-medium flex items-center">
-                      <Calendar className="h-4 w-4 mr-2 text-primary" /> Schedule Your Visit
-                    </h3>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                      {/* Date */}
+                      
                       <FormField
-                        id="preferredDate"
-                        name="preferredDate"
-                        label="Preferred Date"
-                        type="date"
-                        value={formValues.preferredDate}
+                        id="zipCode"
+                        name="zipCode"
+                        label="PIN Code"
+                        type="text"
+                        value={formValues.zipCode}
                         onChange={handleChange}
-                        min={getMinDate()}
-                        icon={<Calendar className="h-4 w-4" />}
-                        error={formErrors.preferredDate}
+                        placeholder="123456"
+                        error={formErrors.zipCode}
                         required
                       />
-                      
-                      {/* Time slot */}
-                      <FormField
-                        id="preferredTimeSlot"
-                        name="preferredTimeSlot"
-                        label="Preferred Time"
-                        type="select"
-                        value={formValues.preferredTimeSlot}
-                        onChange={handleChange}
-                        icon={<Clock className="h-4 w-4" />}
-                        error={formErrors.preferredTimeSlot}
-                        required
-                      >
-                        {timeSlots.map(slot => (
-                          <option key={slot} value={slot}>{slot}</option>
-                        ))}
-                      </FormField>
                     </div>
                   </div>
-                  
-                  {/* Additional notes */}
-                  <FormField
-                    id="additionalNotes"
-                    name="additionalNotes"
-                    label="Additional Notes"
-                    type="textarea"
-                    value={formValues.additionalNotes}
-                    onChange={handleChange}
-                    placeholder="Any specific requirements or questions..."
-                    rows={4}
-                  />
-                </div>
-                
                 </div> {/* End of scrollable area */}
                 
-                {/* Fixed Footer - Submit button section with enhanced styling */}
-                <div className="px-6 py-4 border-t border-white/5 bg-dark-900/60 backdrop-blur-sm flex-shrink-0">
+                {/* Fixed Footer */}
+                <div className="px-6 py-5 border-t border-white/5 bg-dark-900/80 backdrop-blur-lg flex-shrink-0">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                     <p className="text-white/60 text-sm">
                       We'll contact you to confirm your appointment within 24 hours.
                     </p>
-                    <motion.div
+                    
+                    <motion.button
+                      type="submit"
+                      className="inline-flex items-center justify-center font-bold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:pointer-events-none disabled:opacity-50 bg-gradient-to-r from-primary to-secondary text-dark hover:from-primary-hover hover:to-secondary-hover h-12 px-8 rounded-xl min-w-[180px] relative overflow-hidden group"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <Button 
-                        type="submit" 
-                        variant="primary" 
-                        size="lg"
-                        disabled={isSubmitting}
-                        className="min-w-[200px] relative overflow-hidden group"
-                      >
-                        {isSubmitting ? (
-                          <span className="flex items-center">
-                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                            Submitting...
-                          </span>
-                        ) : (
-                          <span className="relative z-10 flex items-center justify-center">
-                            Schedule
-                            <Calendar className="ml-2 h-5 w-5" />
-                          </span>
-                        )}
-                        <span className="absolute inset-0 bg-white/10 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                      </Button>
-                    </motion.div>
+                      <span className="relative z-10 flex items-center justify-center">
+                        Submit
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </span>
+                      <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </motion.button>
                   </div>
                 </div>
               </form>
