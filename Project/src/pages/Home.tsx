@@ -11,6 +11,7 @@ import {
   Zap,
   IndianRupee,
   Shield,
+  LifeBuoy,
   Users,
   Car,
   CheckCircle2,
@@ -321,7 +322,7 @@ function Home() {
                   
                   {/* Enhanced description with better spacing and line height */}
                   <p className="text-lg sm:text-lg md:text-xl text-light/90 mb-7 leading-relaxed max-w-[95%]">
-                    Type 3 transforms rooftops into income-generating solar assets.
+                  Type 3 के सोलर सॉल्यूशंस से ☼
                   </p>
               
                   {/* Installation highlights - Enhanced for mobile */}
@@ -334,7 +335,7 @@ function Home() {
                       <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary">
                         <IndianRupee className="h-6 w-6" />
                       </div>
-                      <div className="text-base font-medium text-light/90">Save up to 90% on electricity bills</div>
+                      <div className="text-base font-medium text-light/90">90% प्रतिशत तक बचाएं बिजली के पैसे</div>
                     </motion.div>
 
                     <motion.div 
@@ -342,9 +343,9 @@ function Home() {
                       className="flex items-center gap-4 p-4 rounded-lg bg-dark-900/50 border border-white/5 hover:border-primary/20 transition-all duration-300"
                     >
                       <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary">
-                        <Shield className="h-6 w-6" />
+                        <LifeBuoy className="h-6 w-6" />
                       </div>
-                      <div className="text-base font-medium text-light/90">Government subsidies available</div>
+                      <div className="text-base font-medium text-light/90"> स्टॉलेशन प्रक्रिया में पूरी सहायता </div>
                     </motion.div>
 
                     <motion.div 
@@ -354,7 +355,7 @@ function Home() {
                       <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary">
                         <Clock className="h-6 w-6" />
                       </div>
-                      <div className="text-base font-medium text-light/90">25+ years system lifespan</div>
+                      <div className="text-base font-medium text-light/90"> 25+ वर्षों की लाइफस्पैन और सपोर्ट </div>
                     </motion.div>
 
                     <motion.div 
@@ -364,9 +365,14 @@ function Home() {
                       <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary">
                         <Sparkles className="h-6 w-6" />
                       </div>
-                      <div className="text-base font-medium text-light/90">Premium quality panels</div>
+                      <div className="text-base font-medium text-light/90"> ₹78,000 तक की सरकारी सब्सिडी </div>
                     </motion.div>
                   </div>
+
+                   {/* Enhanced description with better spacing and line height */}
+                   <p className="text-lg sm:text-lg md:text-xl text-light/90 mb-7 leading-relaxed max-w-[95%]">
+                   आप बस साइट विज़िट बुक करें, बाकी सब हमारी ज़िम्मेदारी 
+                  </p>
 
                   {/* Enhanced CTA button with animation - moved further below and full width */}
                   <div className="flex mt-12">
@@ -483,7 +489,7 @@ function Home() {
                       whileHover={{ x: 10 }}
                     >
                       <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary">
-                        <Shield className="h-6 w-6" />
+                        <LifeBuoy className="h-6 w-6" />
                       </div>
                       <span>₹78,000 subsidy available</span>
                     </motion.li>
@@ -902,7 +908,7 @@ function Home() {
                                   className="flex items-center gap-4 p-4 rounded-lg bg-dark-900/50 border border-white/5 hover:border-primary/20 transition-all duration-300"
                                 >
                                   <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary">
-                                    <Shield className="h-6 w-6" />
+                                    <LifeBuoy className="h-6 w-6" />
                                   </div>
                                   <div>
                                     <div className="text-base font-medium text-light/90">Warranty</div>

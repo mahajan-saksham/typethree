@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Calendar, MapPin, Phone, Mail, User, CheckCircle, ArrowRight, PanelTop } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
+import { sendSiteVisitEmail } from '../lib/sendSiteVisitEmail';
 import { Button } from './Button';
 import { Card } from './Card';
 import { FormField } from './FormField';
@@ -388,6 +389,25 @@ export function SiteVisitForm({ isOpen, onClose, productSku, productName, produc
         console.warn('Lead insert error (non-critical):', leadInsertError);
       }
       
+      // Attempt to send email notification (non-blocking for user)
+      try {
+        await sendSiteVisitEmail({
+          fullName: formValues.fullName,
+          phoneNumber: formattedPhone,
+          address: formValues.address,
+          city: formValues.city,
+          state: formValues.state,
+          zipCode: formValues.zipCode,
+          additionalNotes: formValues.additionalNotes,
+          productSku,
+          productName,
+          productPower,
+        });
+        console.log('Site visit email sent to inquire@type3solar.in');
+      } catch (emailError) {
+        console.warn('Failed to send site visit email:', emailError);
+      }
+
       // Always succeed even if database connection failed
       // The most important thing is that we've captured the lead information
       setIsSuccess(true);
