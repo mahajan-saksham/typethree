@@ -58,7 +58,7 @@ export default {
         '5xl': [
           '2rem', // mobile 32px
           {
-            lineHeight: '1.1',
+            lineHeight: '1.15',
             fontWeight: '700',
             letterSpacing: '-0.02em',
             '@screen sm': { fontSize: '2.5rem' }, // 40px
@@ -68,7 +68,7 @@ export default {
         '4xl': [
           '1.75rem', // 28px
           {
-            lineHeight: '1.15',
+            lineHeight: '1.2',
             fontWeight: '700',
             letterSpacing: '-0.01em',
             '@screen sm': { fontSize: '2.25rem' }, // 36px
@@ -78,7 +78,7 @@ export default {
         '3xl': [
           '1.5rem', // 24px
           {
-            lineHeight: '1.2',
+            lineHeight: '1.25',
             fontWeight: '700',
             '@screen sm': { fontSize: '1.75rem' }, // 28px
             '@screen md': { fontSize: '2.25rem' } // 36px
@@ -87,7 +87,7 @@ export default {
         '2xl': [
           '1.25rem', // 20px
           {
-            lineHeight: '1.25',
+            lineHeight: '1.3',
             fontWeight: '600',
             '@screen sm': { fontSize: '1.375rem' }, // 22px
             '@screen md': { fontSize: '1.75rem' } // 28px
@@ -104,7 +104,7 @@ export default {
         base: [
           '0.9375rem', // 15px
           {
-            lineHeight: '1.5',
+            lineHeight: '1.55',
             fontWeight: '400',
             '@screen sm': { fontSize: '1rem' }, // 16px
             '@screen md': { fontSize: '1.125rem' } // 18px
@@ -113,7 +113,7 @@ export default {
         sm: [
           '0.8125rem', // 13px
           {
-            lineHeight: '1.3',
+            lineHeight: '1.35',
             fontWeight: '400',
             '@screen sm': { fontSize: '0.875rem' }, // 14px
             '@screen md': { fontSize: '0.875rem' } // 14px
@@ -122,7 +122,7 @@ export default {
         xs: [
           '0.75rem', // 12px
           {
-            lineHeight: '1.3',
+            lineHeight: '1.35',
             fontWeight: '300',
             '@screen sm': { fontSize: '0.75rem' },
             '@screen md': { fontSize: '0.75rem' }
