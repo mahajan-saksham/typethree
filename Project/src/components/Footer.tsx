@@ -1,11 +1,31 @@
-import { Link } from 'react-router-dom';
 import { Facebook, Linkedin, Twitter } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Logo } from './Logo';
 
 export function Footer() {
   return (
-    <footer className="bg-dark/95 backdrop-blur-lg border-t border-light/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-dark/95 backdrop-blur-lg border-t border-light/10 relative overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0 bg-gradient-to-b from-dark-900 to-black opacity-95" />
+      
+      {/* Subtle color gradients */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 15% 85%, rgba(204, 255, 0, 0.08) 0%, rgba(0, 0, 0, 0) 45%), radial-gradient(circle at 85% 15%, rgba(0, 225, 255, 0.08) 0%, rgba(0, 0, 0, 0) 45%)",
+        }}
+      />
+      
+      {/* Diagonal pattern background */}
+      <div
+        className="absolute inset-0 z-0 opacity-10"
+        style={{
+          backgroundImage: "repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) 1px, transparent 1px, transparent 10px)",
+          backgroundSize: "30px 30px"
+        }}
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
