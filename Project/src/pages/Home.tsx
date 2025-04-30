@@ -1066,7 +1066,7 @@ function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-center mt-8"
+            className="text-center mt-8 mb-6"
           >
             <p className="text-xl text-light mb-6">अभी मुफ्त साइट विजिट बुक करें</p>
             <button
@@ -1083,7 +1083,7 @@ function Home() {
       </section>
 
       {/* Enhanced Calculator Section */}
-      <section className="py-16 md:py-20 relative" id="calculator">
+      <section className="py-16 md:py-20 relative -mt-8 sm:mt-0" id="calculator">
         {/* Decorative background elements - simplified */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-dark to-dark-900 opacity-95" />
@@ -1129,8 +1129,8 @@ function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               whileHover={{ y: -3, transition: { duration: 0.2 } }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+              viewport={{ once: true }}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-0"
             >
               {/* Left side: Inputs - Compact styling */}
               <motion.div
