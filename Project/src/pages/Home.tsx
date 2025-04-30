@@ -1444,9 +1444,11 @@ function Home() {
                             
                             {/* View Details Button */}
                             <Link to={`/product/${recommendedProduct.id}`} className="mt-2">
-                              <button className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover transition-colors duration-300 text-dark font-bold rounded-xl px-6 py-4 text-lg">
-                                View Details
-                                <ArrowRight className="w-5 h-5" />
+                              <button className="flex items-center justify-between w-full bg-primary hover:bg-primary-hover active:bg-primary-active py-4 px-6 rounded-lg transition-all duration-300">
+                                <span className="text-dark font-medium text-lg" style={{ textTransform: 'none', letterSpacing: '-0.02em' }}>View Details</span>
+                                <div>
+                                  <ArrowRight className="h-7 w-7 text-dark" />
+                                </div>
                               </button>
                             </Link>
                           </>
@@ -1596,14 +1598,11 @@ function Home() {
                       </div>
                       
                       {/* Enhanced CTA Button */}
-                      <button className="w-full py-2.5 px-4 bg-primary text-dark font-medium rounded-lg flex items-center justify-center gap-2 hover:bg-primary-hover transition-colors duration-300 group-hover:shadow-md group-hover:shadow-primary/10">
-                        View Details
-                        <motion.div
-                          animate={{ x: [0, 3, 0] }}
-                          transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
-                        >
-                          <ArrowRight size={16} />
-                        </motion.div>
+                      <button className="flex items-center justify-between w-full bg-primary hover:bg-primary-hover active:bg-primary-active py-3 px-5 rounded-lg transition-all duration-300">
+                        <span className="text-dark font-medium text-base" style={{ textTransform: 'none', letterSpacing: '-0.02em' }}>View Details</span>
+                        <div>
+                          <ArrowRight className="h-5 w-5 text-dark" />
+                        </div>
                       </button>
                     </div>
                   </div>
@@ -1685,11 +1684,11 @@ function Home() {
                   variant="primary"
                   size="md"
                   radius="lg"
-                  className="shadow-md w-full sm:w-auto"
+                  className="shadow-md w-full sm:w-auto py-2.5 px-5"
                 >
-                  <span className="relative z-10 flex items-center justify-center">
-                    Sign In
-                    <ArrowRight className="h-4 w-4 ml-2" />
+                  <span className="relative z-10 flex items-center justify-between w-full">
+                    <span className="text-dark font-medium" style={{ textTransform: 'none', letterSpacing: '-0.02em' }}>Sign In</span>
+                    <ArrowRight className="h-5 w-5 text-dark" />
                   </span>
                 </Button>
 
@@ -1698,11 +1697,12 @@ function Home() {
                   variant="ghost"
                   size="md"
                   radius="lg"
-                  className="border border-white/10 hover:border-primary/20 text-primary hover:bg-primary/10 active:bg-primary/15 shadow-md w-full sm:w-auto"
+                  className="border border-white/10 hover:border-primary/20 text-primary hover:bg-primary/10 active:bg-primary/15 shadow-md w-full sm:w-auto py-2.5 px-5"
                   aria-haspopup="dialog"
                 >
-                  <span className="relative z-10 flex items-center justify-center">
-                    Book Consultation
+                  <span className="relative z-10 flex items-center justify-between w-full">
+                    <span className="font-medium" style={{ textTransform: 'none', letterSpacing: '-0.02em' }}>Book Consultation</span>
+                    <Calendar className="h-5 w-5" />
                   </span>
                 </Button>
               </div>
