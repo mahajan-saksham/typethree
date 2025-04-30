@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
   Sun, 
   Battery, 
@@ -79,7 +80,7 @@ export default function Products() {
   const [sortBy, setSortBy] = useState<SortOption>('capacity-asc');
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+  // selectedProduct state removed - now using standalone ProductDetail page
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('on-grid');
   const [isScrolled, setIsScrolled] = useState(false);
   
@@ -161,9 +162,7 @@ export default function Products() {
     }
   });
 
-  const handleProductSelect = (productId: string) => {
-    setSelectedProduct(productId);
-  };
+  // handleProductSelect function removed - now using direct Link navigation to ProductDetail page
 
   const handleBookClick = (product: Product) => {
     setSiteVisitProduct({
@@ -361,9 +360,9 @@ export default function Products() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="h-full"
               >
-                <div 
-                  className="group h-full flex flex-col bg-dark-800/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/5 hover:border-primary/20 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5 cursor-pointer" 
-                  onClick={() => setSelectedProduct(product.id)}
+                <Link 
+                  to={`/products/${product.id}`}
+                  className="group h-full flex flex-col bg-dark-800/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/5 hover:border-primary/20 transition-all duration-500 hover:shadow-xl hover:shadow-primary/5" 
                 >
                   {/* Product Image - Larger, Apple-style */}
                   <div className="relative h-[150px] md:h-[300px] overflow-hidden">
@@ -456,7 +455,7 @@ export default function Products() {
                       </Button>
                     </div>
                   </div>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -494,176 +493,7 @@ export default function Products() {
       </section>
       
       {/* Product Details Modal - Apple Style */}
-      <AnimatePresence>
-        {selectedProduct && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 z-50 overflow-y-auto"
-            onClick={() => setSelectedProduct(null)}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
-              className="container mx-auto px-6 max-w-6xl py-24"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Modal Content - Apple Aesthetic */}
-              {products.find(p => p.id === selectedProduct) && (
-                <div className="bg-dark-900/80 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/10 max-w-5xl mx-auto">
-                  <button
-                    onClick={() => setSelectedProduct(null)}
-                    className="absolute top-8 right-8 z-50 bg-dark-800/50 backdrop-blur-sm p-2 rounded-full border border-white/10 text-light/60 hover:text-primary transition-colors duration-300"
-                  >
-                    <X size={24} />
-                  </button>
-                  
-                  <div className="grid md:grid-cols-2">
-                    {/* Product Image - Large Display */}
-                    <div className="relative h-[400px] md:h-full overflow-hidden">
-                      <img
-                        src={products.find(p => p.id === selectedProduct)?.image_url}
-                        alt={products.find(p => p.id === selectedProduct)?.name}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-dark/80 md:bg-gradient-to-l"></div>
-                    </div>
-                    
-                    {/* Product Details - Clean Typography */}
-                    <div className="p-10 relative">
-                      <div className="space-y-6 h-full flex flex-col">
-                        <div>
-                          <h2 className="text-3xl font-bold text-primary mb-2">
-                            {products.find(p => p.id === selectedProduct)?.name}
-                          </h2>
-                          <p className="text-light/80 text-lg mb-6">
-                            {products.find(p => p.id === selectedProduct)?.description}
-                          </p>
-                        </div>
-                        
-                        {/* Apple-style feature highlights with icons */}
-                        <div className="space-y-6 mb-8">
-                          <div className="flex items-start gap-4">
-                            <div className="p-2 bg-primary/10 rounded-lg">
-                              <Sun size={24} className="text-primary" />
-                            </div>
-                            <div>
-                              <h4 className="font-medium mb-1">Premium {products.find(p => p.id === selectedProduct)?.capacity_kw}kW System</h4>
-                              <p className="text-light/70 text-sm">Delivers consistent power output in all weather conditions</p>
-                            </div>
-                          </div>
-                          
-                          <div className="flex items-start gap-4">
-                            <div className="p-2 bg-primary/10 rounded-lg">
-                              <Battery size={24} className="text-primary" />
-                            </div>
-                            <div>
-                              <h4 className="font-medium mb-1">Generates {products.find(p => p.id === selectedProduct)?.generation} Daily</h4>
-                              <p className="text-light/70 text-sm">Significantly reduce or eliminate your electricity bills</p>
-                            </div>
-                          </div>
-                          
-                          <div className="flex items-start gap-4">
-                            <div className="p-2 bg-primary/10 rounded-lg">
-                              <IndianRupee size={24} className="text-primary" />
-                            </div>
-                            <div>
-                              <h4 className="font-medium mb-1">₹{products.find(p => p.id === selectedProduct)?.monthly_savings}/mo Savings</h4>
-                              <p className="text-light/70 text-sm">Return on investment within 4-6 years, then pure savings</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Key Features - Apple Style List */}
-                        <div className="mb-8">
-                          <h3 className="text-xl font-semibold mb-4 text-light">In the Box</h3>
-                          <ul className="space-y-3">
-                            {products.find(p => p.id === selectedProduct)?.features.map((feature, index) => (
-                              <li key={index} className="flex items-start gap-3">
-                                <CheckCircle2 size={20} className="text-primary shrink-0 mt-0.5" />
-                                <span className="text-light/80">{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        
-                        {/* Technical Specifications */}
-                        <div className="mb-8">
-                          <h3 className="text-xl font-semibold mb-4 text-light">Tech Specs</h3>
-                          <div className="grid grid-cols-2 gap-x-6 gap-y-4">
-                            <div className="border-t border-white/10 pt-3">
-                              <p className="text-xs text-primary/80 mb-1">Capacity</p>
-                              <p className="text-base">{products.find(p => p.id === selectedProduct)?.capacity_kw} kW</p>
-                            </div>
-                            <div className="border-t border-white/10 pt-3">
-                              <p className="text-xs text-primary/80 mb-1">Generation</p>
-                              <p className="text-base">{products.find(p => p.id === selectedProduct)?.generation || 'N/A'}</p>
-                            </div>
-                            <div className="border-t border-white/10 pt-3">
-                              <p className="text-xs text-primary/80 mb-1">Area Required</p>
-                              <p className="text-base">{products.find(p => p.id === selectedProduct)?.area_required} sq.ft</p>
-                            </div>
-                            <div className="border-t border-white/10 pt-3">
-                              <p className="text-xs text-primary/80 mb-1">Monthly Savings</p>
-                              <p className="text-base">₹{products.find(p => p.id === selectedProduct)?.monthly_savings}/mo</p>
-                            </div>
-                            <div className="border-t border-white/10 pt-3">
-                              <p className="text-xs text-primary/80 mb-1">Panel Type</p>
-                              <p className="text-base">{products.find(p => p.id === selectedProduct)?.panel_type}</p>
-                            </div>
-                            <div className="border-t border-white/10 pt-3">
-                              <p className="text-xs text-primary/80 mb-1">Installation</p>
-                              <p className="text-base">{products.find(p => p.id === selectedProduct)?.installation_time || 'N/A'}</p>
-                            </div>
-                            <div className="border-t border-white/10 pt-3">
-                              <p className="text-xs text-primary/80 mb-1">Easy EMI</p>
-                              <p className="text-base">
-                                ₹{Math.round((products.find(p => p.id === selectedProduct)?.price - (products.find(p => p.id === selectedProduct)?.subsidy_amount || 0)) / 12).toLocaleString()}/month
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Price and CTA */}
-                        <div className="mt-auto pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-                          <div>
-
-                            <div className="flex items-baseline gap-2">
-                              <p className="text-lg line-through text-light/40">₹{products.find(p => p.id === selectedProduct)?.price.toLocaleString()}</p>
-                              <span className="text-sm font-medium text-primary">
-                                {Math.round((products.find(p => p.id === selectedProduct)?.subsidy_amount || 0) / (products.find(p => p.id === selectedProduct)?.price || 1) * 100)}% off
-                              </span>
-                            </div>
-                            <p className="text-3xl font-bold text-light">
-                              ₹{(products.find(p => p.id === selectedProduct)?.price - (products.find(p => p.id === selectedProduct)?.subsidy_amount || 0)).toLocaleString()}
-                            </p>
-                            <p className="text-sm text-light/60">Price after government subsidy</p>
-                          </div>
-                          
-                          <Button 
-                            variant="primary" 
-                            size="lg" 
-                            radius="full" 
-                            onClick={() => {
-                              const prod = products.find(p => p.id === selectedProduct);
-                              if (prod) handleBookClick(prod);
-                            }}
-                          >
-                            Book
-                            <ArrowRight size={18} className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Product details modal removed - now using standalone ProductDetail page */}
       {/* Site Visit Modal */}
       <AnimatePresence>
         {isSiteVisitModalOpen && siteVisitProduct && (

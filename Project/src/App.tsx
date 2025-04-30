@@ -12,6 +12,7 @@ const Home = React.lazy(() => import('./pages/Home'));
 // Commenting out Services import as the file doesn't exist
 // const Services = React.lazy(() => import('./pages/Services'));
 const Products = React.lazy(() => import('./pages/Products'));
+const ProductDetail = React.lazy(() => import('./pages/ProductDetail'));
 const Install = React.lazy(() => import('./pages/Install'));
 // ROICalculator component not found in filesystem - commenting out
 // const ROICalculator = React.lazy(() => import('./pages/ROICalculator'));
@@ -55,6 +56,7 @@ function App() {
               <Route index element={<Home />} />
               {/* Route for Services removed as the component doesn't exist */}
               <Route path="products" element={<Products />} />
+              <Route path="products/:productId" element={<ProductDetail />} />
               <Route path="install" element={<Install />} />
               {/* ROI Calculator route commented out as component is missing */}
               {/* <Route path="roi" element={<ROICalculator />} /> */}

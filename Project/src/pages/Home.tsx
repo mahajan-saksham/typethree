@@ -1443,7 +1443,7 @@ function Home() {
                             </div>
                             
                             {/* View Details Button */}
-                            <Link to={`/product/${recommendedProduct.id}`} className="mt-2">
+                            <Link to={`/products/${recommendedProduct.id}`} className="mt-2">
                               <button className="flex items-center justify-between w-full bg-primary hover:bg-primary-hover active:bg-primary-active py-4 px-6 rounded-lg transition-all duration-300">
                                 <span className="text-dark font-medium text-lg" style={{ textTransform: 'none', letterSpacing: '-0.02em' }}>View Details</span>
                                 <div>
@@ -1678,13 +1678,13 @@ function Home() {
               </p>
               
               {/* CTA buttons - centered and full width on mobile */}
-              <div className="flex flex-col sm:flex-row gap-3 mt-6 w-full sm:w-auto sm:justify-start">
+              <div className="flex flex-col sm:flex-row gap-4 mt-6 w-full sm:justify-start">
                 <Button
                   to="/products"
                   variant="primary"
                   size="md"
                   radius="lg"
-                  className="shadow-md w-full sm:w-auto py-2.5 px-5"
+                  className="shadow-md w-full sm:w-auto py-3 px-6 sm:min-w-[170px]"
                 >
                   <span className="relative z-10 flex items-center justify-between w-full">
                     <span className="text-dark font-medium" style={{ textTransform: 'none', letterSpacing: '-0.02em' }}>Sign In</span>
@@ -1697,7 +1697,7 @@ function Home() {
                   variant="ghost"
                   size="md"
                   radius="lg"
-                  className="border border-white/10 hover:border-primary/20 text-primary hover:bg-primary/10 active:bg-primary/15 shadow-md w-full sm:w-auto py-2.5 px-5"
+                  className="border border-white/20 text-white bg-transparent hover:bg-white/5 active:bg-white/10 shadow-md w-full sm:w-auto py-3 px-6 sm:min-w-[210px]"
                   aria-haspopup="dialog"
                 >
                   <span className="relative z-10 flex items-center justify-between w-full">
@@ -1718,12 +1718,12 @@ function Home() {
             >
               <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-2 bg-white/5 border border-white/10 rounded-lg px-2 py-3 sm:px-3 sm:py-2 transition-transform duration-200 hover:-translate-y-1">
                 <Shield className="h-5 w-5 text-primary" />
-                <span className="text-light text-xs sm:text-sm text-center sm:text-left whitespace-nowrap">5-Year Warranty</span>
+                <span className="text-light text-xs sm:text-sm text-center sm:text-left whitespace-nowrap">25-Year Warranty</span>
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-2 bg-white/5 border border-white/10 rounded-lg px-2 py-3 sm:px-3 sm:py-2 transition-transform duration-200 hover:-translate-y-1">
                 <Users className="h-5 w-5 text-primary" />
-                <span className="text-light text-xs sm:text-sm text-center sm:text-left whitespace-nowrap">1000+ Customers</span>
+                <span className="text-light text-xs sm:text-sm text-center sm:text-left whitespace-nowrap">100+ Customers</span>
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-1 sm:gap-2 bg-white/5 border border-white/10 rounded-lg px-2 py-3 sm:px-3 sm:py-2 transition-transform duration-200 hover:-translate-y-1">

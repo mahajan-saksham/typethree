@@ -73,9 +73,9 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="group transition-transform duration-300 hover:scale-105">
-            <span className="inline-block transition-shadow duration-300 group-hover:shadow-[0_0_16px_2px_rgba(204,255,0,0.25)]">
+          {/* Logo - hover effects removed */}
+          <Link to="/" className="block">
+            <span className="inline-block">
               <Logo />
             </span>
           </Link>
