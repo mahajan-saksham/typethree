@@ -1,4 +1,4 @@
-import { Facebook, Linkedin, Twitter } from 'lucide-react';
+
 import { Link } from 'react-router-dom';
 import { Logo } from './Logo';
 
@@ -58,19 +58,15 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Social */}
+          {/* Make in India */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-            <div className="flex space-x-4">
-              <a href="#" className="social-link">
-                <Facebook className="h-6 w-6" />
-              </a>
-              <a href="#" className="social-link">
-                <Linkedin className="h-6 w-6" />
-              </a>
-              <a href="#" className="social-link">
-                <Twitter className="h-6 w-6" />
-              </a>
+            <h3 className="text-lg font-semibold mb-4">Made in India</h3>
+            <div className="flex items-center">
+              <img 
+                src="https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/images//make-in-india-seeklogo.png" 
+                alt="Make in India logo" 
+                className="h-20 w-auto object-contain" 
+              />
             </div>
           </div>
         </div>

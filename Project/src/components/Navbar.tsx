@@ -12,6 +12,7 @@ import { Logo } from './Logo';
 import { Button } from './Button';
 import { Card } from './Card';
 import { supabase } from '../lib/supabaseClient';
+import { LanguageSwitcher } from './LanguageSwitcher';
 // Site Visit form will be used in Contact page instead
 
 export function Navbar() {
@@ -80,8 +81,8 @@ export function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center gap-5">
+          {/* Desktop Navigation - right aligned */}
+          <div className="hidden md:flex md:items-center md:ml-auto gap-5">
             <div className="flex items-center gap-5">
   <Link 
     to="/" 
@@ -119,6 +120,9 @@ export function Navbar() {
 </div>
             {/* Contact tab removed */}
             
+            {/* Language Switcher */}
+            <LanguageSwitcher />
+            
             {user ? (
               <div className="flex items-center gap-4">
                 <Button 
@@ -150,19 +154,24 @@ export function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 text-light hover:text-primary transition-colors relative z-50 rounded-lg"
-            aria-label="Toggle menu"
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
+          <div className="flex items-center gap-3">
+            {/* Language Switcher in Mobile - next to menu button */}
+            <div className="md:hidden">
+              <LanguageSwitcher />
+            </div>
+            
+            <button
+              className="md:hidden text-light p-2 transition-colors hover:text-primary focus:outline-none"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -218,6 +227,8 @@ export function Navbar() {
               </div>
             ) : (
               <div className="mb-6 border-b border-white/10 pb-4">
+                {/* Language Switcher moved to header */}
+                
                 <Button 
                   to="/auth"
                   variant="primary"

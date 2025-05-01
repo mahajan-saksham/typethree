@@ -31,6 +31,7 @@ import { Button } from "../components/Button";
 import { ImageCarousel } from "../components/ImageCarousel";
 import { Link } from "react-router-dom"; // Fix the Link import to resolve the lint error
 import { supabase } from "../lib/supabaseClient";
+import OurSitesShowcase from "../components/OurSitesShowcase";
 
 // Types for products
 interface Product {
@@ -1115,10 +1116,10 @@ function Home() {
             className="text-center mb-6 max-w-3xl mx-auto"
           >
             <h2 className="text-[calc(1.1*1.25rem)] md:text-[calc(1.1*1.25rem)] lg:text-[calc(1.1*2rem)] font-bold text-light mb-2">
-              Calculate Your Solar <span className="text-primary">Savings</span>
+              अपनी सोलर <span className="text-primary">बचत</span> की गणना करें
             </h2>
             <p className="text-base text-light/70 max-w-2xl mx-auto">
-              See how much you can save with rooftop solar energy for your home or business.
+              देखें कि आप अपने घर या व्यवसाय के लिए रूफटॉप सोलर ऊर्जा से कितनी बचत कर सकते हैं।
             </p>
           </motion.div>
 
@@ -1153,7 +1154,7 @@ function Home() {
                     <div className="text-primary flex justify-center items-center bg-white/5 p-2 rounded-lg mr-3">
                       <Zap className="h-5 w-5" />
                     </div>
-                    <div>
+                    <div className="flex items-center">
                       <h3 className="text-lg font-bold text-light">System Specifications</h3>
                     </div>
                     {/* kW value display removed */}
@@ -1246,7 +1247,7 @@ function Home() {
                         <path d="M336.47 255.21h64.36v-12.46c-3.68-13.63-9.54-22.87-17.13-28.49-7.59-5.61-17.43-8.01-28.98-7.93l-263.96.06c-6.5 0-11.76-5.27-11.76-11.76 0-6.5 5.26-11.76 11.76-11.76l263.65.03c16.59-.16 31.23 3.62 43.25 12.53 1.08.8 2.14 1.64 3.17 2.52v-7.07c0-10.98-4.53-21.02-11.82-28.31-7.23-7.29-17.25-11.8-28.29-11.8h-8.49l-1.09-.05-4.15 15.56h-28.52l16.92-63.47c-14.22-3.8-22.7-18.5-18.89-32.72l-94.11-25.21c-3.81 14.21-18.5 22.71-32.7 18.9l-27.63 102.5h-29.41L177.4 0l199.7 53.51-19.69 73.73h3.31c17.45 0 33.36 7.19 44.9 18.72 11.56 11.51 18.73 27.45 18.73 44.92v64.99c6.79 1.35 12.86 4.71 17.57 9.42 6.21 6.21 10.08 14.81 10.08 24.28v77.35c0 9.87-4.04 18.85-10.52 25.32-4.63 4.63-10.53 8.02-17.13 9.57v46.66c0 17.46-7.18 33.39-18.72 44.93l-.74.68c-11.5 11.13-27.11 18.03-44.17 18.03H63.63c-17.47 0-33.4-7.17-44.94-18.7C7.17 481.89 0 465.98 0 448.47V190.88c0-17.52 7.16-33.43 18.68-44.95 11.52-11.52 27.44-18.69 44.95-18.69h37.12l.16.01L130.46 17.5l28.19 7.55-38.73 141.23H90.4l4.18-15.51H63.63c-11.01 0-21.04 4.52-28.32 11.79-7.27 7.27-11.79 17.31-11.79 28.32v257.59c0 11.01 4.53 21.03 11.81 28.3 7.28 7.29 17.32 11.82 28.3 11.82h297.09c10.73 0 20.54-4.3 27.74-11.25l.54-.58c7.29-7.28 11.83-17.32 11.83-28.29v-45.71h-64.36c-19.88 0-37.96-8.14-51.02-21.2l-1.23-1.35c-12.36-13-19.98-30.52-19.98-49.68v-3.1c0-19.79 8.13-37.83 21.21-50.94l.13-.13c13.1-13.05 31.12-21.15 50.89-21.15zm-95.71-93.06c17.19 4.6 34.89-5.6 39.49-22.8 4.61-17.19-5.61-34.89-22.8-39.49-17.2-4.6-34.9 5.6-39.5 22.8-4.6 17.19 5.62 34.88 22.81 39.49zM362.3 309.07l.06.05c10.93 10.96 10.9 28.79-.02 39.74l-.05.06c-10.96 10.93-28.79 10.9-39.75-.02l-.05-.05c-10.93-10.96-10.9-28.79.02-39.75l.05-.05c10.96-10.93 28.79-10.91 39.74.02z" />
                       </svg>
                     </div>
-                    <div>
+                    <div className="flex items-center">
                       <h3 className="text-lg font-bold text-light">Financial Benefits</h3>
                     </div>
                   </div>
@@ -1492,10 +1493,10 @@ function Home() {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl sm:text-4xl font-bold text-light">
-                Suggested <span className="bg-gradient-to-r from-primary to-primary/80 text-transparent bg-clip-text">Products</span>
+              <h2 className="text-[calc(1.1*1.25rem)] md:text-[calc(1.1*1.25rem)] lg:text-[calc(1.1*2rem)] font-bold text-light mb-2">
+                Suggested <span className="text-primary">Products</span>
               </h2>
-              <p className="text-light/60 mt-2">Tailored solutions for your solar energy needs</p>
+              <p className="text-light/60">Tailored solutions for your solar energy needs</p>
             </motion.div>
           </div>
           
@@ -1628,6 +1629,53 @@ function Home() {
           </div>
           
           {/* CSS for hiding scrollbar is in global styles */}
+        </div>
+      </section>
+      
+      {/* Our Sites Showcase Section */}
+      <section className="py-16 bg-[#0f0f0f] relative overflow-hidden" id="our-sites">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Decorative noise texture */}
+          <div
+            className="absolute inset-0 opacity-30"
+            style={{
+              backgroundImage: "url('https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/images/noise-texture.png')",
+              backgroundSize: "200px",
+              mixBlendMode: "overlay",
+            }}
+          />
+
+          {/* Decorative gradients */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, x: "-50%", y: "-50%" }}
+            animate={{ opacity: 0.4, scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/10 blur-3xl"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, x: "50%", y: "50%" }}
+            animate={{ opacity: 0.3, scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-primary/10 blur-3xl"
+          />
+
+          {/* No animated lines */}
+        </div>
+        
+        <div className="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="text-center mb-6 max-w-3xl mx-auto"
+          >
+            <h2 className="text-[calc(1.1*1.25rem)] md:text-[calc(1.1*1.25rem)] lg:text-[calc(1.1*2rem)] font-bold text-light mb-2">
+              See Our Work <span className="text-primary">Showcase</span>
+            </h2>
+          </motion.div>
+          
+          <OurSitesShowcase />
         </div>
       </section>
       

@@ -4,6 +4,9 @@ import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
 
+// Import custom Google Translate styles
+import './styles/google-translate.css';
+
 // Use standard React.lazy for code splitting
 // The error handling is now managed by the ErrorBoundary component
 
