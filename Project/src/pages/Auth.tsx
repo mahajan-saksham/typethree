@@ -1,68 +1,18 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, ArrowRight, Loader2, AlertCircle, Check, Eye, EyeOff } from 'lucide-react';
+import { ArrowRight, Loader2, AlertCircle, Check, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { supabase } from '../lib/supabaseClient';
 
+// We're not adding a global declaration here since it might conflict with other declarations
+// Instead, we'll use optional chaining when accessing these properties
+
 function Auth() {
-  // Facebook SDK integration
-  React.useEffect(() => {
-    // Only run on client
-    if (typeof window !== 'undefined') {
-      window.fbAsyncInit = function() {
-        window.FB && window.FB.init({
-          appId      : '{your-app-id}', // TODO: Replace with your Facebook App ID
-          cookie     : true,
-          xfbml      : true,
-          version    : '{api-version}' // TODO: Replace with your API version, e.g., 'v19.0'
-        });
-        window.FB && window.FB.AppEvents && window.FB.AppEvents.logPageView();
-      };
-      (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    }
-  }, []);
+  // Auth state and navigation
 
-  // Google Auth handler
-  const [googleLoading, setGoogleLoading] = React.useState(false);
-  const handleGoogleSignIn = async () => {
-    setGoogleLoading(true);
-    try {
-      await supabase.auth.signInWithOAuth({ provider: 'google' });
-    } catch (err) {
-      // Optionally handle error
-      setGoogleLoading(false);
-    }
-  };
 
-  // Facebook SDK integration
-  React.useEffect(() => {
-    // Only run on client
-    if (typeof window !== 'undefined') {
-      window.fbAsyncInit = function() {
-        window.FB && window.FB.init({
-          appId      : '{your-app-id}', // TODO: Replace with your Facebook App ID
-          cookie     : true,
-          xfbml      : true,
-          version    : '{api-version}' // TODO: Replace with your API version, e.g., 'v19.0'
-        });
-        window.FB && window.FB.AppEvents && window.FB.AppEvents.logPageView();
-      };
-      (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    }
-  }, []);
+
 
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
@@ -273,6 +223,8 @@ function Auth() {
         className="relative z-10 max-w-md w-full mx-4 backdrop-blur-xl"
       >
 
+        {/* Email/Password Authentication */}
+
         {/* Mode Toggle */}
         {!success && (
           <div className="flex p-1 bg-dark-200 rounded-lg mb-6">
@@ -473,31 +425,16 @@ function Auth() {
               className="inline-flex items-center justify-center font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-dark hover:bg-primary-hover active:bg-primary-active transform hover:scale-[1.02] h-14 px-8 text-lg rounded-lg w-full"
               disabled={isLoading || (!isLogin && !passwordStrength.isStrong)}
             >
-              {isLoading ? (
-                <>
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  {isLogin ? 'Logging in...' : 'Creating Account...'}
-                </>
-              ) : (
-                <>
-                  {isLogin ? 'Log In' : 'Create Account'}
-                  <ArrowRight className="h-5 w-5 ml-2" />
-                </>
-              )}
+              {/* Simplify conditional rendering to avoid DOM node issues */}
+              {isLoading && <Loader2 className="h-5 w-5 animate-spin mr-2" />}
+              <span>{isLoading 
+                ? (isLogin ? 'Logging in...' : 'Creating Account...') 
+                : (isLogin ? 'Log In' : 'Create Account')
+              }</span>
+              {!isLoading && <ArrowRight className="h-5 w-5 ml-2" />}
             </button>
 
-            <div className="text-center">
-              <p className="text-light/60">
-                {isLogin ? 'Don\'t have an account? ' : 'Already have an account? '}
-                <button
-                  type="button"
-                  onClick={() => setIsLogin(!isLogin)}
-                  className="text-primary hover:text-primary-hover"
-                >
-                  {isLogin ? 'Sign up' : 'Log in'}
-                </button>
-              </p>
-            </div>
+
           </form>
         )}
       </Card>

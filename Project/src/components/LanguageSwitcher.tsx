@@ -30,28 +30,12 @@ export const LanguageSwitcher: React.FC = () => {
     }
   };
   
-  // Force clear any existing language cookie on component mount
-  useEffect(() => {
-    const clearExistingLanguageCookie = () => {
-      // Clear any existing language cookie to ensure we start fresh with English
-      if (document.cookie.includes('googtrans')) {
-        // Clear on all possible domains and paths
-        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.${window.location.hostname};`;
-        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
-      }
-    };
-    
-    // Clear cookies before checking translate status
-    clearExistingLanguageCookie();
-  }, []);
-
   // Check for Google Translate and set defaults
   useEffect(() => {
     // Function to check if Google Translate is loaded
     const checkForTranslate = () => {
       // If Google Translate is ready, set up initial state
-      if (window.google && window.google.translate) {
+      if (window.google?.translate) {
         // Check if we already have a language preference
         const hasLanguageCookie = document.cookie.includes('googtrans');
         

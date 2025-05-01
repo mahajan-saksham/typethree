@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 
 import { SiteVisitForm } from "../components/SiteVisitForm";
-import { Button } from "../components/Button";
+import { Button } from '../design-system/components/Button/Button';
 import { ImageCarousel } from "../components/ImageCarousel";
 import { Link } from "react-router-dom"; // Fix the Link import to resolve the lint error
 import { supabase } from "../lib/supabaseClient";
@@ -572,7 +572,7 @@ function Home() {
             viewport={{ once: true, margin: "-100px" }}
             className="text-center mb-8"
           >
-            <h2 className="text-[calc(1.2*1.1*1.25rem)] md:text-[calc(1.2*1.1*1.25rem)] lg:text-[calc(1.1*2.5rem)] font-bold text-light mb-1">टाइप 3 के साथ पाएं</h2>
+            <h2 className="text-[calc(1.2*1.1*1.25rem)] md:text-[calc(1.2*1.1*1.25rem)] lg:text-[calc(1.1*2.5rem)] font-bold text-light mb-1">Get with Type 3</h2>
           </motion.div>
 
           <div className="flex md:grid overflow-x-auto pb-4 md:overflow-visible md:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-6 text-center" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
@@ -599,8 +599,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-lg md:text-lg m-0">३०+ वर्षों</p>
-                <p className="m-0 -mt-1">का अनुभव</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">30+ Years</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">experience</p>
               </div>
             </motion.div>
 
@@ -621,8 +621,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-lg md:text-lg m-0">२५ वर्षों</p>
-                <p className="m-0 -mt-1">की वारंटी</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">25 Years</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">warranty</p>
               </div>
             </motion.div>
 
@@ -643,8 +643,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-lg md:text-lg m-0">विश्वसनीय</p>
-                <p className="m-0 -mt-1">गुणवत्ता</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">Reliable</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">quality</p>
               </div>
             </motion.div>
 
@@ -665,8 +665,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-lg md:text-lg m-0">सरल</p>
-                <p className="m-0 -mt-1">वित्त विकल्प</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">Easy</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">Finance Options</p>
               </div>
             </motion.div>
 
@@ -687,8 +687,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-lg md:text-lg m-0">जीवन भर</p>
-                <p className="m-0 -mt-1">सेवा</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">Lifetime</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">Service</p>
               </div>
             </motion.div>
 
@@ -709,8 +709,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-lg md:text-lg m-0">आसान</p>
-                <p className="m-0 -mt-1">वित्तपोषण</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">Easy</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">Financing</p>
               </div>
             </motion.div>
 
@@ -731,8 +731,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-lg md:text-lg m-0">सभी</p>
-                <p className="m-0 -mt-1">मौसम प्रूफ</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">All</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">Weather Proof</p>
               </div>
             </motion.div>
 
@@ -753,8 +753,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-lg md:text-lg m-0">बीमा</p>
-                <p className="m-0 -mt-1">कवर</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">Insurance</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">Cover</p>
               </div>
             </motion.div>
           </div>

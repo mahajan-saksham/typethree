@@ -4,6 +4,23 @@ export const typography = {
     body: 'Inter, system-ui, sans-serif',
     mono: 'JetBrains Mono, monospace'
   },
+  // Add missing fontFamily properties for backwards compatibility
+  fontFamily: {
+    headline: 'Space Grotesk, system-ui, sans-serif',
+    body: 'Inter, system-ui, sans-serif'
+  },
+  // Add missing fontSize properties for backwards compatibility
+  fontSize: {
+    small: '0.875rem',   // 14px
+    body: '1rem',        // 16px
+    bodyLarge: '1.125rem', // 18px
+    md: '1rem',         // 16px
+    base: '1rem'         // 16px
+  },
+  // Add missing letterSpacing property
+  letterSpacing: {
+    wide: '0.05em'
+  },
   sizes: {
     h1: {
       size: '4rem',      // 64px

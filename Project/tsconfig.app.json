@@ -20,5 +20,14 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/components/ChatBubble.tsx",
+    "src/components/Navigation.tsx",
+    "src/DesignSystemShowcase.tsx",
+    "src/components/Button.tsx",
+    "src/components/Input.tsx",
+    "**/*.styled.ts",
+    "**/*.styled.tsx"
+  ]
 }

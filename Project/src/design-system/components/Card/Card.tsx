@@ -70,23 +70,17 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     children, 
     ...props 
   }, ref) => {
+    // Simplified structure to fix DOM errors - removed unnecessary outer div
     return (
-      <div className={cn(containerClassName)}>
-        <div
-          ref={ref}
-          className={cn(cardVariants({ 
-            variant, 
-            hover, 
-            padding, 
-            radius, 
-            align,
-            equalHeight,
-            className 
-          }))}
-          {...props}
-        >
-          {children}
-        </div>
+      <div
+        ref={ref}
+        className={cn(
+          cardVariants({ variant, hover, padding, radius, align, equalHeight }),
+          className
+        )}
+        {...props}
+      >
+        {children}
       </div>
     );
   }

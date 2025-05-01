@@ -28,6 +28,13 @@ export const colors = {
     hover: '#00E974',
     active: '#00BD60'
   },
+  // Adding the missing colors for backward compatibility
+  // These are not used in the new design system but are referenced in old code
+  neonPink: '#FF2975',
+  electricYellow: '#ECFC58',
+  limeGreen: '#D6FF6D',
+  skyBlue: '#5DD3FF',
+  white: '#FFFFFF',
   error: {
     DEFAULT: '#FF5F56',
     hover: '#FF7A73',

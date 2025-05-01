@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../design-system/utils/cn';
 
-// Button variants using Tailwind CSS only - no styled-components
 const buttonVariants = cva(
-  'inline-flex items-center justify-between font-medium tracking-tight letter-spacing-[-0.02em] transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
@@ -45,11 +44,11 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   to?: string;
-  icon?: React.ReactNode;
+  asChild?: boolean;
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, radius, fullWidth, to, icon, type = "button", children, ...props }, ref) => {
+  ({ className, variant, size, radius, fullWidth, to, type = "button", children, ...props }, ref) => {
     const Comp = to ? Link : 'button';
     const buttonProps = to ? {} : { type };
 
@@ -61,16 +60,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...buttonProps}
         {...props}
       >
-        <span>{children}</span>
-        {icon && (
-          <span className={cn(
-            size === 'sm' && "h-5 w-5",
-            size === 'md' && "h-5 w-5",
-            size === 'lg' && "h-7 w-7",
-          )}>
-            {icon}
-          </span>
-        )}
+        {children}
       </Comp>
     );
   }
