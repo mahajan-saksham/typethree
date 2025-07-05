@@ -1,0 +1,10 @@
+{
+  "name": "type3-solar-scripts",
+  "version": "1.0.0",
+  "description": "Utility scripts for Type3 Solar platform",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
+    "dotenv": "^16.5.0",
+    "node-fetch": "^3.3.2"
+  }
+}

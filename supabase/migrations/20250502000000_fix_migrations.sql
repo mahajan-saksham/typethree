@@ -1,0 +1,2 @@
+-- This is a placeholder migration file to match remote database history
+-- It doesn't contain actual migration code since this is just for synchronization

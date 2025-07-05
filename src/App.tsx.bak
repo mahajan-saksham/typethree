@@ -1,0 +1,96 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
+import ErrorBoundary from './components/ErrorBoundary';
+
+// Helper function for better lazy loading with error handling
+const lazyLoad = (path: string) => {
+  // Correctly handle Vite's dynamic imports by using absolute paths from src root
+  const absolutePath = path.startsWith('./') ? path : `./src/${path}`;
+
+  return React.lazy(() => 
+    // Use dynamic import with absolute path resolution for Vite
+    import(/* @vite-ignore */ absolutePath).catch(error => {
+      console.error(`Error loading module ${path}:`, error);
+      return { 
+        default: () => (
+          <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-[#0A0A0A] text-light">
+            <h2 className="text-2xl font-bold text-[#CCFF00] mb-4">Module Loading Error</h2>
+            <p className="mb-4">There was a problem loading this page component.</p>
+            <p className="text-sm mb-4 text-light/70">Path: {path}</p>
+            <button
+              onClick={() => window.location.href = '/'}
+              className="px-4 py-2 bg-[#CCFF00] text-[#0A0A0A] font-medium rounded hover:bg-[#CCFF00]/80"
+            >
+              Go to Homepage
+            </button>
+          </div>
+        )
+      };
+    })
+  );
+};
+
+// Lazy load pages
+const Home = lazyLoad('./pages/Home');
+// Commenting out Services import as the file doesn't exist
+// const Services = lazyLoad('./pages/Services');
+const Products = lazyLoad('./pages/Products');
+const Install = lazyLoad('./pages/Install');
+const ROICalculator = lazyLoad('./pages/ROICalculator');
+const About = lazyLoad('./pages/About');
+// Contact page removed
+
+// Import routes
+const DashboardRoutes = lazyLoad('./pages/Dashboard');
+const AdminRoutes = lazyLoad('./pages/AdminRoutes');
+const Auth = lazyLoad('./pages/Auth');
+
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-[#CCFF00]"></div>
+  </div>
+);
+
+function App() {
+  return (
+    <Router>
+      <div className="min-h-screen bg-[#0A0A0A] flex flex-col">
+        <React.Suspense fallback={<LoadingSpinner />}>
+          <ErrorBoundary>
+            <Routes>
+              {/* Dashboard and Admin routes */}
+              <Route path="/dashboard/*" element={<DashboardRoutes />} />
+              <Route path="/admin/*" element={<AdminRoutes />} />
+            
+            {/* Main routes with shared layout */}
+            <Route
+              element={
+                <>
+                  <Navbar />
+                  <main className="flex-grow">
+                    <Outlet />
+                  </main>
+                  <Footer />
+                </>
+              }
+            >
+              <Route index element={<Home />} />
+              {/* Route for Services removed as the component doesn't exist */}
+              <Route path="products" element={<Products />} />
+              <Route path="install" element={<Install />} />
+              <Route path="roi" element={<ROICalculator />} />
+              <Route path="about" element={<About />} />
+              {/* Contact route removed */}
+              <Route path="auth" element={<Auth />} />
+            </Route>
+            </Routes>
+          </ErrorBoundary>
+        </React.Suspense>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
