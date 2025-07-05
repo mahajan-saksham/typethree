@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type 3 Solar - TaskMaster Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">Type 3 Solar - TaskMaster Dashboard</h1>
+            <p class="text-gray-600">Last updated: <span id="lastUpdated"></span></p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Tasks</h2>
+                <p class="text-4xl font-bold text-blue-600" id="totalTasks">-</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">Completed</h2>
+                <p class="text-4xl font-bold text-green-600" id="completedTasks">-</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">In Progress</h2>
+                <p class="text-4xl font-bold text-yellow-600" id="inProgressTasks">-</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">Completion</h2>
+                <p class="text-4xl font-bold text-purple-600" id="completionPercentage">-</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Project Progress</h2>
+                <canvas id="progressChart" height="250"></canvas>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Task Status</h2>
+                <canvas id="statusChart" height="250"></canvas>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <div class="p-6 border-b">
+                    <h2 class="text-xl font-semibold text-gray-700">All Tasks</h2>
+                    <div class="mt-2 flex gap-2">
+                        <button class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm filter-btn active" data-filter="all">All</button>
+                        <button class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm filter-btn" data-filter="high">High Priority</button>
+                        <button class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm filter-btn" data-filter="pending">Pending</button>
+                        <button class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm filter-btn" data-filter="completed">Completed</button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dependencies</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="taskTableBody">
+                            <tr>
+                                <td colspan="5" class="px-6 py-4 text-center text-gray-500">Loading tasks...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-700 mb-4">Project Status</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-medium text-lg text-gray-700 mb-2">Security Enhancements</h3>
+                        <div class="mb-2">
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Progress</span>
+                                <span class="text-sm font-medium text-gray-700" id="securityProgress">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-600 h-2.5 rounded-full" id="securityProgressBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-lg text-gray-700 mb-2">Product Page Redesign</h3>
+                        <div class="mb-2">
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm font-medium text-gray-700">Progress</span>
+                                <span class="text-sm font-medium text-gray-700" id="productProgress">0%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-600 h-2.5 rounded-full" id="productProgressBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="font-medium text-lg text-gray-700 mb-2">Next Tasks</h3>
+                <ul class="list-disc pl-5 space-y-2" id="nextTasksList">
+                    <li class="text-gray-600">Loading next tasks...</li>
+                </ul>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="font-medium text-lg text-gray-700 mb-2">Recently Completed</h3>
+                <ul class="list-disc pl-5 space-y-2" id="completedTasksList">
+                    <li class="text-gray-600">Loading completed tasks...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load tasks.json file
+        const tasksUrl = '../tasks/tasks.json';
+        let tasks = [];
+        let securityTasks = [];
+        let productTasks = [];
+
+        function init() {
+            fetch(tasksUrl)
+                .then(response => response.json())
+                .then(data => {
+                    tasks = data.tasks || [];
+                    processData();
+                    updateDashboard();
+                    initCharts();
+                    populateTaskTable();
+                    document.getElementById('lastUpdated').textContent = new Date().toLocaleString();
+                })
+                .catch(error => {
+                    console.error('Error loading tasks data:', error);
+                    document.getElementById('taskTableBody').innerHTML = `
+                        <tr>
+                            <td colspan="5" class="px-6 py-4 text-center text-red-500">
+                                Error loading tasks. Please check the console for details.
+                            </td>
+                        </tr>
+                    `;
+                });
+        }
+
+        function processData() {
+            // Categorize tasks
+            securityTasks = tasks.filter(task => task.id <= 15);
+            productTasks = tasks.filter(task => task.id > 15);
+        }
+
+        function updateDashboard() {
+            // Update summary stats
+            const totalTasks = tasks.length;
+            const completedTasks = tasks.filter(task => task.status === 'done').length;
+            const inProgressTasks = tasks.filter(task => task.status === 'in-progress').length;
+            const completionPercentage = Math.round((completedTasks / totalTasks) * 100);
+
+            document.getElementById('totalTasks').textContent = totalTasks;
+            document.getElementById('completedTasks').textContent = completedTasks;
+            document.getElementById('inProgressTasks').textContent = inProgressTasks;
+            document.getElementById('completionPercentage').textContent = `${completionPercentage}%`;
+
+            // Update project progress
+            const securityCompleted = securityTasks.filter(task => task.status === 'done').length;
+            const securityPercentage = Math.round((securityCompleted / securityTasks.length) * 100);
+            document.getElementById('securityProgress').textContent = `${securityPercentage}%`;
+            document.getElementById('securityProgressBar').style.width = `${securityPercentage}%`;
+
+            const productCompleted = productTasks.filter(task => task.status === 'done').length;
+            const productPercentage = Math.round((productCompleted / productTasks.length) * 100);
+            document.getElementById('productProgress').textContent = `${productPercentage}%`;
+            document.getElementById('productProgressBar').style.width = `${productPercentage}%`;
+
+            // Update next tasks
+            const pendingTasks = tasks
+                .filter(task => task.status === 'pending')
+                .sort((a, b) => {
+                    if (a.priority === 'high' && b.priority !== 'high') return -1;
+                    if (a.priority !== 'high' && b.priority === 'high') return 1;
+                    if (a.dependencies.length === 0 && b.dependencies.length > 0) return -1;
+                    if (a.dependencies.length > 0 && b.dependencies.length === 0) return 1;
+                    return a.id - b.id;
+                })
+                .slice(0, 5);
+
+            document.getElementById('nextTasksList').innerHTML = pendingTasks.length 
+                ? pendingTasks.map(task => `
+                    <li class="text-gray-600">
+                        <span class="font-medium">#${task.id}: ${task.title}</span>
+                        <span class="ml-2 px-2 py-0.5 text-xs rounded-full ${task.priority === 'high' ? 'bg-red-100 text-red-800' : task.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800'}">${task.priority}</span>
+                    </li>
+                `).join('')
+                : '<li class="text-gray-600">No pending tasks</li>';
+
+            // Update completed tasks
+            const recentlyCompleted = tasks
+                .filter(task => task.status === 'done')
+                .sort((a, b) => b.id - a.id)
+                .slice(0, 5);
+
+            document.getElementById('completedTasksList').innerHTML = recentlyCompleted.length
+                ? recentlyCompleted.map(task => `
+                    <li class="text-gray-600">
+                        <span class="font-medium">#${task.id}: ${task.title}</span>
+                    </li>
+                `).join('')
+                : '<li class="text-gray-600">No completed tasks</li>';
+        }
+
+        function initCharts() {
+            // Project progress chart
+            const progressCtx = document.getElementById('progressChart').getContext('2d');
+            const progressData = {
+                labels: ['Security Enhancements', 'Product Page Redesign'],
+                datasets: [
+                    {
+                        label: 'Completed',
+                        data: [
+                            securityTasks.filter(t => t.status === 'done').length,
+                            productTasks.filter(t => t.status === 'done').length
+                        ],
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                    },
+                    {
+                        label: 'Pending',
+                        data: [
+                            securityTasks.filter(t => t.status !== 'done').length,
+                            productTasks.filter(t => t.status !== 'done').length
+                        ],
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)'
+                    }
+                ]
+            };
+            new Chart(progressCtx, {
+                type: 'bar',
+                data: progressData,
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            stacked: true,
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Task status chart
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            const statusData = {
+                labels: ['Completed', 'In Progress', 'Pending'],
+                datasets: [{
+                    data: [
+                        tasks.filter(t => t.status === 'done').length,
+                        tasks.filter(t => t.status === 'in-progress').length,
+                        tasks.filter(t => t.status === 'pending').length
+                    ],
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(201, 203, 207, 0.6)'
+                    ]
+                }]
+            };
+            new Chart(statusCtx, {
+                type: 'doughnut',
+                data: statusData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function populateTaskTable(filter = 'all') {
+            let filteredTasks = [...tasks];
+            
+            if (filter === 'high') {
+                filteredTasks = tasks.filter(task => task.priority === 'high');
+            } else if (filter === 'pending') {
+                filteredTasks = tasks.filter(task => task.status === 'pending');
+            } else if (filter === 'completed') {
+                filteredTasks = tasks.filter(task => task.status === 'done');
+            }
+            
+            document.getElementById('taskTableBody').innerHTML = filteredTasks
+                .map(task => `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${task.id}</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">
+                            <div class="font-medium">${task.title}</div>
+                            <div class="text-gray-500 text-xs mt-1">${task.description}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                ${task.status === 'done' ? 'bg-green-100 text-green-800' : 
+                                task.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' : 
+                                'bg-gray-100 text-gray-800'}">${task.status}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                ${task.priority === 'high' ? 'bg-red-100 text-red-800' : 
+                                task.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' : 
+                                'bg-blue-100 text-blue-800'}">${task.priority}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            ${task.dependencies.map(depId => `<span class="inline-block px-2 py-1 mr-1 bg-gray-100 rounded">#${depId}</span>`).join('')}
+                        </td>
+                    </tr>
+                    ${task.subtasks && task.subtasks.length > 0 ? task.subtasks.map(subtask => `
+                        <tr class="bg-gray-50">
+                            <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">${task.id}.${subtask.id}</td>
+                            <td class="px-6 py-3 text-sm text-gray-500">
+                                <div class="pl-4 border-l-2 border-gray-300">
+                                    <div class="font-medium">${subtask.title}</div>
+                                    <div class="text-gray-400 text-xs mt-1">${subtask.description}</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-3 whitespace-nowrap text-sm">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                    ${subtask.status === 'done' ? 'bg-green-100 text-green-800' : 
+                                    subtask.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' : 
+                                    'bg-gray-100 text-gray-800'}">${subtask.status}</span>
+                            </td>
+                            <td class="px-6 py-3 whitespace-nowrap text-sm">-</td>
+                            <td class="px-6 py-3 whitespace-nowrap text-sm text-gray-500">
+                                ${subtask.dependencies ? subtask.dependencies.map(depId => `<span class="inline-block px-2 py-1 mr-1 bg-gray-100 rounded">#${task.id}.${depId}</span>`).join('') : ''}
+                            </td>
+                        </tr>
+                    `).join('') : ''}
+                `).join('') || `
+                    <tr>
+                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">No tasks found</td>
+                    </tr>
+                `;
+        }
+
+        // Add event listeners to filter buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active', 'bg-blue-600', 'text-white'));
+                    this.classList.add('active', 'bg-blue-600', 'text-white');
+                    populateTaskTable(this.dataset.filter);
+                });
+            });
+            
+            init();
+        });
+    </script>
+</body>
+</html>

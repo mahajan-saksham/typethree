@@ -153,6 +153,16 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, title }) => {
               <Link to="/admin/users" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors duration-150 outline-none focus:ring-2 focus:ring-primary ${getActiveClass('/admin/users')}`}> <UserCog className="h-5 w-5" /> <span>Users Management</span></Link>
             </>
           )}
+          
+          {/* Security: admin only */}
+          {role === 'admin' && (
+            <>
+              <div className="mt-6 mb-2 text-xs text-light/40 uppercase tracking-widest font-semibold">Security</div>
+              <Link to="/admin/security-logs" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors duration-150 outline-none focus:ring-2 focus:ring-primary ${getActiveClass('/admin/security-logs')}`}> <span className="h-5 w-5">🔒</span> <span>Security Logs</span></Link>
+              <Link to="/admin/csp-violation-reports" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors duration-150 outline-none focus:ring-2 focus:ring-primary ${getActiveClass('/admin/csp-violation-reports')}`}> <span className="h-5 w-5">🛡️</span> <span>CSP Violations</span></Link>
+              <Link to="/admin/jwt-key-management" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors duration-150 outline-none focus:ring-2 focus:ring-primary ${getActiveClass('/admin/jwt-key-management')}`}> <span className="h-5 w-5">🔑</span> <span>JWT Key Management</span></Link>
+            </>
+          )}
 
           {/* Reports: admin, viewer */}
           {(role === 'admin' || role === 'viewer') && (

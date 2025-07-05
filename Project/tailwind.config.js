@@ -48,8 +48,14 @@ export default {
         'text-tertiary': '#999999',
         'text-accent': '#CCFF00',
         'text-legal': '#888888',
+        // Product useCase colors
+        'residential': '#CCFF00',
+        'commercial': '#00D4FF',
+        'industrial': '#FF7E36'
       },
       fontFamily: {
+        satoshi: ['Satoshi', 'system-ui', 'sans-serif'],
+        inter: ['Inter', 'system-ui', 'sans-serif'],
         heading: ['Satoshi', 'Inter', 'system-ui', 'sans-serif'],
         body: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['IBM Plex Mono', 'monospace']

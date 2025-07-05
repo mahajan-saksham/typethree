@@ -1,0 +1,72 @@
+{
+  "projectName": "Type 3 Solar Platform",
+  "dataDirectory": "/Users/sakshammahajan/Documents/type 3/.task-manager-data",
+  "branches": ["main", "develop", "feature"],
+  "taskCategories": [
+    "Development",
+    "Design",
+    "Product Management", 
+    "Operations",
+    "Security",
+    "Documentation"
+  ],
+  "integrations": {
+    "supabase": {
+      "enabled": true,
+      "projectId": "type-3-solar",
+      "url": "https://dtuoyawpebjcmfesgwwn.supabase.co",
+      "auth": {
+        "enabled": true,
+        "persistTasks": true,
+        "taskTable": "task_master_tasks",
+        "subtaskTable": "task_master_subtasks",
+        "permissionsTable": "task_permissions"
+      }
+    },
+    "git": {
+      "enabled": true,
+      "autoCommit": false
+    }
+  },
+  "auth": {
+    "enabled": true,
+    "requireAuth": true,
+    "roles": {
+      "user": {
+        "permissions": {
+          "canCreate": true,
+          "canUpdate": true,
+          "canDelete": false,
+          "canAssign": false
+        }
+      },
+      "admin": {
+        "permissions": {
+          "canCreate": true,
+          "canUpdate": true,
+          "canDelete": true,
+          "canAssign": true
+        }
+      }
+    },
+    "session": {
+      "timeout": 43200000,
+      "refreshEnabled": true,
+      "autoSignOut": true
+    }
+  },
+  "templates": {
+    "task": {
+      "defaultStatus": "pending",
+      "defaultPriority": "medium",
+      "statusOptions": [
+        "pending", 
+        "in-progress", 
+        "review", 
+        "done", 
+        "deferred", 
+        "cancelled"
+      ]
+    }
+  }
+}

@@ -24,8 +24,11 @@ import {
   Leaf,
   Calendar,
   Wallet,
+  MessageCircle,
 } from "lucide-react";
 
+import { ProductCard } from "../components/products/ProductCard";
+import { products as staticProducts } from "../data/products";
 import { SiteVisitForm } from "../components/SiteVisitForm";
 import { Button } from '../design-system/components/Button/Button';
 import { ImageCarousel } from "../components/ImageCarousel";
@@ -50,21 +53,6 @@ interface Product {
 
 // Fallback product data in case database is empty
 const fallbackProducts: Product[] = [
-  {
-    id: "fallback-1",
-    sku: "APN-OFFGRID-1KW",
-    name: "1kW Off-Grid Solar System",
-    category: "off-grid",
-    capacity_kw: 1,
-    price: 42000,
-    image_url:
-      "https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Off-grid%20solar%20system/1kW%20off-grid%20solar%20system.png",
-    description:
-      "Complete 1kW off-grid solar system for homes and small offices",
-    warranty_years: 25,
-    installation_days: 3,
-    subsidy_amount: 15600,
-  },
   {
     id: "fallback-3",
     sku: "APN-OFFGRID-3KW",
@@ -97,56 +85,31 @@ const fallbackProducts: Product[] = [
 
 function Home() {
   const [roofSize, setRoofSize] = useState<number>(5);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(staticProducts);
   const [recommendedProduct, setRecommendedProduct] = useState<Product | null>(
     null
   );
   const [isSiteVisitModalOpen, setIsSiteVisitModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch products from database when component mounts
+  // Initialize products from static data (same as Products page)
   useEffect(() => {
-    const fetchProducts = async () => {
-      setIsLoading(true);
-      setError(null);
-
+    const initializeProducts = () => {
       try {
-        console.log("Fetching products from Supabase...");
-        const { data, error } = await supabase
-          .from("product_skus")
-          .select("*")
-          .order("capacity_kw", { ascending: true });
-
-        if (error) {
-          console.error("Supabase Error:", error);
-          setError("Failed to fetch products from database");
-          // Use fallback data
-          setProducts(fallbackProducts);
-          return;
-        }
-
-        console.log("Supabase response:", data);
-
-        if (data && data.length > 0) {
-          setProducts(data as Product[]);
-          console.log("Products loaded successfully:", data.length, "items");
-        } else {
-          console.warn("No products found in database, using fallback data");
-          // Use fallback data if no products in database
-          setProducts(fallbackProducts);
-        }
+        console.log("Loading static products for home page...");
+        // Use the same static products as the Products page
+        setProducts(staticProducts);
+        console.log(`Loaded ${staticProducts.length} products from static data`);
       } catch (err) {
-        console.error("Unexpected error:", err);
-        setError("An unexpected error occurred");
-        // Use fallback data in case of error
+        console.error("Error loading products:", err);
         setProducts(fallbackProducts);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchProducts();
+    initializeProducts();
   }, []);
 
   // Update recommended product when roof size changes
@@ -1477,23 +1440,17 @@ function Home() {
       </section>
 
       {/* Suggested Products section */}
-      <section className="py-12 md:py-16 relative overflow-hidden" id="suggested-products">
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-900 to-dark-800 opacity-50" />
-        <div className="absolute inset-0 z-0 opacity-10" style={{
-          backgroundImage: "repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) 1px, transparent 1px, transparent 10px)",
-          backgroundSize: "30px 30px"
-        }} />
-            
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          {/* Section header with title and category filters */}
-          <div className="text-center md:text-left mb-10">
+      <section className="py-12 md:py-16 bg-dark" id="suggested-products">
+        <div className="container mx-auto px-4 sm:px-6">
+          {/* Section header with title */}
+          <div className="text-center mb-10">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-[calc(1.1*1.25rem)] md:text-[calc(1.1*1.25rem)] lg:text-[calc(1.1*2rem)] font-bold text-light mb-2">
+              <h2 className="text-3xl lg:text-4xl font-bold text-light mb-2">
                 Suggested <span className="text-primary">Products</span>
               </h2>
               <p className="text-light/60">Tailored solutions for your solar energy needs</p>
@@ -1501,115 +1458,30 @@ function Home() {
           </div>
           
           {/* Product cards - horizontal scroll on mobile, grid on desktop */}
-          <div className="flex overflow-x-auto pb-4 sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 hide-scrollbar">
-            {products.slice(0, 4).map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex-shrink-0 w-[280px] sm:w-auto"
-              >
-                <Link 
-                  to={`/products/${product.id}`} 
-                  className="group h-full flex flex-col bg-dark-800/30 backdrop-blur-sm rounded-xl overflow-hidden border border-white/5 hover:border-primary/20 transition-all duration-500 hover:shadow-lg hover:shadow-primary/5"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products
+              .filter(product => {
+                const name = product.name?.toLowerCase();
+                return !(
+                  name?.includes('1kw off-grid') || 
+                  name?.includes('1kw on-grid') || 
+                  name?.includes('100lpd solar water heater') || 
+                  name?.includes('2kw hybrid') || 
+                  name?.includes('2kw on-grid')
+                );
+              })
+              .slice(0, 4)
+              .map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  {/* Product Image - full width with improved styling */}
-                  <div className="relative h-[140px] sm:h-[160px] overflow-hidden">
-                    {product.image_url ? (
-                      <img
-                        src={product.image_url}
-                        alt={product.name || 'Solar product'}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        onError={({ currentTarget }) => {
-                          currentTarget.onerror = null; // prevents looping
-                          currentTarget.src = "/images/solar-default.jpg";
-                        }}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-dark-800/80">
-                        <Sun className="h-12 w-12 text-primary/40" />
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-dark/70"></div>
-                    {product.capacity_kw !== undefined && (
-                      <div className="absolute top-3 right-3 bg-primary text-dark px-3 py-1 rounded-full text-xs font-semibold shadow-sm">
-                        {product.capacity_kw} kW
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Product Info - Enhanced version */}
-                  <div className="p-5 flex flex-col flex-1">
-                    {/* Product Name with fallback */}
-                    <h3 className="text-lg font-bold mb-1.5 text-light group-hover:text-primary transition-colors duration-300 line-clamp-1">
-                      {product.name || 'Solar Product'}
-                    </h3>
-                    
-                    {/* Short Description with fallback */}
-                    <p className="text-sm text-light/60 mb-4 line-clamp-2">
-                      {product.description || `High-efficiency ${product.category || 'solar'} solution for your energy needs`}
-                    </p>
-                    
-                    {/* Key specs - enhanced version */}
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center gap-2">
-                        <div className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10">
-                          <Sun size={14} className="text-primary" />
-                        </div>
-                        <div className="flex flex-1 justify-between">
-                          <span className="text-xs text-light/70">Annual Energy</span>
-                          <span className="text-xs font-semibold text-light">{product.capacity_kw ? `${product.capacity_kw * 1400} kWh` : 'N/A'}</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10">
-                          <Wallet size={14} className="text-primary" />
-                        </div>
-                        <div className="flex flex-1 justify-between">
-                          <span className="text-xs text-light/70">Annual Savings</span>
-                          <span className="text-xs font-semibold text-light">{product.monthly_savings ? `₹${(product.monthly_savings * 12).toLocaleString()}` : 'Contact us'}</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Enhanced Price and CTA */}
-                    <div className="mt-auto pt-3 border-t border-white/10">
-                      {/* Price Section */}
-                      <div className="flex items-end gap-2 mb-3">
-                        {product.subsidy_amount ? (
-                          <div className="flex flex-col">
-                            <span className="text-xs line-through text-light/40">₹{product.price.toLocaleString()}</span>
-                            <span className="text-xl font-bold text-primary">
-                              ₹{(product.price - product.subsidy_amount).toLocaleString()}
-                            </span>
-                          </div>
-                        ) : (
-                          <span className="text-xl font-bold text-primary">
-                            ₹{product.price ? product.price.toLocaleString() : 'Call for price'}
-                          </span>
-                        )}
-                        
-                        {product.subsidy_amount && (
-                          <span className="text-xs bg-success/20 text-success px-2 py-0.5 rounded font-medium">
-                            Save ₹{product.subsidy_amount.toLocaleString()}
-                          </span>
-                        )}
-                      </div>
-                      
-                      {/* Enhanced CTA Button */}
-                      <button className="flex items-center justify-between w-full bg-primary hover:bg-primary-hover active:bg-primary-active py-3 px-5 rounded-lg transition-all duration-300">
-                        <span className="text-dark font-medium text-base" style={{ textTransform: 'none', letterSpacing: '-0.02em' }}>View Details</span>
-                        <div>
-                          <ArrowRight className="h-5 w-5 text-dark" />
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                  <ProductCard product={product} />
+                </motion.div>
+              ))}
           </div>
           
           {/* View all products link */}
@@ -1795,7 +1667,7 @@ function Home() {
       {/* Floating WhatsApp Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <a
-          href="https://wa.me/917995657936"
+          href="https://wa.me/918095508066"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 px-6 h-12 rounded-full font-medium text-sm shadow-xl border border-[#25D366]/40 hover:border-[#25D366] text-white bg-[#25D366] hover:bg-[#25D366]/90 active:bg-[#25D366]/80 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 hover:scale-105 disabled:pointer-events-none disabled:opacity-50 animate-pulse"

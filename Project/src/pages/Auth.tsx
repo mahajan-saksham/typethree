@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Loader2, AlertCircle, Check, Eye, EyeOff } from 'lucide-react';
+import { ArrowRight, Loader2, AlertCircle, Check, Eye, EyeOff, Info } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { supabase } from '../lib/supabaseClient';
+import { 
+  evaluatePasswordStrength, 
+  getPasswordStrengthColor, 
+  getPasswordStrengthLabel,
+  validatePasswordRequirements
+} from '../utils/passwordUtils';
 
 // We're not adding a global declaration here since it might conflict with other declarations
 // Instead, we'll use optional chaining when accessing these properties
@@ -27,24 +33,15 @@ function Auth() {
     role: 'user'
   });
 
-  // Password strength indicators
-  const getPasswordStrength = (password: string) => {
-    const hasLength = password.length >= 8;
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasLowerCase = /[a-z]/.test(password);
-    const hasNumbers = /\d/.test(password);
-    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-
-    const strength = [hasLength, hasUpperCase, hasLowerCase, hasNumbers, hasSpecialChar]
-      .filter(Boolean).length;
-
-    return {
-      score: strength,
-      isStrong: strength >= 4
-    };
+  // Use the improved password strength evaluation from zxcvbn
+  const passwordResult = evaluatePasswordStrength(formData.password, [formData.email, formData.fullName]);
+  const passwordRequirements = validatePasswordRequirements(formData.password);
+  
+  // For backward compatibility with existing code
+  const passwordStrength = {
+    score: passwordResult.score,
+    isStrong: passwordResult.isAcceptable
   };
-
-  const passwordStrength = getPasswordStrength(formData.password);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -354,38 +351,88 @@ function Auth() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="space-y-2"
+                    className="space-y-3"
                   >
-                    <div className="flex gap-1 mt-2">
-                      {[...Array(5)].map((_, i) => (
-                        <div
-                          key={i}
-                          className={`h-1 flex-1 rounded-full transition-colors duration-300 ${
-                            i < passwordStrength.score ? 'bg-primary' : 'bg-light/20'
-                          }`}
-                        />
-                      ))}
-                    </div>
+                    {/* Strength meter with label */}
                     <div className="space-y-1">
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-light/80">Password Strength:</span>
+                        <span className={getPasswordStrengthColor(passwordResult.score).split(' ')[0]}>
+                          {getPasswordStrengthLabel(passwordResult.score)}
+                        </span>
+                      </div>
+                      <div className="flex gap-1 mt-1">
+                        {[...Array(5)].map((_, i) => (
+                          <div
+                            key={i}
+                            className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${
+                              i <= passwordResult.score ? getPasswordStrengthColor(passwordResult.score).split(' ')[1] : 'bg-light/20'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <div className="text-xs text-light/60 mt-1">
+                        {passwordResult.guessTimeString && (
+                          <span>Estimated crack time: {passwordResult.guessTimeString}</span>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {/* Requirements checklist */}
+                    <div className="space-y-1 bg-dark-200/50 p-2 rounded-md">
                       <div className="flex items-center gap-2 text-sm">
-                        <Check className={`h-4 w-4 ${formData.password.length >= 8 ? 'text-primary' : 'text-light/40'}`} />
-                        <span className={formData.password.length >= 8 ? 'text-light' : 'text-light/40'}>
+                        <Check className={`h-4 w-4 ${passwordRequirements.minLength ? 'text-primary' : 'text-light/40'}`} />
+                        <span className={passwordRequirements.minLength ? 'text-light' : 'text-light/40'}>
                           At least 8 characters
                         </span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
-                        <Check className={`h-4 w-4 ${/[A-Z]/.test(formData.password) ? 'text-primary' : 'text-light/40'}`} />
-                        <span className={/[A-Z]/.test(formData.password) ? 'text-light' : 'text-light/40'}>
+                        <Check className={`h-4 w-4 ${passwordRequirements.hasUppercase ? 'text-primary' : 'text-light/40'}`} />
+                        <span className={passwordRequirements.hasUppercase ? 'text-light' : 'text-light/40'}>
                           One uppercase letter
                         </span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
-                        <Check className={`h-4 w-4 ${/\d/.test(formData.password) ? 'text-primary' : 'text-light/40'}`} />
-                        <span className={/\d/.test(formData.password) ? 'text-light' : 'text-light/40'}>
+                        <Check className={`h-4 w-4 ${passwordRequirements.hasLowercase ? 'text-primary' : 'text-light/40'}`} />
+                        <span className={passwordRequirements.hasLowercase ? 'text-light' : 'text-light/40'}>
+                          One lowercase letter
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Check className={`h-4 w-4 ${passwordRequirements.hasNumber ? 'text-primary' : 'text-light/40'}`} />
+                        <span className={passwordRequirements.hasNumber ? 'text-light' : 'text-light/40'}>
                           One number
                         </span>
                       </div>
+                      <div className="flex items-center gap-2 text-sm">
+                        <Check className={`h-4 w-4 ${passwordRequirements.hasSpecialChar ? 'text-primary' : 'text-light/40'}`} />
+                        <span className={passwordRequirements.hasSpecialChar ? 'text-light' : 'text-light/40'}>
+                          One special character (!@#$%^&*...)
+                        </span>
+                      </div>
                     </div>
+                    
+                    {/* Feedback from zxcvbn */}
+                    {(passwordResult.feedback.warning || passwordResult.feedback.suggestions.length > 0) && (
+                      <div className="p-2 bg-dark-200/50 rounded-md">
+                        {passwordResult.feedback.warning && (
+                          <div className="flex items-start gap-2 mb-1">
+                            <AlertCircle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
+                            <p className="text-sm text-orange-200">{passwordResult.feedback.warning}</p>
+                          </div>
+                        )}
+                        {passwordResult.feedback.suggestions.length > 0 && (
+                          <div className="flex items-start gap-2">
+                            <Info className="h-4 w-4 text-light/60 flex-shrink-0 mt-0.5" />
+                            <div className="text-sm text-light/60">
+                              {passwordResult.feedback.suggestions.map((suggestion, index) => (
+                                <p key={index}>{suggestion}</p>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>

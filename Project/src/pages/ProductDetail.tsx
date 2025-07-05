@@ -1,331 +1,407 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { supabase } from '../lib/supabaseClient';
-import { SiteVisitForm } from '../components/SiteVisitForm';
-import { Button } from '../components/Button';
 import { 
-  Sun, Battery, Shield, ArrowRight, ArrowLeft,
-  IndianRupee, Clock, CheckCircle2, Power,
-  CircuitBoard, Zap, HomeIcon, X
+  ShieldCheck, 
+  Sun, 
+  Zap, 
+  Home, 
+  Clock, 
+  ChevronRight,
+  Check,
+  Info,
+  Leaf,
+  Wallet
 } from 'lucide-react';
+import { products, Product } from '../data/products';
 
-interface Product {
-  id: string;
-  name: string;
+
+// Variant type for capacity options
+interface ProductVariant {
+  capacity: string;
   capacity_kw: number;
-  generation: string;
-  area_required: number;
-  monthly_savings: number;
   price: number;
-  subsidy_amount?: number;
-  sku: string;
-  panel_type: string;
-  installation_time: string;
-  power: number;
-  image_url?: string;
-  description?: string;
+  subsidized_price: number;
+  monthly_savings: number;
+  daily_units: number;
+  area_required: number;
+  payback_period: number;
 }
 
-export default function ProductDetail() {
-  const { productId } = useParams<{ productId: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [isSiteVisitModalOpen, setIsSiteVisitModalOpen] = useState(false);
+// Generate variants based on product capacity
+const generateVariants = (product: Product): ProductVariant[] => {
+  const baseCapacity = parseFloat(product.capacity_kw || '3');
+  const basePrice = product.price || 100000;
   
-  useEffect(() => {
-    async function fetchProduct() {
-      setLoading(true);
-      try {
-        console.log('Fetching product with ID:', productId);
-      
-        if (productId) {
-          const { data, error } = await supabase
-            .from('product_skus')
-            .select('*')
-            .eq('id', productId)
-            .single();
-            
-          console.log('Supabase response:', { data, error });  
-            
-          if (data) {
-            console.log('Product data found:', data);
-            setProduct(data);
-          } else if (error) {
-            console.error('Error fetching product:', error);
-          } else {
-            console.warn('No product found and no error returned');
-          }
-        } else {
-          console.warn('No productId provided in URL params');
-        }
-      } catch (err) {
-        console.error('Exception in fetchProduct:', err);
-      } finally {
-        setLoading(false);
-      }
-    }
+  // Define standard residential capacities
+  const capacities = [1, 2, 3, 5, 10];
+  
+  return capacities.map(kw => {
+    const priceMultiplier = kw / baseCapacity;
+    const price = Math.round(basePrice * priceMultiplier);
+    const subsidyAmount = product.subsidy_amount || Math.round(price * 0.3);
+    const subsidized_price = price - subsidyAmount;
     
-    fetchProduct();
-  }, [productId]);
-  
-  const handleBookClick = () => {
-    setIsSiteVisitModalOpen(true);
-  };
-  
-  const handleCloseSiteVisit = () => {
-    setIsSiteVisitModalOpen(false);
-  };
-  
-  // SEO Optimization
-  useEffect(() => {
-    if (product) {
-      document.title = `${product.name} | Type 3 Solar`;
-      
-      // Update meta description
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute(
-          'content', 
-          `${product.capacity_kw}kW ${product.name} - ${product.description?.substring(0, 150) || 'High-efficiency solar system'}`
-        );
-      }
-    } else {
-      document.title = 'Solar Product | Type 3 Solar';
-    }
-    
-    return () => {
-      document.title = 'Type 3 Solar | Clean Energy Solutions';
+    return {
+      capacity: `${kw}kW`,
+      capacity_kw: kw,
+      price: price,
+      subsidized_price: subsidized_price,
+      monthly_savings: Math.round((product.monthly_savings || 3000) * (kw / baseCapacity)),
+      daily_units: kw * 4, // Assuming 4 units per kW per day
+      area_required: kw * 100, // Assuming 100 sq ft per kW
+      payback_period: Math.round(subsidized_price / (kw * 4 * 30 * 5)) // Simple payback calculation
     };
-  }, [product]);
+  });
+};
+
+const ProductDetail: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
+  const [selectedImageIndex] = useState(0);
+  const [showROICalculator, setShowROICalculator] = useState(false);
   
-  if (loading) return (
-    <div className="container mx-auto py-20 text-center">
-      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary mx-auto"></div>
-      <p className="text-light mt-4">Loading product details...</p>
-    </div>
-  );
+  // Find the product
+  const product = products.find(p => p.id === id);
   
-  if (!product) return (
-    <div className="container mx-auto py-20 text-center">
-      <h2 className="text-2xl font-bold text-light mb-4">Product not found</h2>
-      <Link to="/products" className="text-primary hover:underline">
-        Browse all products
-      </Link>
-    </div>
-  );
+  // Generate variants for the product
+  const variants = product ? generateVariants(product) : [];
+  
+  // Set default variant
+  useEffect(() => {
+    if (variants.length > 0 && !selectedVariant) {
+      // Select variant closest to product's base capacity
+      const baseCapacity = parseFloat(product?.capacity_kw || '3');
+      const defaultVariant = variants.reduce((prev, curr) => 
+        Math.abs(curr.capacity_kw - baseCapacity) < Math.abs(prev.capacity_kw - baseCapacity) ? curr : prev
+      );
+      setSelectedVariant(defaultVariant);
+    }
+  }, [variants, product, selectedVariant]);
+  
+  // Handle not found
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-dark flex items-center justify-center">
+        <div className="container mx-auto py-20 text-center">
+          <h2 className="text-2xl font-bold text-light mb-4">Product not found</h2>
+          <Link to="/products" className="text-primary hover:underline">
+            Browse all products
+          </Link>
+        </div>
+      </div>
+    );
+  }
+  
+  // Product images - use multiple if available, otherwise duplicate the main image
+  const productImages = product.images && product.images.length > 0 
+    ? product.images 
+    : [product.image_url, product.image_url, product.image_url].filter(Boolean);
+  
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+  
+  const calculateEMI = (principal: number, months: number = 60) => {
+    const rate = 0.08 / 12; // 8% annual rate
+    const emi = principal * rate * Math.pow(1 + rate, months) / (Math.pow(1 + rate, months) - 1);
+    return Math.round(emi);
+  };
 
   return (
-    <div className="min-h-screen bg-dark-950">
-      {/* Hero Section with Background Image */}
-      <div className="relative h-[50vh] sm:h-[60vh] w-full overflow-hidden">
-        <div className="absolute inset-0 bg-black/60 z-10"></div>
-        <img 
-          src={product.image_url || 'https://via.placeholder.com/1920x1080?text=No+Image'} 
-          alt={product.name}
-          className="w-full h-full object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark-950 to-transparent z-10"></div>
-        
-        {/* Navigation and Title Overlay */}
-        <div className="container mx-auto absolute inset-0 z-20 flex flex-col justify-end pb-12 px-4">
-          {/* Breadcrumb Navigation */}
-          <nav className="mb-6 text-light/80">
-            <ol className="flex flex-wrap items-center">
-              <li className="flex items-center">
-                <Link to="/" className="hover:text-primary transition-colors duration-300">
-                  <HomeIcon size={16} />
-                </Link>
-                <span className="mx-2">/</span>
-              </li>
-              <li className="flex items-center">
-                <Link to="/products" className="hover:text-primary transition-colors duration-300">
-                  Products
-                </Link>
-                <span className="mx-2">/</span>
-              </li>
-              <li className="text-light truncate max-w-[200px] sm:max-w-xs">
-                {product.name}
-              </li>
-            </ol>
+    <div className="min-h-screen bg-dark">
+      {/* Header with breadcrumb */}
+      <div className="bg-darker border-b border-gray-800">
+        <div className="container mx-auto px-4 py-4">
+          <nav className="flex items-center text-sm text-gray-400">
+            <Link to="/" className="hover:text-primary transition-colors">Home</Link>
+            <ChevronRight className="w-4 h-4 mx-2" />
+            <Link to="/products" className="hover:text-primary transition-colors">Products</Link>
+            <ChevronRight className="w-4 h-4 mx-2" />
+            <span className="text-light">{product.name}</span>
           </nav>
-          
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">{product.name}</h1>
-          <p className="text-xl text-light/90 max-w-2xl drop-shadow-md">{product.description || `Complete ${product.capacity_kw} kW solar system for residential use with high efficiency panels.`}</p>
         </div>
       </div>
       
-      {/* Main Content Area */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Left Column - Product Details */}
-          <div className="lg:col-span-2 space-y-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              
-              {/* Product Specs Grid */}
-              <div className="bg-dark-900/30 backdrop-blur-sm p-8 rounded-xl border border-white/5">
-                <h2 className="text-2xl font-bold text-white mb-6">System Specifications</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/10 rounded-lg">
-                      <Zap size={22} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-light/80 text-sm mb-1">Capacity</p>
-                      <p className="text-xl font-medium text-white">{product.capacity_kw} kW</p>
-                    </div>
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Image Gallery */}
+          <div className="space-y-4">
+            {/* Main Image */}
+            <div className="relative bg-darker rounded-xl overflow-hidden">
+              <div className="aspect-square">
+                <img 
+                  src={productImages[selectedImageIndex] || product.image_url} 
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/600x600?text=' + encodeURIComponent(product.name);
+                  }}
+                />
+              </div>
+              {/* Trust Badge */}
+              <div className="absolute top-4 right-4 bg-primary/20 backdrop-blur-sm rounded-lg px-3 py-2">
+                <div className="flex items-center gap-2 text-primary">
+                  <ShieldCheck className="w-4 h-4" />
+                  <span className="text-sm font-medium">{product.warranty_years || 25} Year Warranty</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          
+          {/* Product Details */}
+          <div className="space-y-6">
+            {/* Title and Description */}
+            <div>
+              <h1 className="text-3xl lg:text-4xl font-bold text-light mb-2">
+                {product.name}
+              </h1>
+              <p className="text-gray-400 text-lg">
+                {product.description || product.short_description || 
+                 `High-efficiency ${product.capacity || '3kW'} solar system perfect for ${product.useCase?.toLowerCase() || 'residential'} use.`}
+              </p>
+            </div>
+            
+
+            
+            {/* Price Section */}
+            {selectedVariant && (
+              <div className="bg-darker rounded-xl p-6 space-y-4">
+                <div>
+                  <div className="flex items-baseline gap-3 mb-2">
+                    <span className="text-3xl font-bold text-light">
+                      {formatCurrency(selectedVariant.subsidized_price)}
+                    </span>
+                    <span className="text-xl text-gray-500 line-through">
+                      {formatCurrency(selectedVariant.price)}
+                    </span>
+                    <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded text-sm font-medium">
+                      Save {Math.round(((selectedVariant.price - selectedVariant.subsidized_price) / selectedVariant.price) * 100)}%
+                    </span>
                   </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/10 rounded-lg">
-                      <Sun size={22} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-light/80 text-sm mb-1">Generation</p>
-                      <p className="text-xl font-medium text-white">{product.generation || '1st Generation'}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/10 rounded-lg">
-                      <HomeIcon size={22} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-light/80 text-sm mb-1">Area Required</p>
-                      <p className="text-xl font-medium text-white">{product.area_required || 100} sq.ft</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/10 rounded-lg">
-                      <IndianRupee size={22} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-light/80 text-sm mb-1">Monthly Savings</p>
-                      <p className="text-xl font-medium text-white">₹{product.monthly_savings?.toLocaleString() || '1,250'}/mo</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/10 rounded-lg">
-                      <CircuitBoard size={22} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-light/80 text-sm mb-1">Panel Type</p>
-                      <p className="text-xl font-medium text-white">{product.panel_type || 'monocrystalline'}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/10 rounded-lg">
-                      <Clock size={22} className="text-primary" />
-                    </div>
-                    <div>
-                      <p className="text-light/80 text-sm mb-1">Installation</p>
-                      <p className="text-xl font-medium text-white">{product.installation_time || '1-2'} days</p>
-                    </div>
-                  </div>
+                  <p className="text-gray-400 text-sm">
+                    After government subsidy of {formatCurrency(selectedVariant.price - selectedVariant.subsidized_price)}
+                  </p>
                 </div>
                 
-                {/* Price and CTA */}
-                <div className="mt-auto pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-                  <div>
-                    <div className="flex items-baseline gap-2">
-                      <p className="text-lg line-through text-light/40">₹{product.price.toLocaleString()}</p>
-                      <span className="text-sm font-medium text-primary">
-                        {Math.round((product.subsidy_amount || 0) / product.price * 100)}% off
-                      </span>
-                    </div>
-                    <p className="text-2xl sm:text-3xl font-bold text-light">
-                      ₹{(product.price - (product.subsidy_amount || 0)).toLocaleString()}
-                    </p>
-                    <p className="text-sm text-light/60">Price after government subsidy</p>
-                  </div>
-                  
-                  <Button 
-                    variant="primary" 
-                    size="md" 
-                    radius="lg" 
-                    onClick={handleBookClick}
-                    className="w-full md:w-auto py-3 px-6 md:min-w-[170px]"
-                  >
-                    <span className="relative z-10 flex items-center justify-between w-full">
-                      <span className="text-dark font-medium" style={{ textTransform: 'none', letterSpacing: '-0.02em' }}>Book Site Visit</span>
-                      <Clock className="h-5 w-5 text-dark" />
+                <div className="border-t border-gray-700 pt-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-gray-400">EMI starts at</span>
+                    <span className="text-light font-medium">
+                      {formatCurrency(calculateEMI(selectedVariant.subsidized_price))}/month
                     </span>
-                  </Button>
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    *For 5 year tenure at 8% interest rate
+                  </p>
                 </div>
               </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-      
-      {/* ROI Estimator Section */}
-      <div className="container mx-auto px-4 py-12 bg-dark-900/20 border-t border-b border-white/5">
-        <h2 className="text-3xl font-bold text-white text-center mb-12">Return on Investment</h2>
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <div className="bg-dark-900/30 backdrop-blur-sm p-6 rounded-xl border border-white/5 text-center">
-            <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-              <IndianRupee size={28} className="text-primary" />
-            </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Monthly Savings</h3>
-            <p className="text-3xl font-bold text-primary">₹{product.monthly_savings?.toLocaleString() || '1,250'}</p>
-          </div>
-          
-          <div className="bg-dark-900/30 backdrop-blur-sm p-6 rounded-xl border border-white/5 text-center">
-            <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-              <Clock size={28} className="text-primary" />
-            </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Payback Period</h3>
-            <p className="text-3xl font-bold text-primary">{Math.round(((product.price || 45000) - (product.subsidy_amount || 30000)) / (product.monthly_savings || 1250) / 12)} years</p>
-          </div>
-          
-          <div className="bg-dark-900/30 backdrop-blur-sm p-6 rounded-xl border border-white/5 text-center">
-            <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-              <Sun size={28} className="text-primary" />
-            </div>
-            <h3 className="text-xl font-semibold text-white mb-2">25-Year Savings</h3>
-            <p className="text-3xl font-bold text-primary">₹{((product.monthly_savings || 1250) * 12 * 25).toLocaleString()}</p>
-          </div>
-        </div>
-      </div>
-      
-      {/* Site Visit Modal */}
-      {isSiteVisitModalOpen && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
-          <div 
-            className="bg-dark-900/90 backdrop-blur-xl rounded-2xl max-w-2xl w-full overflow-hidden border border-white/10"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-light">Book a Site Visit</h3>
-                <button 
-                  onClick={handleCloseSiteVisit}
-                  className="p-2 text-light/60 hover:text-primary transition-colors duration-300"
-                >
-                  <X size={24} />
-                </button>
+            )}
+            
+            {/* Key Features */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex items-start gap-3">
+                <div className="bg-primary/20 rounded-lg p-2">
+                  <Zap className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-light font-medium">Daily Generation</p>
+                  <p className="text-gray-400 text-sm">
+                    {selectedVariant?.daily_units || 12} units/day
+                  </p>
+                </div>
               </div>
               
-              <SiteVisitForm
-                isOpen={isSiteVisitModalOpen}
-                onClose={handleCloseSiteVisit}
-                productSku={product.sku}
-                productName={product.name}
-                productPower={product.capacity_kw}
-                price={(product.price || 0) - (product.subsidy_amount || 0)}
-                installationTime={product.installation_time || '7-10 days'}
-              />
+              <div className="flex items-start gap-3">
+                <div className="bg-primary/20 rounded-lg p-2">
+                  <Wallet className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-light font-medium">Monthly Savings</p>
+                  <p className="text-gray-400 text-sm">
+                    {formatCurrency(selectedVariant?.monthly_savings || 3000)}
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="bg-primary/20 rounded-lg p-2">
+                  <Home className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-light font-medium">Area Required</p>
+                  <p className="text-gray-400 text-sm">
+                    {selectedVariant?.area_required || 300} sq.ft
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="bg-primary/20 rounded-lg p-2">
+                  <Clock className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="text-light font-medium">Installation Time</p>
+                  <p className="text-gray-400 text-sm">
+                    {product.installation_time || '3-4 days'}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            {/* CTA Buttons */}
+            <div className="space-y-3">
+
+              
+              <button 
+                onClick={() => setShowROICalculator(true)}
+                className="w-full bg-darker border border-gray-700 text-light px-6 py-3 rounded-lg font-medium hover:border-gray-600 transition-all flex items-center justify-center gap-2"
+              >
+                Calculate Your Savings
+                <Info className="w-4 h-4" />
+              </button>
+            </div>
+            
+            {/* Trust Indicators */}
+            <div className="border-t border-gray-700 pt-6">
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <ShieldCheck className="w-8 h-8 text-primary mx-auto mb-2" />
+                  <p className="text-sm text-gray-400">25 Year Warranty</p>
+                </div>
+                <div>
+                  <Sun className="w-8 h-8 text-primary mx-auto mb-2" />
+                  <p className="text-sm text-gray-400">Premium Panels</p>
+                </div>
+                <div>
+                  <Leaf className="w-8 h-8 text-primary mx-auto mb-2" />
+                  <p className="text-sm text-gray-400">Eco Friendly</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      )}
+        
+        {/* Product Features Section */}
+        {product.features && product.features.length > 0 && (
+          <div className="mt-12 bg-darker rounded-xl p-8">
+            <h2 className="text-2xl font-bold text-light mb-6">Product Features</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {product.features.map((feature, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Technical Specifications */}
+        <div className="mt-8 bg-darker rounded-xl p-8">
+          <h2 className="text-2xl font-bold text-light mb-6">Technical Specifications</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-lg font-semibold text-primary mb-4">System Details</h3>
+              <dl className="space-y-3">
+                <div className="flex justify-between">
+                  <dt className="text-gray-400">System Type</dt>
+                  <dd className="text-light font-medium">{product.product_type?.replace('-', ' ').toUpperCase() || 'On-Grid'}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-gray-400">Capacity</dt>
+                  <dd className="text-light font-medium">{selectedVariant?.capacity || product.capacity}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-gray-400">Daily Generation</dt>
+                  <dd className="text-light font-medium">{selectedVariant?.daily_units || 12} units</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-gray-400">Annual Generation</dt>
+                  <dd className="text-light font-medium">{(selectedVariant?.daily_units || 12) * 365} units</dd>
+                </div>
+              </dl>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-semibold text-primary mb-4">Installation Requirements</h3>
+              <dl className="space-y-3">
+                <div className="flex justify-between">
+                  <dt className="text-gray-400">Roof Area Required</dt>
+                  <dd className="text-light font-medium">{selectedVariant?.area_required || 300} sq.ft</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-gray-400">Installation Time</dt>
+                  <dd className="text-light font-medium">{product.installation_time || '3-4 days'}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-gray-400">Suitable For</dt>
+                  <dd className="text-light font-medium">{product.useCase || 'Residential'}</dd>
+                </div>
+                <div className="flex justify-between">
+                  <dt className="text-gray-400">Warranty Period</dt>
+                  <dd className="text-light font-medium">{product.warranty_years || 25} Years</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+        
+        {/* ROI Calculator Modal */}
+        {showROICalculator && selectedVariant && (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-darker rounded-xl p-6 max-w-md w-full">
+              <h3 className="text-xl font-bold text-light mb-4">ROI Calculator</h3>
+              
+              <div className="space-y-4">
+                <div className="bg-dark rounded-lg p-4">
+                  <p className="text-gray-400 text-sm mb-1">Total Investment</p>
+                  <p className="text-2xl font-bold text-light">
+                    {formatCurrency(selectedVariant.subsidized_price)}
+                  </p>
+                </div>
+                
+                <div className="bg-dark rounded-lg p-4">
+                  <p className="text-gray-400 text-sm mb-1">Monthly Savings</p>
+                  <p className="text-2xl font-bold text-primary">
+                    {formatCurrency(selectedVariant.monthly_savings)}
+                  </p>
+                </div>
+                
+                <div className="bg-dark rounded-lg p-4">
+                  <p className="text-gray-400 text-sm mb-1">Payback Period</p>
+                  <p className="text-2xl font-bold text-light">
+                    {selectedVariant.payback_period} Years
+                  </p>
+                </div>
+                
+                <div className="bg-dark rounded-lg p-4">
+                  <p className="text-gray-400 text-sm mb-1">25 Year Savings</p>
+                  <p className="text-2xl font-bold text-green-400">
+                    {formatCurrency(selectedVariant.monthly_savings * 12 * 25)}
+                  </p>
+                </div>
+              </div>
+              
+              <button 
+                onClick={() => setShowROICalculator(false)}
+                className="mt-6 w-full bg-primary text-dark px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors"
+              >
+                Close Calculator
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+      
+
     </div>
   );
-}
+};
+
+export default ProductDetail;

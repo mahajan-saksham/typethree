@@ -1,0 +1,23 @@
+{
+  "projectName": "Type 3 Solar Platform",
+  "defaultBranch": "main",
+  "branches": ["develop", "feature", "hotfix"],
+  "taskCategories": [
+    "Development",
+    "Design", 
+    "Product Management",
+    "Operations",
+    "Marketing",
+    "Sales"
+  ],
+  "integrations": {
+    "supabase": {
+      "enabled": true,
+      "projectId": "type-3-solar"
+    },
+    "git": {
+      "enabled": true,
+      "autoCommit": false
+    }
+  }
+}

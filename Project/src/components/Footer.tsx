@@ -54,7 +54,7 @@ export function Footer() {
               <li className="text-light/60">6/3 South Harsiddhi</li>
               <li className="text-light/60">Indore, MP – 452002</li>
               <li className="text-light/60">hello@type3.energy</li>
-              <li className="text-light/60">+91 7995657936</li>
+              <li className="text-light/60">+91 8095508066</li>
             </ul>
           </div>
 

@@ -112,7 +112,7 @@ export function ContactAndAbout() {
                   </div>
                   <div>
                     <h3 className="text-lg font-medium text-light/80 mb-0.5">Phone</h3>
-                    <p className="text-light/60">+91-7995657936</p>
+                    <p className="text-light/60">+91-8095508066</p>
                   </div>
                 </div>
                 
@@ -163,7 +163,7 @@ export function ContactAndAbout() {
               {/* Replace form with Contact Us button */}
               <div className="flex justify-center mt-8">
                 <a
-                  href="tel:+917995657936"
+                  href="tel:+918095508066"
                   role="button"
                   tabIndex={0}
                   className="w-full bg-primary hover:bg-primary/90 text-dark font-medium rounded-lg p-4 flex items-center justify-center transition-colors"

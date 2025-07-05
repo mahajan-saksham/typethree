@@ -1,0 +1,154 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Set Up Product Detail Page Component",
+      "status": "pending",
+      "priority": "high",
+      "description": "Create a standalone ProductDetail page component to replace the current popup modal implementation.",
+      "details": "Create a new component at /pages/ProductDetail.tsx that will display detailed product information in a full-page layout rather than a popup. The component should fetch product data based on URL parameters and display complete product information in a responsive layout. Include all the current functionality from the popup but with a better user experience and SEO benefits.",
+      "dependencies": [],
+      "test_strategy": "Verify the component renders correctly with valid product data. Test responsive behavior across different screen sizes. Check that all product information is displayed correctly."
+    },
+    {
+      "id": "2",
+      "title": "Update Routing Configuration",
+      "status": "pending",
+      "priority": "high",
+      "description": "Add a new route in App.tsx for the standalone product detail pages.",
+      "details": "Add a new route in App.tsx with the pattern: '/products/:productId' that renders the ProductDetail component. Ensure proper routing and navigation between pages.",
+      "dependencies": ["1"],
+      "test_strategy": "Verify route works with different product IDs. Test navigation to and from product detail pages."
+    },
+    {
+      "id": "3",
+      "title": "Update Product Links in Products Page",
+      "status": "pending",
+      "priority": "high",
+      "description": "Update product card links in the Products page to point to the new detail pages instead of opening the popup.",
+      "details": "In the Products.tsx component, update the onClick handlers for product cards to use navigation with the new URL pattern (/products/:productId) instead of opening the modal.",
+      "dependencies": ["1", "2"],
+      "test_strategy": "Click on product cards and verify they navigate to the correct product detail page. Verify URL pattern is correct."
+    },
+    {
+      "id": "4",
+      "title": "Update Product Links in Home Page",
+      "status": "pending",
+      "priority": "high",
+      "description": "Update 'View Details' links on the home page to use the new route structure.",
+      "details": "Find all instances of product links on the Home.tsx page and update them to use the new URL pattern (/products/:productId).",
+      "dependencies": ["1", "2"],
+      "test_strategy": "Click on product links from the home page and verify they navigate to the correct product detail page."
+    },
+    {
+      "id": "5",
+      "title": "Implement SEO Optimization for Product Pages",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Add dynamic SEO metadata to product detail pages for better search engine indexing.",
+      "details": "Implement dynamic title, meta description, and other SEO elements based on product data. Use product name, category, and key specifications to create unique and descriptive metadata for each product.",
+      "dependencies": ["1"],
+      "test_strategy": "Inspect page source to verify SEO tags are being properly populated with product-specific information."
+    },
+    {
+      "id": "6",
+      "title": "Implement Breadcrumb Navigation",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Add breadcrumb navigation to product detail pages for better user navigation.",
+      "details": "Create a Breadcrumb component that shows the navigation path: Home > Products > [Category] > [Product Name]. Make sure it's responsive and matches the overall site design.",
+      "dependencies": ["1"],
+      "test_strategy": "Verify breadcrumb displays correct path. Test clicking on breadcrumb links navigates to correct pages."
+    },
+    {
+      "id": "7",
+      "title": "Enhance Product Variants Display",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Improve the display of product variants on the product detail page.",
+      "details": "Create a component to display different capacity variants of a product. Allow users to select different variants and update the displayed specifications and pricing accordingly. Ensure the component works with the existing product_variants table in the database.",
+      "dependencies": ["1"],
+      "test_strategy": "Test variant selection updates all relevant information correctly. Verify all variant data is displayed properly."
+    },
+    {
+      "id": "8",
+      "title": "Implement Technical Specifications Section",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Create a detailed technical specifications section on the product detail page.",
+      "details": "Design and implement a section that displays all technical specifications of a product in an organized and readable format. Consider using tabs or accordion components for better organization of information.",
+      "dependencies": ["1"],
+      "test_strategy": "Verify all specifications are displayed correctly. Test responsive behavior of the specifications section."
+    },
+    {
+      "id": "9",
+      "title": "Integrate Consultation Booking Form",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Integrate the SiteVisitForm component into the product detail page.",
+      "details": "Add the existing SiteVisitForm component to the product detail page for consultation booking. Pre-fill the form with the current product information when possible.",
+      "dependencies": ["1"],
+      "test_strategy": "Test form submission and validation. Verify product information is pre-filled correctly."
+    },
+    {
+      "id": "10",
+      "title": "Responsive Design Implementation",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Ensure the product detail page is fully responsive across all device sizes.",
+      "details": "Implement responsive design for the product detail page using TailwindCSS breakpoints. Ensure all components adjust correctly for mobile, tablet, and desktop views.",
+      "dependencies": ["1"],
+      "test_strategy": "Test on multiple screen sizes and devices. Verify all elements display correctly at each breakpoint."
+    },
+    {
+      "id": "11",
+      "title": "Add Product Images Gallery",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Create an image gallery component for displaying multiple product images.",
+      "details": "Implement a responsive image gallery that supports multiple product images. Include features like image zoom, thumbnail navigation, and full-screen view.",
+      "dependencies": ["1"],
+      "test_strategy": "Test gallery navigation controls. Verify images load correctly and responsive behavior works as expected."
+    },
+    {
+      "id": "12",
+      "title": "Implement Price and Subsidy Display",
+      "status": "pending",
+      "priority": "medium",
+      "description": "Create a component to display product pricing with subsidy calculations.",
+      "details": "Design and implement a component that clearly shows the original price, applicable subsidy, and final price after subsidy. Include visual elements to highlight the savings.",
+      "dependencies": ["1"],
+      "test_strategy": "Verify price calculations are correct. Test with different subsidy percentages to ensure correct display."
+    },
+    {
+      "id": "13",
+      "title": "Add Related Products Section",
+      "status": "pending",
+      "priority": "low",
+      "description": "Create a section to display related products based on category or specifications.",
+      "details": "Implement a component that fetches and displays products related to the currently viewed product. Base the relationship on product category or similar specifications. Display as a horizontal scrollable list of product cards.",
+      "dependencies": ["1"],
+      "test_strategy": "Verify related products are relevant to the current product. Test scrolling behavior and navigation to related products."
+    },
+    {
+      "id": "14",
+      "title": "Implement Smooth Transitions and Animations",
+      "status": "pending",
+      "priority": "low",
+      "description": "Add Framer Motion animations for smooth page transitions and UI interactions.",
+      "details": "Use Framer Motion to implement smooth transitions when loading the product detail page. Add subtle animations for interactive elements to enhance user experience.",
+      "dependencies": ["1"],
+      "test_strategy": "Verify animations work correctly across browsers. Test performance impact of animations."
+    },
+    {
+      "id": "15",
+      "title": "Add Product Comparison Feature",
+      "status": "pending",
+      "priority": "low",
+      "description": "Implement a feature to compare the current product with other similar products.",
+      "details": "Create a component that allows users to add the current product to a comparison list and view a side-by-side comparison with other selected products. Focus on comparing key specifications and pricing.",
+      "dependencies": ["1"],
+      "test_strategy": "Test adding/removing products from comparison. Verify comparison data is displayed correctly."
+    }
+  ]
+}

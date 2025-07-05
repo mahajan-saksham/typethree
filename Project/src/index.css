@@ -2,6 +2,7 @@
 
 /* Import spacing system */
 @import './styles/spacing.css';
+@import './styles/typography.css';
 
 @tailwind base;
 @tailwind components;
@@ -47,47 +48,41 @@
 
   /* Heading Styles */
   h1, .h1 {
-    @apply text-4xl sm:text-4xl md:text-5xl font-heading font-bold tracking-tightest;
-    font-family: var(--font-heading);
+    @apply text-4xl sm:text-4xl md:text-5xl font-satoshi font-bold tracking-tightest;
     color: var(--color-text-primary);
     line-height: 1.1;
     margin-bottom: 1.5rem;
   }
   
   h2, .h2 {
-    @apply text-3xl sm:text-3xl md:text-4xl font-heading font-bold tracking-tight;
-    font-family: var(--font-heading);
+    @apply text-3xl sm:text-3xl md:text-4xl font-satoshi font-bold tracking-tight;
     color: var(--color-text-primary);
     line-height: 1.15;
     margin-bottom: 1.25rem;
   }
   
   h3, .h3 {
-    @apply text-2xl sm:text-2xl md:text-3xl font-heading font-semibold;
-    font-family: var(--font-heading);
+    @apply text-2xl sm:text-2xl md:text-3xl font-satoshi font-semibold;
     color: var(--color-text-primary);
     line-height: 1.2;
     margin-bottom: 1rem;
   }
   h4, .h4 {
-    @apply text-xl sm:text-xl md:text-2xl font-heading font-semibold;
-    font-family: var(--font-heading);
+    @apply text-xl sm:text-xl md:text-2xl font-satoshi font-semibold;
     color: var(--color-text-primary);
     line-height: 1.25;
     margin-bottom: 0.75rem;
   }
   
   h5, .h5 {
-    @apply text-lg sm:text-lg md:text-xl font-heading font-semibold;
-    font-family: var(--font-heading);
+    @apply text-lg sm:text-lg md:text-xl font-satoshi font-semibold;
     color: var(--color-text-primary);
     line-height: 1.3;
     margin-bottom: 0.5rem;
   }
   
   h6, .h6 {
-    @apply text-base sm:text-base md:text-lg font-heading font-semibold;
-    font-family: var(--font-heading);
+    @apply text-base sm:text-base md:text-lg font-satoshi font-semibold;
     color: var(--color-text-primary);
     line-height: 1.3;
     margin-bottom: 0.5rem;
@@ -95,36 +90,34 @@
 
   /* Body Text Styles */
   p, .body1 {
-    @apply text-base sm:text-base md:text-lg font-body font-normal;
-    font-family: var(--font-body);
+    @apply text-base sm:text-base md:text-lg font-inter font-normal;
     color: var(--color-text-secondary);
     line-height: 1.5;
     margin-bottom: 1rem;
   }
   
   .body2 {
-    @apply text-base font-body font-normal;
-    font-family: var(--font-body);
+    @apply text-base font-inter font-normal;
     color: var(--color-text-secondary);
     line-height: 1.5;
     margin-bottom: 1rem;
   }
   
   .caption {
-    @apply text-sm font-body font-normal;
+    @apply text-sm font-inter font-normal;
     color: var(--color-text-tertiary);
     line-height: 1.3;
   }
   
   .legal, .footer-text {
-    @apply text-xs font-body font-light;
+    @apply text-xs font-inter font-light;
     color: var(--color-text-legal);
     line-height: 1.3;
   }
 
   /* Special Text Styles */
   .button-text {
-    @apply uppercase font-heading font-medium tracking-wide;
+    @apply uppercase font-satoshi font-medium tracking-wide;
     letter-spacing: 0.05em;
   }
   

@@ -1,0 +1,10 @@
+# MCP Shrimp Task Manager Environment Variables Configuration
+
+# Task data storage directory (absolute path)
+DATA_DIR=/Users/sakshammahajan/Documents/type 3/tasks
+
+# Set Templates
+TEMPLATES_USE=en
+
+# Enable GUI interface
+ENABLE_GUI=true

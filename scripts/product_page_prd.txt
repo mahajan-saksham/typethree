@@ -1,0 +1,102 @@
+# Product Page Redesign - Type 3 Solar Platform
+
+## Overview
+This document outlines the requirements for redesigning the `/products` page of the Type 3 Solar Platform. The goal is to create a clean, premium, and conversion-optimized product catalog that showcases rooftop solar SKUs with a focus on simplicity and strong WhatsApp CTAs.
+
+## Goals and Objectives
+- Replace the existing complex product page with a simplified, visually appealing design
+- Focus on clear presentation of key product information
+- Optimize for conversions through prominent WhatsApp CTAs
+- Ensure responsive design for all device types
+- Streamline the user journey to encourage direct engagement
+
+## Page Layout
+- Implement a responsive card grid layout:
+  - Mobile: 1 column
+  - Tablet: 2 columns
+  - Desktop: 3 columns
+- Design visually distinct product cards with elevation (soft shadows/borders)
+- Ensure cards are interactive primarily through the WhatsApp CTA
+
+## Product Card Requirements
+Each product card must include:
+1. **Product Name** - Bold, large, top center (e.g., "5 kW Premium Home Solution")
+2. **Capacity** - Clear indication of system size
+3. **Estimated Daily Output** - Generation capacity in kWh/units
+4. **Net Price Range** - Price after subsidy where applicable
+5. **MNRE Subsidy Badge** - Visual indicator for subsidy eligibility
+6. **Features** - Maximum 3 bullet points with key product features
+7. **Use Case Tag** - Visual badge for market segment (Residential/Commercial/Industrial)
+8. **CTA Button** - WhatsApp button in brand color (#CCFF00) on black background
+
+## Product SKUs
+Implement the following 5 specific product offerings:
+1. **1 kW Smart Starter Kit**
+   - For small homes
+   - ₹35,000 – ₹55,000 after subsidy  
+   - Est. Gen: 4 units/day
+   - Residential use case
+   
+2. **3 kW Family Saver Pack**
+   - For mid-sized families  
+   - ₹1.02 – ₹1.37 Lakh  
+   - Est. Gen: 12 units/day
+   - Residential use case
+   
+3. **5 kW Premium Home Solution**
+   - Large homes / villas  
+   - ₹2.37 – ₹2.79 Lakh  
+   - Est. Gen: 20 units/day
+   - Residential use case
+   
+4. **10 kW Commercial Starter Pack**
+   - Small businesses  
+   - ₹4.53 – ₹5.29 Lakh  
+   - Est. Gen: 40 units/day
+   - Commercial use case
+   
+5. **25 kW Industrial Solar Solution**
+   - For factories / warehouses  
+   - ₹12.5 – ₹13.75 Lakh (no subsidy)  
+   - Est. Gen: 100 units/day
+   - Industrial use case
+
+## WhatsApp Integration
+- Implement direct WhatsApp linking with pre-filled text:
+  `https://wa.me/91XXXXXXXXXX?text=Hi%20Team%20Type3,%20I%27m%20interested%20in%20the%20[PRODUCT_NAME]%20solar%20solution.`
+- Open WhatsApp in new tab (`target="_blank"`)
+- Dynamically insert the product name in the message template
+
+## UI Styling Guidelines
+- Section background: `#0f0f0f` or clean white with neutral shadows
+- Typography: 
+  - `Satoshi` for titles
+  - `Inter` for body text
+- Feature bullets: Include subtle icons, well-spaced
+- Color-coded badges for use cases:
+  - Residential = `#CCFF00`  
+  - Commercial = `#00D4FF`  
+  - Industrial = `#FF7E36`
+
+## Mobile Optimizations
+- Implement larger tap targets for WhatsApp buttons
+- Collapse features on smaller screens (width < 360px)
+- Add horizontal swipe functionality for small devices
+
+## Optional Enhancements
+- Filtering by use case (Residential/Commercial/Industrial)
+- ROI calculator above product listings
+- Image lazy loading for performance
+
+## Success Criteria
+- Clean, premium visual design
+- Clear presentation of all required product information
+- Functional WhatsApp CTAs with correct pre-filled messages
+- Fully responsive across all breakpoints
+- Improved page load performance
+
+## Technical Implementation Notes
+- Update React component structure to use modern patterns
+- Implement Tailwind CSS for styling
+- Use static product data (no dynamic fetching required for initial implementation)
+- Ensure accessibility compliance

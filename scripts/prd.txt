@@ -1,0 +1,55 @@
+# Task Master Integration for Type 3 Solar Platform
+
+## Project Overview
+Integrate the MCP Shrimp Task Manager into the Type 3 Solar Platform to enhance project management, task tracking, and team collaboration.
+
+## Key Objectives
+1. Seamlessly integrate Task Master into our existing project infrastructure
+2. Enable comprehensive task management for development, design, and operational teams
+3. Provide a centralized system for tracking project progress
+4. Support agile workflow and project transparency
+
+## Core Requirements
+
+### Technical Integration
+- Install Task Master CLI and dependencies
+- Configure project-specific task management settings
+- Set up initial project structure
+- Create custom task templates for solar platform development
+
+### Workflow Implementation
+- Define task categories:
+  * Development
+  * Design
+  * Product Management
+  * Operations
+  * Marketing
+  * Sales
+
+### Features to Implement
+1. Task Creation Workflows
+2. Dependency Tracking
+3. Status Management
+4. Reporting and Analytics
+5. Team Collaboration Tools
+
+### Development Constraints
+- Must work with existing React + TypeScript stack
+- Integrate with Supabase authentication
+- Maintain existing project directory structure
+- Minimize performance overhead
+
+### Deployment Considerations
+- Local development setup
+- CI/CD integration
+- Environment-specific configurations
+
+## Success Criteria
+- 100% task tracking coverage
+- Intuitive user interface
+- Minimal disruption to existing workflows
+- Enhanced team productivity and transparency
+
+## Out of Scope
+- Complete replacement of existing communication tools
+- Advanced project accounting features
