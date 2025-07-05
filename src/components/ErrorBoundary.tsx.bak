@@ -1,0 +1,46 @@
+import React from 'react';
+
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  state: ErrorBoundaryState = { hasError: false, error: null };
+  
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+  
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo);
+  }
+  
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-[#0A0A0A] text-light p-4">
+          <h2 className="text-2xl font-bold text-[#CCFF00] mb-4">Something went wrong</h2>
+          <p className="mb-4">We're sorry, but there was an error loading this page.</p>
+          <pre className="bg-black/30 p-4 rounded mb-4 max-w-full overflow-auto text-sm text-red-400">
+            {this.state.error ? this.state.error.message : 'An unknown error occurred'}
+          </pre>
+          <button 
+            onClick={() => window.location.href = '/'} 
+            className="px-4 py-2 bg-[#CCFF00] text-[#0A0A0A] font-medium rounded hover:bg-[#CCFF00]/80"
+          >
+            Go to Homepage
+          </button>
+        </div>
+      );
+    }
+    
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;

@@ -1,0 +1,211 @@
+/* Type 3 Solar Platform - Spacing System
+ * Based on 8pt grid system
+ */
+
+:root {
+  /* Base spacing tokens */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Component-specific spacing */
+  --card-padding-mobile: var(--space-4);
+  --card-padding-desktop: var(--space-6);
+  --section-gap-mobile: var(--space-8);
+  --section-gap-desktop: var(--space-12);
+  --container-padding-mobile: var(--space-4);
+  --container-padding-tablet: var(--space-8);
+  --container-padding-desktop: var(--space-16);
+  
+  /* Typography rhythm */
+  --heading-paragraph-gap: var(--space-4);
+  --paragraph-paragraph-gap: var(--space-4);
+  --caption-paragraph-gap: var(--space-2);
+  
+  /* Form spacing */
+  --label-input-gap: var(--space-2);
+  --input-help-gap: var(--space-1);
+  --field-field-gap: var(--space-4);
+  --form-block-gap: var(--space-6);
+  
+  /* Navigation spacing */
+  --navbar-padding-y-mobile: var(--space-3);
+  --navbar-padding-x-mobile: var(--space-4);
+  --navbar-padding-y-desktop: var(--space-4);
+  --navbar-padding-x-desktop: var(--space-8);
+  --sidebar-link-padding-y: var(--space-2);
+  --sidebar-link-padding-x: var(--space-4);
+  --footer-section-gap: var(--space-8);
+  --footer-margin-top: var(--space-12);
+  
+  /* Modal spacing */
+  --modal-padding: var(--space-6);
+  --modal-title-content-gap: var(--space-4);
+  --modal-content-cta-gap: var(--space-6);
+}
+
+/* Layout & Containers */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding-mobile);
+  padding-right: var(--container-padding-mobile);
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: var(--container-padding-tablet);
+    padding-right: var(--container-padding-tablet);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: var(--container-padding-desktop);
+    padding-right: var(--container-padding-desktop);
+  }
+}
+
+/* Section spacing */
+.section {
+  padding-top: var(--section-gap-mobile);
+  padding-bottom: var(--section-gap-mobile);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-top: var(--section-gap-desktop);
+    padding-bottom: var(--section-gap-desktop);
+  }
+}
+
+/* Card spacing */
+.card {
+  padding: var(--card-padding-mobile);
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: var(--card-padding-desktop);
+  }
+}
+
+.card-title {
+  margin-bottom: var(--space-3);
+}
+
+.card-content {
+  margin-bottom: var(--space-4);
+}
+
+.card-footer {
+  margin-top: var(--space-4);
+}
+
+/* Form spacing */
+.form-label {
+  margin-bottom: var(--label-input-gap);
+}
+
+.form-help-text {
+  margin-top: var(--input-help-gap);
+}
+
+.form-field {
+  margin-bottom: var(--field-field-gap);
+}
+
+.form-block {
+  margin-top: var(--form-block-gap);
+}
+
+/* Navigation spacing */
+.navbar {
+  padding-top: var(--navbar-padding-y-mobile);
+  padding-bottom: var(--navbar-padding-y-mobile);
+  padding-left: var(--navbar-padding-x-mobile);
+  padding-right: var(--navbar-padding-x-mobile);
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    padding-top: var(--navbar-padding-y-desktop);
+    padding-bottom: var(--navbar-padding-y-desktop);
+    padding-left: var(--navbar-padding-x-desktop);
+    padding-right: var(--navbar-padding-x-desktop);
+  }
+}
+
+.sidebar-link {
+  padding-top: var(--sidebar-link-padding-y);
+  padding-bottom: var(--sidebar-link-padding-y);
+  padding-left: var(--sidebar-link-padding-x);
+}
+
+.footer {
+  margin-top: var(--footer-margin-top);
+}
+
+.footer-section {
+  gap: var(--footer-section-gap);
+}
+
+/* Modal spacing */
+.modal {
+  padding: var(--modal-padding);
+}
+
+.modal-title {
+  margin-bottom: var(--modal-title-content-gap);
+}
+
+.modal-footer {
+  margin-top: var(--modal-content-cta-gap);
+}
+
+/* Utility classes for vertical rhythm */
+.stack > * + * {
+  margin-top: var(--space-4);
+}
+
+.stack-sm > * + * {
+  margin-top: var(--space-2);
+}
+
+.stack-lg > * + * {
+  margin-top: var(--space-6);
+}
+
+/* Grid gap presets */
+.grid-cards {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .grid-cards {
+    gap: var(--space-6);
+  }
+}
+
+.grid-forms {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.grid-content {
+  display: grid;
+  gap: var(--space-8);
+}
