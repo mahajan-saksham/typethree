@@ -10,7 +10,8 @@ const InvestmentsManagement = React.lazy(() => import('./admin/InvestmentsManage
 const WattageCreditsAdmin = React.lazy(() => import('./admin/WattageCreditsAdmin'));
 const SecurityLogs = React.lazy(() => import('./admin/SecurityLogs'));
 const CSPViolationReports = React.lazy(() => import('./admin/CSPViolationReports'));
-const JWTKeyManagement = React.lazy(() => import('./admin/JWTKeyManagement'));
+// Temporarily disabled - missing UI components
+// const JWTKeyManagement = React.lazy(() => import('./admin/JWTKeyManagement'));
 
 // Placeholder components for future implementation
 const ProjectsManagement = React.lazy(() => import('./admin/ProjectsManagement'));
@@ -126,7 +127,8 @@ const AdminRoutes: React.FC = () => {
       
       {/* Security Routes */}
       <Route path="csp-violation-reports" element={<AdminLayout><CSPViolationReports /></AdminLayout>} />
-      <Route path="jwt-key-management" element={<AdminLayout><JWTKeyManagement /></AdminLayout>} />
+      {/* Temporarily disabled - missing UI components */}
+      {/* <Route path="jwt-key-management" element={<AdminLayout><JWTKeyManagement /></AdminLayout>} /> */}
       
       <Route path="legacy" element={<AdminLayout><Admin /></AdminLayout>} />
       <Route path="*" element={<Navigate to="/admin/dashboard" />} />

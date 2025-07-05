@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Button, Table, Badge, Tabs, TabsContent, TabsList, TabsTrigger, Alert, AlertTitle, AlertDescription } from "../../components/ui";
+import Card from "../../components/Card";
+import Button from "../../components/Button";
 import { RefreshCw, Key, Shield, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import AdminLayout from '../../components/admin/AdminLayout';
 import { checkJwtKeyRotation, rotateJwtKey, getJwtKeyEvents, addJwtKey, JwtKeyInfo, JwtKeyEvent } from '../../lib/jwtKeyManager';

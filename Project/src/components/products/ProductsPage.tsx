@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { useProducts } from '@/hooks/useProducts';
 import { ProductCard } from '@/components/products/ProductCard';
 import { ProductGridSkeleton } from '@/components/products/ProductSkeleton';
-import { ErrorMessage } from '@/components/ui/ErrorMessage';
+import { ErrorMessage } from '../ui/ErrorMessage';
 
 interface ProductsPageProps {
   initialCategory?: string;

@@ -5,8 +5,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useProduct } from '@/hooks/useProducts';
-import { ResponsiveImage } from '@/components/ui/image/ResponsiveImage';
-import { ErrorMessage } from '@/components/ui/ErrorMessage';
+import { ResponsiveImage } from '../ui/image/ResponsiveImage';
+import { ErrorMessage } from '../ui/ErrorMessage';
 import { ProductVariant } from '@/types/product';
 import { calculateProductROI } from '@/utils/productDatabase';
 
