@@ -1,21 +1,21 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, MessageCircle, Wallet, Shield, IndianRupee } from 'lucide-react';
+import { ArrowRight, MessageCircle, Calendar, Shield } from 'lucide-react';
 
 interface ProductCardProps { product: any; }
 
-const getBadgeColor = (useCase: string) => {
+const getCategoryColor = (useCase: string) => {
   switch (useCase?.toLowerCase()) {
-    case 'residential': return 'bg-[#CCFF00] text-black';
-    case 'commercial': return 'bg-[#00D4FF] text-black';
-    case 'industrial': return 'bg-[#FF7E36] text-black';
-    default: return 'bg-primary text-black';
+    case 'residential': return 'text-blue-400 bg-blue-500/10 border-blue-500/20';
+    case 'commercial': return 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20';
+    case 'industrial': return 'text-orange-400 bg-orange-500/10 border-orange-500/20';
+    default: return 'text-green-400 bg-green-500/10 border-green-500/20';
   }
 };
 
 const generateWhatsAppLink = (productName: string, capacity: string) => {
-  const message = `Hi Team Type3, I'm interested in the ${productName} (${capacity}) solar solution.`;
+  const message = `Hi Team Type3, I'm interested in the ${productName} (${capacity}). Please provide more details and a quote.`;
   return `https://wa.me/918095508066?text=${encodeURIComponent(message)}`;
 };
 
@@ -37,138 +37,127 @@ export function ProductCard({ product }: ProductCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
+      whileHover={{ y: -4, transition: { duration: 0.2 } }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="group relative bg-gradient-to-b from-dark to-dark-900 rounded-2xl overflow-hidden"
+      className="group h-full"
     >
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full" style={{
-          background: "radial-gradient(circle at 15% 50%, rgba(204, 255, 0, 0.08) 0%, rgba(0, 0, 0, 0) 45%)",
-        }} />
-        <div className="absolute inset-0 z-0 opacity-5" style={{
-          backgroundImage: "repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) 1px, transparent 1px, transparent 20px)",
-          backgroundSize: "20px 20px"
-        }} />
-      </div>
-      <div className="transition-all duration-500 border border-white/10 hover:border-primary/30 rounded-2xl shadow-lg relative z-10 flex flex-col h-full group-hover:shadow-xl backdrop-blur-sm bg-white/5">
+      <div className="h-full bg-white/[0.02] backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/20 hover:bg-white/[0.04] hover:shadow-2xl hover:shadow-black/20">
         
         {/* Product Image Section */}
-        <Link to={`/products/${product.id}`} className="relative h-48 overflow-hidden rounded-t-2xl block">
-          <img
-            src={product.image_url || "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80"}
-            alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            onError={(e) => {
-              e.currentTarget.src = "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80";
-            }}
-          />
-          
-          <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent" />
-          
-          {/* Capacity badge */}
-          <div className="absolute top-3 right-3 bg-primary text-dark px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1">
-            <Zap className="h-3 w-3" />
-            {capacity}
+        <Link to={`/products/${product.id}`} className="relative block overflow-hidden">
+          <div className="aspect-[4/3] relative">
+            <img
+              src={product.image_url || "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80"}
+              alt={product.name}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              onError={(e) => {
+                e.currentTarget.src = "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80";
+              }}
+            />
+            
+            {/* Subtle overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            
+            {/* Top badges */}
+            <div className="absolute top-4 left-4 right-4 flex items-start justify-between">
+              {/* Category badge */}
+              {product.useCase && (
+                <div className={`px-3 py-1.5 rounded-full text-xs font-medium border backdrop-blur-sm ${getCategoryColor(product.useCase)}`}>
+                  {product.useCase}
+                </div>
+              )}
+              
+              {/* Capacity badge */}
+              <div className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-3 py-1.5 rounded-full text-sm font-semibold">
+                ⚡ {capacity}
+              </div>
+            </div>
+
+            {/* Bottom badges */}
+            <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+              {/* Discount badge */}
+              {hasDiscount && (
+                <div className="bg-red-500/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs font-semibold">
+                  {discountPercent}% OFF
+                </div>
+              )}
+
+              {/* Subsidy badge */}
+              {subsidyAmount > 0 && (
+                <div className="bg-green-500/90 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs font-semibold ml-auto">
+                  ₹{(subsidyAmount/1000).toFixed(0)}K Subsidy
+                </div>
+              )}
+            </div>
           </div>
-
-          {/* Use case badge */}
-          {product.useCase && (
-            <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold ${getBadgeColor(product.useCase)}`}>
-              {product.useCase}
-            </div>
-          )}
-
-          {/* Discount badge */}
-          {hasDiscount && (
-            <div className="absolute bottom-3 left-3 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
-              {discountPercent}% OFF
-            </div>
-          )}
-
-          {/* Subsidy badge */}
-          {subsidyAmount > 0 && (
-            <div className="absolute bottom-3 right-3 bg-success text-white px-3 py-1 rounded-full text-xs font-semibold">
-              ₹{subsidyAmount.toLocaleString()} Subsidy
-            </div>
-          )}
         </Link>
 
-        {/* Product Info Section */}
-        <div className="p-5 flex flex-col flex-1">
-          <div className="mb-4">
-            <h3 className="text-lg font-bold text-light group-hover:text-primary transition-colors duration-300 mb-2 line-clamp-2">
+        {/* Content Section */}
+        <div className="p-6">
+          {/* Product Title & Description */}
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold text-white mb-2 leading-tight group-hover:text-green-400 transition-colors duration-300">
               {product.name}
-            </h3>            <p className="text-light/70 text-sm line-clamp-2 mb-3">
+            </h3>
+            <p className="text-gray-400 text-sm leading-relaxed line-clamp-2">
               {product.short_description || product.description}
             </p>
           </div>
 
-          {/* Key specifications */}
-          <div className="space-y-2 mb-4">
+          {/* Key Metrics */}
+          <div className="grid grid-cols-2 gap-4 mb-6">
             {monthlySavings > 0 && (
-              <div className="flex items-center justify-between text-sm">
-                <div className="flex items-center gap-2">
-                  <Wallet className="h-4 w-4 text-primary" />
-                  <span className="text-light/70">Monthly Savings</span>
-                </div>
-                <span className="font-semibold text-primary">₹{monthlySavings.toLocaleString()}</span>
+              <div className="text-center">
+                <div className="text-gray-400 text-xs uppercase tracking-wide mb-1">Monthly Savings</div>
+                <div className="text-green-400 font-semibold">₹{monthlySavings.toLocaleString()}</div>
               </div>
             )}
             
-            <div className="flex items-center justify-between text-sm">
-              <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-primary" />
-                <span className="text-light/70">Warranty</span>
-              </div>
-              <span className="font-semibold text-light">{warrantyYears} Years</span>
+            <div className="text-center">
+              <div className="text-gray-400 text-xs uppercase tracking-wide mb-1">Warranty</div>
+              <div className="text-white font-semibold">{warrantyYears} Years</div>
             </div>
           </div>
 
-          {/* Price section */}
-          <div className="mb-4 p-3 rounded-xl bg-white/5 border border-white/10">
-            <div className="flex items-end gap-3 mb-2">
-              <div className="flex items-center gap-1">
-                <IndianRupee className="h-5 w-5 text-primary" />
-                <span className="text-2xl font-bold text-primary">
-                  {salePrice.toLocaleString()}
-                </span>
+          {/* Price Section */}
+          <div className="mb-6 p-4 rounded-xl bg-white/[0.02] border border-white/5">
+            <div className="text-center">
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <span className="text-3xl font-bold text-white">₹ {salePrice.toLocaleString()}</span>
+                {hasDiscount && (
+                  <span className="text-lg text-gray-500 line-through">₹{originalPrice.toLocaleString()}</span>
+                )}
               </div>
-              {hasDiscount && (
-                <span className="text-sm line-through text-light/50">
-                  ₹{originalPrice.toLocaleString()}
-                </span>
+              
+              {subsidyAmount > 0 && (
+                <div className="text-xs text-green-400 font-medium">
+                  Inclusive of ₹{subsidyAmount.toLocaleString()} government subsidy
+                </div>
               )}
             </div>
-            
-            {subsidyAmount > 0 && (
-              <div className="text-xs text-success font-medium">
-                Inclusive of ₹{subsidyAmount.toLocaleString()} government subsidy
-              </div>
-            )}
           </div>
 
           {/* CTA Buttons */}
-          <div className="mt-auto space-y-3">
-            {/* Primary WhatsApp CTA */}            <a
+          <div className="space-y-3">
+            {/* Primary CTA */}
+            <a
               href={generateWhatsAppLink(product.name, capacity)}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 w-full bg-primary hover:bg-primary-hover active:bg-primary-active py-3 px-5 rounded-lg transition-all duration-300 group/btn"
+              className="group/cta flex items-center justify-center gap-3 w-full bg-green-500 hover:bg-green-400 text-black py-3.5 px-6 rounded-xl transition-all duration-300 font-semibold text-sm shadow-lg hover:shadow-green-500/25 hover:shadow-xl"
             >
-              <MessageCircle className="h-4 w-4 text-dark" />
-              <span className="text-dark font-semibold text-base">
-                Get Quote on WhatsApp
-              </span>
+              <MessageCircle className="h-4 w-4 transition-transform group-hover/cta:scale-110" />
+              <span>Get Quote on WhatsApp</span>
             </a>
 
-            {/* Secondary View Details CTA */}
+            {/* Secondary CTA */}
             <Link 
               to={`/products/${product.id}`}
-              className="flex items-center justify-center gap-2 w-full border border-white/20 text-light hover:border-primary/50 hover:bg-primary/5 py-2.5 px-5 rounded-lg transition-all duration-300 group/btn"
+              className="group/view flex items-center justify-center gap-2 w-full border border-white/20 text-gray-300 hover:text-white hover:border-white/40 py-3 px-6 rounded-xl transition-all duration-300 font-medium text-sm hover:bg-white/[0.02]"
             >
-              <span className="font-medium text-sm">View Details</span>
-              <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-200" />
+              <span>View Details</span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover/view:translate-x-1" />
             </Link>
           </div>
         </div>
