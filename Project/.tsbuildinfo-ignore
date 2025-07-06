@@ -1,4 +1,0 @@
-# Components using old theme properties to ignore
-src/components/ChatBubble.tsx
-src/components/Navigation.tsx
-src/DesignSystemShowcase.tsx
