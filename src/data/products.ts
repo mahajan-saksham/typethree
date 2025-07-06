@@ -114,36 +114,6 @@ export const products: Product[] = [
     image_url: 'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Off-grid%20solar%20system/5kW%20off-grid%20solar%20system.png'
   },
   
-  // SOLAR STREET LIGHTS
-  {
-    id: 'STREET-20W-001',
-    name: '20W Solar Street Light',
-    capacity: '20W',
-    capacity_kw: '20W',
-    price: 18900,
-    sale_price: 16900,
-    hasSubsidy: false,
-    subsidy_percentage: 0,
-    subsidy_amount: 0,
-    monthly_savings: 500,
-    warranty_years: 10,
-    installation_time: '1 day',
-    features: [
-      'Automatic dusk-to-dawn operation',
-      'Motion sensor included',
-      '8-10 hours continuous lighting',
-      'Weather-resistant IP65',
-      'Zero electricity bills'
-    ],
-    useCase: 'Commercial',
-    category: 'commercial',
-    product_type: 'street-light',
-    description: 'High-efficiency 20W LED solar street light with automatic dusk-to-dawn operation and motion sensor. Provides 8-10 hours of continuous lighting after full charge.',
-    short_description: 'Smart outdoor lighting solution',
-    targetAudience: 'Gardens, pathways, streets',
-    image_url: 'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/%20Solar%20street%20light%20/20W%20solar%20street%20light.png'
-  },
-  
   // COMMERCIAL SOLAR SYSTEMS
   {
     id: 'ONGRID-10KW-001',
