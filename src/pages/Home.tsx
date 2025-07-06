@@ -35,6 +35,7 @@ import { ImageCarousel } from "../components/ImageCarousel";
 import { Link } from "react-router-dom"; // Fix the Link import to resolve the lint error
 import { supabase } from "../lib/supabaseClient";
 import OurSitesShowcase from "../components/OurSitesShowcase";
+import WhatsAppCTA from "../components/WhatsAppCTA";
 
 // Types for products
 interface Product {
@@ -1033,15 +1034,18 @@ function Home() {
             className="text-center mt-8 mb-6"
           >
             <p className="text-xl text-light mb-6">अभी मुफ्त साइट विजिट बुक करें</p>
-            <button
-              className="flex items-center justify-between w-full sm:w-3/4 md:w-1/2 mx-auto bg-primary hover:bg-primary-hover active:bg-primary-active py-4 px-6 rounded-lg transition-all duration-300"
-              onClick={() => setIsSiteVisitModalOpen(true)}
+            <WhatsAppCTA
+              variant="primary"
+              size="lg"
+              context="visit"
+              fullWidth={false}
+              className="flex items-center justify-between w-full sm:w-3/4 md:w-1/2 mx-auto py-4 px-6"
+              analyticsEvent="home_book_free_visit_click"
+              showIcon={false}
             >
               <span className="text-dark font-medium text-lg" style={{ textTransform: 'none', letterSpacing: '-0.02em' }}>Book Free Visit</span>
-              <div>
-                <Calendar className="h-7 w-7 text-dark" />
-              </div>
-            </button>
+              <Calendar className="h-7 w-7 text-dark" />
+            </WhatsAppCTA>
           </motion.div>
         </div>
       </section>
@@ -1612,19 +1616,20 @@ function Home() {
                   </span>
                 </Button>
 
-                <Button
-                  onClick={() => setIsSiteVisitModalOpen(true)}
+                <WhatsAppCTA
                   variant="ghost"
                   size="md"
-                  radius="lg"
+                  context="visit"
+                  fullWidth={false}
                   className="border border-white/20 text-white bg-transparent hover:bg-white/5 active:bg-white/10 shadow-md w-full sm:w-auto py-3 px-6 sm:min-w-[210px]"
-                  aria-haspopup="dialog"
+                  analyticsEvent="home_book_consultation_click"
+                  showIcon={false}
                 >
                   <span className="relative z-10 flex items-center justify-between w-full">
                     <span className="font-medium" style={{ textTransform: 'none', letterSpacing: '-0.02em' }}>Book Consultation</span>
                     <Calendar className="h-5 w-5" />
                   </span>
-                </Button>
+                </WhatsAppCTA>
               </div>
             </motion.div>
 
