@@ -49,71 +49,6 @@ export const ProductTypes = {
 export const products: Product[] = [
   // ON-GRID SOLAR SYSTEMS
   {
-    id: 'ONGRID-1KW-001',
-    name: '1KW On-Grid Solar System',
-    capacity: '1 kW',
-    capacity_kw: '1',
-    dailyOutput: '4 units/day',
-    price: 89000,
-    sale_price: 69000,
-    hasSubsidy: true,
-    subsidy_percentage: 30,
-    subsidy_amount: 20000,
-    subsidyAmount: 'Up to ₹20,000',
-    monthly_savings: 1500,
-    warranty_years: 25,
-    installation_time: '3-4 days',
-    features: [
-      'High-efficiency solar panels',
-      '1kW grid-tie inverter',
-      'Mounting structure included',
-      '25-year performance warranty',
-      'Mobile monitoring app'
-    ],
-    useCase: 'Residential',
-    category: 'residential',
-    product_type: 'on-grid',
-    description: 'Complete 1kW on-grid solar power system with high-efficiency panels, 1kW inverter, mounting structure, and 25-year performance warranty. Generates approximately 4 units daily. Save ₹1,500 monthly on electricity bills in Indore.',
-    short_description: 'Entry-level on-grid system for small homes',
-    targetAudience: 'Small homes and apartments',
-    image_url: 'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Off-grid%20solar%20system/1kW%20off-grid%20solar%20system.png',
-    images: [
-      'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Off-grid%20solar%20system/1kW%20off-grid%20solar%20system.png'
-    ]
-  },
-  {
-    id: 'ONGRID-2KW-001',
-    name: '2KW On-Grid Solar System',
-    capacity: '2 kW',
-    capacity_kw: '2',
-    dailyOutput: '8 units/day',
-    price: 139000,
-    sale_price: 99000,
-    hasSubsidy: true,
-    subsidy_percentage: 35,
-    subsidy_amount: 40000,
-    subsidyAmount: 'Up to ₹40,000',
-    monthly_savings: 3000,
-    warranty_years: 25,
-    installation_time: '3-4 days',    features: [
-      'High-efficiency solar panels',
-      '2kW grid-tie inverter',
-      'Mounting structure included',
-      '25-year performance warranty',
-      'Mobile monitoring app'
-    ],
-    useCase: 'Residential',
-    category: 'residential',
-    product_type: 'on-grid',
-    description: 'Complete 2kW on-grid solar power system with high-efficiency panels, 2kW inverter, mounting structure, and 25-year performance warranty. Generates approximately 8 units daily. Save ₹3,000 monthly on electricity bills.',
-    short_description: 'Perfect for small to medium homes',
-    targetAudience: 'Small to medium homes',
-    image_url: 'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Off-grid%20solar%20system/2kW%20off-grid%20solar%20system.png',
-    images: [
-      'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Off-grid%20solar%20system/2kW%20off-grid%20solar%20system.png'
-    ]
-  },
-  {
     id: 'ONGRID-3KW-001',
     name: '3KW On-Grid Solar System',
     capacity: '3 kW',
@@ -142,7 +77,8 @@ export const products: Product[] = [
     description: 'Complete 3kW on-grid solar power system with high-efficiency panels, 3kW inverter, mounting structure, and 25-year performance warranty. Generates approximately 12 units daily. Save ₹4,500 monthly on electricity bills.',
     short_description: 'Most popular choice for families',
     targetAudience: 'Medium to large families',
-    image_url: 'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Off-grid%20solar%20system/3kW%20off-grid%20solar%20system.png',    images: [
+    image_url: 'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Off-grid%20solar%20system/3kW%20off-grid%20solar%20system.png',
+    images: [
       'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Off-grid%20solar%20system/3kW%20off-grid%20solar%20system.png'
     ]
   },
@@ -178,99 +114,6 @@ export const products: Product[] = [
     image_url: 'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Off-grid%20solar%20system/5kW%20off-grid%20solar%20system.png'
   },
   
-  // OFF-GRID SOLAR SYSTEMS
-  {
-    id: 'OFFGRID-1KW-001',
-    name: '1KW Off-Grid Solar System',
-    capacity: '1 kW',
-    capacity_kw: '1',
-    dailyOutput: '4 units/day',
-    price: 58900,
-    sale_price: 48900,
-    hasSubsidy: true,
-    subsidy_percentage: 17,
-    subsidy_amount: 10000,    subsidyAmount: 'Up to ₹10,000',
-    monthly_savings: 1200,
-    warranty_years: 25,
-    installation_time: '3-4 days',
-    features: [
-      'Solar panels with battery storage',
-      '1kW off-grid inverter',
-      'Battery backup system',
-      'Complete independence from grid',
-      'Perfect for remote locations'
-    ],
-    useCase: 'Residential',
-    category: 'residential',
-    product_type: 'off-grid',
-    description: 'Complete 1kW off-grid solar power system with high-efficiency panels, 1kW inverter, battery storage, and mounting structure. Generates approximately 4 units daily with backup power capability.',
-    short_description: 'Grid-independent power solution',
-    targetAudience: 'Remote locations, backup power',
-    image_url: 'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Off-grid%20solar%20system/1kW%20off-grid%20solar%20system.png'
-  },
-  
-  // HYBRID SOLAR SYSTEMS
-  {
-    id: 'HYBRID-2KW-001',
-    name: '2KW Hybrid Solar System',
-    capacity: '2 kW',
-    capacity_kw: '2',
-    dailyOutput: '8 units/day',
-    price: 99000,
-    sale_price: 89000,
-    hasSubsidy: true,
-    subsidy_percentage: 10,
-    subsidy_amount: 10000,
-    subsidyAmount: 'Up to ₹10,000',
-    monthly_savings: 2800,
-    warranty_years: 25,
-    installation_time: '4-5 days',
-    features: [
-      'Grid-tied with battery backup',
-      'Seamless power switching',
-      'Smart energy management',
-      'Best of both worlds',
-      'Mobile app monitoring'
-    ],
-    useCase: 'Residential',
-    category: 'residential',
-    product_type: 'hybrid',
-    description: 'Complete 2kW hybrid solar power system combining grid-tied and battery backup features. Best of both worlds with grid connection and energy storage capability.',
-    short_description: 'Grid + Battery backup solution',
-    targetAudience: 'Homes wanting reliability',    image_url: 'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Hybrid%20Solar%20System/2kW%20hybrid%20solar%20system.png'
-  },
-  
-  // SOLAR WATER HEATERS
-  {
-    id: 'HEATER-100LPD-001',
-    name: '100LPD Solar Water Heater',
-    capacity: '100 LPD',
-    capacity_kw: '100LPD',
-    price: 19900,
-    sale_price: 17900,
-    hasSubsidy: true,
-    subsidy_percentage: 10,
-    subsidy_amount: 2000,
-    subsidyAmount: 'Up to ₹2,000',
-    monthly_savings: 800,
-    warranty_years: 15,
-    installation_time: '1-2 days',
-    features: [
-      'Evacuated tube collectors',
-      'Insulated storage tank',
-      'Hot water for 3-4 members',
-      '80% electricity savings',
-      'Works in all weather'
-    ],
-    useCase: 'Residential',
-    category: 'residential',
-    product_type: 'water-heater',
-    description: 'High-efficiency 100 LPD (Liters Per Day) solar water heater system with evacuated tube collectors and insulated storage tank. Reduces electricity costs by up to 80% for water heating.',
-    short_description: 'Eco-friendly hot water solution',
-    targetAudience: 'Small families (3-4 members)',
-    image_url: 'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/Water%20heater/100%20LPD%20solar%20water%20heater.png'
-  },
-  
   // SOLAR STREET LIGHTS
   {
     id: 'STREET-20W-001',
@@ -285,7 +128,8 @@ export const products: Product[] = [
     monthly_savings: 500,
     warranty_years: 10,
     installation_time: '1 day',
-    features: [      'Automatic dusk-to-dawn operation',
+    features: [
+      'Automatic dusk-to-dawn operation',
       'Motion sensor included',
       '8-10 hours continuous lighting',
       'Weather-resistant IP65',
@@ -330,7 +174,8 @@ export const products: Product[] = [
     short_description: 'Perfect for small businesses',
     targetAudience: 'Small businesses, large homes',
     image_url: 'https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/productphotos/On-Grid%20Solar%20Systems/10kW%20On-Grid%20Solar%20System.png'
-  },  
+  },
+  
   // INDUSTRIAL SOLAR SYSTEMS
   {
     id: 'ONGRID-20KW-001',
