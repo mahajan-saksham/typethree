@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   Menu,
   X,
   Home,
   ShoppingBag,
-  LogOut,
   Info
 } from 'lucide-react';
 import { Logo } from './Logo';
 import { Button } from './Button';
 import { Card } from './Card';
-import { supabase } from '../lib/supabaseClient';
 import { LanguageSwitcher } from './LanguageSwitcher';
 // Site Visit form will be used in Contact page instead
 
@@ -19,7 +17,6 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const location = useLocation();
-  const navigate = useNavigate();
 
   // Close menu when route changes
   useEffect(() => {
@@ -45,26 +42,6 @@ export function Navbar() {
       document.body.classList.remove('overflow-hidden');
     }
   }, [isMenuOpen]);
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() => {
-    // Get current session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user || null);
-    });
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user || null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate('/');
-  };
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -122,35 +99,6 @@ export function Navbar() {
             
             {/* Language Switcher */}
             <LanguageSwitcher />
-            
-            {user ? (
-              <div className="flex items-center gap-4">
-                <Button 
-                  to="/dashboard"
-                  variant="primary"
-                  size="md"
-                  radius="xl"
-                >
-                  Dashboard
-                </Button>
-                <button
-                  onClick={handleLogout}
-                  className="p-2 text-light/60 hover:text-primary transition-colors"
-                >
-                  <LogOut className="h-5 w-5" />
-                </button>
-              </div>
-            ) : (
-              <Button 
-                to="/auth"
-                variant="primary"
-                size="md"
-                radius="xl"
-                className="ml-2 shadow-lg shadow-primary/20 focus:ring-2 focus:ring-primary/40 focus:ring-offset-2 transition-all duration-300"
-              >
-                Sign In
-              </Button>
-            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -197,50 +145,6 @@ export function Navbar() {
           id="mobile-menu"
         >
           <div className="p-4 space-y-4">
-            {user ? (
-              <div className="flex flex-col gap-3 mb-6 border-b border-white/10 pb-4">
-                <div className="text-light text-sm mb-1 px-2">Welcome, {user.email?.split('@')[0]}</div>
-                <Button 
-                  to="/dashboard"
-                  variant="primary"
-                  size="md"
-                  radius="xl"
-                  fullWidth
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Dashboard
-                </Button>
-                <Button
-                  to="#"
-                  variant="ghost"
-                  size="md"
-                  radius="xl"
-                  fullWidth
-                  onClick={() => {
-                    handleLogout();
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  <LogOut className="h-5 w-5 mr-2" />
-                  Sign Out
-                </Button>
-              </div>
-            ) : (
-              <div className="mb-6 border-b border-white/10 pb-4">
-                {/* Language Switcher moved to header */}
-                
-                <Button 
-                  to="/auth"
-                  variant="primary"
-                  size="md"
-                  radius="xl"
-                  fullWidth
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Sign In / Register
-                </Button>
-              </div>
-            )}
             <Link 
               to="/"
               className={`flex justify-between items-center px-4 py-3 rounded-lg transition-colors ${

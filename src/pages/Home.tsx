@@ -1603,19 +1603,6 @@ function Home() {
               
               {/* CTA buttons - centered and full width on mobile */}
               <div className="flex flex-col sm:flex-row gap-4 mt-6 w-full sm:justify-start">
-                <Button
-                  to="/products"
-                  variant="primary"
-                  size="md"
-                  radius="lg"
-                  className="shadow-md w-full sm:w-auto py-3 px-6 sm:min-w-[170px]"
-                >
-                  <span className="relative z-10 flex items-center justify-between w-full">
-                    <span className="text-dark font-medium" style={{ textTransform: 'none', letterSpacing: '-0.02em' }}>Sign In</span>
-                    <ArrowRight className="h-5 w-5 text-dark" />
-                  </span>
-                </Button>
-
                 <WhatsAppCTA
                   variant="ghost"
                   size="md"
