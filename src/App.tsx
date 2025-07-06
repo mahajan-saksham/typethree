@@ -68,7 +68,7 @@ function App() {
       {/* Floating WhatsApp Button */}
       <WhatsAppCTA 
         variant="floating" 
-        size="lg" 
+        size="md" 
         context="general" 
         analyticsEvent="floating_whatsapp_click" 
       />

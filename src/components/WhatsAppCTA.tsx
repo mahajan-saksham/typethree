@@ -121,15 +121,15 @@ export default function WhatsAppCTA({
           rel="noopener noreferrer"
           onClick={handleClick}
           className={`
-            inline-flex items-center justify-center gap-3 rounded-full transition-all duration-300
-            ${getVariantStyles()} ${getSizeStyles()}
-            ${size === 'sm' ? 'w-12 h-12' : size === 'lg' ? 'w-16 h-16' : 'w-14 h-14'}
+            inline-flex items-center justify-center gap-2 rounded-full transition-all duration-300
+            ${getVariantStyles()}
+            ${size === 'sm' ? 'w-12 h-12' : 'w-14 h-14 md:w-auto md:px-4 md:rounded-xl'}
           `}
           aria-label="Contact us on WhatsApp"
         >
-          {showIcon && <MessageCircle className={size === 'sm' ? 'h-5 w-5' : size === 'lg' ? 'h-7 w-7' : 'h-6 w-6'} />}
+          {showIcon && <MessageCircle className={size === 'sm' ? 'h-5 w-5' : 'h-6 w-6'} />}
           {size === 'lg' && (
-            <span className="hidden sm:inline font-medium">Chat with us</span>
+            <span className="hidden md:inline font-medium text-sm whitespace-nowrap">Chat with us</span>
           )}
         </a>
       </div>
