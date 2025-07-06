@@ -29,6 +29,14 @@ const Products: React.FC = () => {
     const fetchProducts = async () => {
       try {
         setIsLoading(true);
+        
+        // Temporarily use static products in all environments until database is fully populated
+        // This ensures consistent experience between local and production
+        setProducts(staticProducts);
+        
+        // Optional: Try to fetch from Supabase but don't override static data if it fails
+        // Uncomment below when database is fully populated:
+        /*
         if (import.meta.env.MODE !== 'development') {
           const { data, error } = await supabase
             .from('product_skus')
@@ -40,6 +48,7 @@ const Products: React.FC = () => {
             setProducts(data);
           }
         }
+        */
       } catch (err) {
         console.error('Error fetching products:', err);
         setProducts(staticProducts);
