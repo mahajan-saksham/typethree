@@ -491,6 +491,71 @@ function Home() {
         </motion.div>
       </section>
 
+      {/* Suggested Products section */}
+      <section className="py-12 md:py-16 bg-dark" id="suggested-products">
+        <div className="container mx-auto px-4 sm:px-6">
+          {/* Section header with title */}
+          <div className="text-center mb-10">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl lg:text-4xl font-bold text-light mb-2">
+                Suggested <span className="text-primary">Products</span>
+              </h2>
+              <p className="text-light/60">Tailored solutions for your solar energy needs</p>
+            </motion.div>
+          </div>
+          
+          {/* Product cards - horizontal scroll on mobile, grid on desktop */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products
+              .filter(product => {
+                const name = product.name?.toLowerCase();
+                return !(
+                  name?.includes('1kw off-grid') || 
+                  name?.includes('1kw on-grid') || 
+                  name?.includes('100lpd solar water heater') || 
+                  name?.includes('2kw hybrid') || 
+                  name?.includes('2kw on-grid')
+                );
+              })
+              .slice(0, 4)
+              .map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <ProductCard product={product} />
+                </motion.div>
+              ))}
+          </div>
+          
+          {/* View all products link */}
+          <div className="mt-6 sm:mt-8 text-center">
+            <Button
+              to="/products"
+              variant="ghost"
+              size="md"
+              radius="lg"
+              className="border border-white/10 hover:border-primary/20 text-light hover:text-primary hover:bg-primary/5"
+            >
+              <span className="relative z-10 flex items-center justify-center">
+                View All Products
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </span>
+            </Button>
+          </div>
+          
+          {/* CSS for hiding scrollbar is in global styles */}
+        </div>
+      </section>
+
       {/* Type 3 Benefits Section */}
       <section className="py-12 relative overflow-hidden">
         {/* Decorative background elements matching calculator card style */}
@@ -1443,71 +1508,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Suggested Products section */}
-      <section className="py-12 md:py-16 bg-dark" id="suggested-products">
-        <div className="container mx-auto px-4 sm:px-6">
-          {/* Section header with title */}
-          <div className="text-center mb-10">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl lg:text-4xl font-bold text-light mb-2">
-                Suggested <span className="text-primary">Products</span>
-              </h2>
-              <p className="text-light/60">Tailored solutions for your solar energy needs</p>
-            </motion.div>
-          </div>
-          
-          {/* Product cards - horizontal scroll on mobile, grid on desktop */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products
-              .filter(product => {
-                const name = product.name?.toLowerCase();
-                return !(
-                  name?.includes('1kw off-grid') || 
-                  name?.includes('1kw on-grid') || 
-                  name?.includes('100lpd solar water heater') || 
-                  name?.includes('2kw hybrid') || 
-                  name?.includes('2kw on-grid')
-                );
-              })
-              .slice(0, 4)
-              .map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <ProductCard product={product} />
-                </motion.div>
-              ))}
-          </div>
-          
-          {/* View all products link */}
-          <div className="mt-6 sm:mt-8 text-center">
-            <Button
-              to="/products"
-              variant="ghost"
-              size="md"
-              radius="lg"
-              className="border border-white/10 hover:border-primary/20 text-light hover:text-primary hover:bg-primary/5"
-            >
-              <span className="relative z-10 flex items-center justify-center">
-                View All Products
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </span>
-            </Button>
-          </div>
-          
-          {/* CSS for hiding scrollbar is in global styles */}
-        </div>
-      </section>
-      
       {/* Our Sites Showcase Section */}
       <section className="py-16 bg-[#0f0f0f] relative overflow-hidden" id="our-sites">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
