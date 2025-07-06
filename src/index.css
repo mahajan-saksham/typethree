@@ -203,4 +203,14 @@
   }
 }
 
+/* Product Carousel Animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Responsive type scaling and vertical rhythm handled by Tailwind classes and custom utilities. */

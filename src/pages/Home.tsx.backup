@@ -31,14 +31,11 @@ import { ProductCard } from "../components/products/ProductCard";
 import { products as staticProducts } from "../data/products";
 import { SiteVisitForm } from "../components/SiteVisitForm";
 import { Button } from '../design-system/components/Button/Button';
-import { ProductCarousel, EnhancedProductCarousel } from "../components/ProductCarousel";
+import { ProductCarousel } from "../components/ProductCarousel";
 import { Link } from "react-router-dom"; // Fix the Link import to resolve the lint error
 import { supabase } from "../lib/supabaseClient";
 import OurSitesShowcase from "../components/OurSitesShowcase";
 import WhatsAppCTA from "../components/WhatsAppCTA";
-
-// Configuration: Set to true to use the enhanced carousel
-const USE_ENHANCED_CAROUSEL = false;
 
 // Types for products
 interface Product {
@@ -298,7 +295,7 @@ function Home() {
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-b from-dark/70 via-dark/70 to-dark" />
                 <div className="absolute inset-0 z-0">
-                  {USE_ENHANCED_CAROUSEL ? <EnhancedProductCarousel /> : <ProductCarousel />}
+                  <ProductCarousel />
                 </div>
                 <div
                   className="absolute inset-0 z-20 pointer-events-none"
@@ -475,7 +472,7 @@ function Home() {
 
                   {/* Dynamic product carousel */}
                   <div className="absolute inset-0 z-0">
-                    {USE_ENHANCED_CAROUSEL ? <EnhancedProductCarousel /> : <ProductCarousel />}
+                    <ProductCarousel />
                   </div>
 
                   {/* Overlay with grid texture */}

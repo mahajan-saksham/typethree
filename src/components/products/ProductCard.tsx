@@ -7,10 +7,10 @@ interface ProductCardProps { product: any; }
 
 const getCategoryColor = (useCase: string) => {
   switch (useCase?.toLowerCase()) {
-    case 'residential': return 'text-residential bg-residential/15';
-    case 'commercial': return 'text-commercial bg-commercial/15';
-    case 'industrial': return 'text-industrial bg-industrial/15';
-    default: return 'text-primary bg-primary/15';
+    case 'residential': return 'text-dark bg-residential';
+    case 'commercial': return 'text-dark bg-commercial';
+    case 'industrial': return 'text-white bg-industrial';
+    default: return 'text-dark bg-primary';
   }
 };
 
@@ -60,21 +60,21 @@ export function ProductCard({ product }: ProductCardProps) {
             {/* Minimal overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             
-            {/* Clean capacity badge - top right */}
-            <div className="absolute top-3 right-3">
-              <div className="bg-dark/80 backdrop-blur-sm text-white px-2.5 py-1 rounded-md text-xs font-semibold">
-                {capacity}
-              </div>
-            </div>
-
-            {/* Discount badge - bottom left */}
+            {/* Discount badge - top left */}
             {hasDiscount && (
-              <div className="absolute bottom-3 left-3">
+              <div className="absolute top-3 left-3">
                 <div className="bg-error text-white px-2.5 py-1 rounded-md text-xs font-bold">
                   -{discountPercent}%
                 </div>
               </div>
             )}
+
+            {/* Category badge - top right */}
+            <div className="absolute top-3 right-3">
+              <span className={`inline-flex px-2.5 py-1 rounded-md text-xs font-medium ${getCategoryColor(useCase)}`}>
+                {useCase}
+              </span>
+            </div>
           </div>
         </Link>
 
@@ -82,20 +82,13 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="flex-1 p-4 flex flex-col">
           
           {/* Product name and description */}
-          <div className="mb-3">
+          <div className="mb-4">
             <h3 className="text-lg font-bold text-white leading-tight mb-2">
               {product.name}
             </h3>
             <p className="text-sm text-gray-400 leading-relaxed line-clamp-2">
               {product.short_description || product.description || 'High-efficiency solar solution'}
             </p>
-          </div>
-
-          {/* Category badge */}
-          <div className="mb-4">
-            <span className={`inline-flex px-2.5 py-1 rounded-full text-xs font-medium ${getCategoryColor(useCase)}`}>
-              {useCase}
-            </span>
           </div>
 
           {/* Key metrics - clean grid */}
