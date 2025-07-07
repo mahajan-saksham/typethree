@@ -44,6 +44,7 @@ interface Translations {
   howItWorks: {
     title: string;
     subtitle: string;
+    cta: string;
     steps: {
       step1: {
         title: string;
@@ -70,6 +71,12 @@ interface Translations {
     viewAll: string;
   };
   
+  // Calculator section
+  calculator: {
+    title: string;
+    subtitle: string;
+  };
+  
   // Common terms
   common: {
     monthlyRupees: string;
@@ -91,7 +98,7 @@ const hindiTranslations: Translations = {
       emi: "आसान मासिक EMI",
       subsidy: "₹78,000 तक की सब्सिडी"
     },
-    cta: "Explore Products"
+    cta: "अभी मुफ्त साइट विजिट बुक करें"
   },
   
   nav: {
@@ -117,6 +124,7 @@ const hindiTranslations: Translations = {
   howItWorks: {
     title: "यह कैसे काम करता है",
     subtitle: "सोलर अपनाने के 3 आसान चरण",
+    cta: "Explore Products",
     steps: {
       step1: {
         title: "मुफ्त विजिट बुक करें",
@@ -129,9 +137,9 @@ const hindiTranslations: Translations = {
         tags: ["कस्टम समाधान", "बजट फ्रेंडली"]
       },
       step3: {
-        title: "इंस्टॉलेशन और शुरुआत",
-        description: "हमारी एक्सपर्ट टीम आपके घर पर सोलर सिस्टम इंस्टॉल करती है और आपको इसका पूरा प्रशिक्षण देती है।",
-        tags: ["एक्सपर्ट इंस्टॉलेशन", "पूरा प्रशिक्षण"]
+        title: "इंस्टॉलेशन और देखभाल",
+        description: "प्रोफेशनल इंस्टॉलेशन और आजीवन देखभाल। हमारी कुशल टीम आपके सोलर सिस्टम को स्थापित करती है और उसकी निरंतर देखभाल सुनिश्चित करती है।",
+        tags: ["एक्सपर्ट इंस्टॉलेशन", "आजीवन सपोर्ट"]
       }
     }
   },
@@ -140,6 +148,11 @@ const hindiTranslations: Translations = {
     title: "सुझाए गए उत्पाद",
     subtitle: "आपकी सौर ऊर्जा आवश्यकताओं के लिए अनुकूलित समाधान",
     viewAll: "सभी उत्पाद देखें"
+  },
+  
+  calculator: {
+    title: "अपनी सोलर बचत की गणना करें",
+    subtitle: "देखें कि आप अपने घर या व्यवसाय के लिए रूफटॉप सोलर ऊर्जा से कितनी बचत कर सकते हैं।"
   },
   
   common: {
@@ -162,7 +175,7 @@ const englishTranslations: Translations = {
       emi: "Easy Monthly EMI",
       subsidy: "Subsidy up to ₹78,000"
     },
-    cta: "Explore Products"
+    cta: "Book Free Site Visit Now"
   },
   
   nav: {
@@ -188,6 +201,7 @@ const englishTranslations: Translations = {
   howItWorks: {
     title: "How It Works",
     subtitle: "3 Simple Steps to Adopt Solar",
+    cta: "Explore Products",
     steps: {
       step1: {
         title: "Book Free Site Visit",
@@ -200,9 +214,9 @@ const englishTranslations: Translations = {
         tags: ["Custom Solutions", "Budget Friendly"]
       },
       step3: {
-        title: "Installation and Start",
-        description: "Our expert team installs the solar system at your home and provides you with complete training.",
-        tags: ["Expert Installation", "Complete Training"]
+        title: "Installation and Maintenance",
+        description: "Professional installation and lifetime maintenance. Our skilled team installs your solar system and ensures its continuous care.",
+        tags: ["Expert Installation", "Lifetime Support"]
       }
     }
   },
@@ -211,6 +225,11 @@ const englishTranslations: Translations = {
     title: "Suggested Products",
     subtitle: "Tailored solutions for your solar energy needs",
     viewAll: "View All Products"
+  },
+  
+  calculator: {
+    title: "Calculate Your Solar Savings",
+    subtitle: "See how much you can save with rooftop solar energy for your home or business."
   },
   
   common: {

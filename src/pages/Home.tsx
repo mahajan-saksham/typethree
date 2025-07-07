@@ -1052,13 +1052,14 @@ function Home() {
                         </div>
                       </div>
                       <div className="space-y-[2px]">
-                        <h3 className="text-3xl font-bold text-light group-hover:text-primary transition-colors duration-300">सही सिस्टम चुनें</h3>
-                        <p className="text-light/70 text-sm">हम आपकी छत के आकार, आपकी बिजली की जरूरतों और बजट के हिसाब से सही सोलर सिस्टम का सुझाव देते हैं।</p>
+                        <h3 className="text-3xl font-bold text-light group-hover:text-primary transition-colors duration-300">{t.howItWorks.steps.step2.title}</h3>
+                        <p className="text-light/70 text-sm">{t.howItWorks.steps.step2.description}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 flex-wrap mt-3">
-                      <span className="px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full">Custom Solutions</span>
-                      <span className="px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full">Budget Friendly</span>
+                      {t.howItWorks.steps.step2.tags.map((tag, index) => (
+                        <span key={index} className="px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full">{tag}</span>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -1136,13 +1137,14 @@ function Home() {
                         </div>
                       </div>
                       <div className="space-y-[2px]">
-                        <h3 className="text-3xl font-bold text-light group-hover:text-primary transition-colors duration-300">इंस्टॉलेशन और देखभाल</h3>
-                        <p className="text-light/70 text-sm">प्रोफेशनल इंस्टॉलेशन और आजीवन देखभाल। हमारी कुशल टीम आपके सोलर सिस्टम को स्थापित करती है और उसकी निरंतर देखभाल सुनिश्चित करती है।</p>
+                        <h3 className="text-3xl font-bold text-light group-hover:text-primary transition-colors duration-300">{t.howItWorks.steps.step3.title}</h3>
+                        <p className="text-light/70 text-sm">{t.howItWorks.steps.step3.description}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 flex-wrap mt-3">
-                      <span className="px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full">Expert Installation</span>
-                      <span className="px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full">Lifetime Support</span>
+                      {t.howItWorks.steps.step3.tags.map((tag, index) => (
+                        <span key={index} className="px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full">{tag}</span>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -1158,7 +1160,7 @@ function Home() {
             viewport={{ once: true }}
             className="text-center mt-8 mb-6"
           >
-            <p className="text-xl text-light mb-6">अभी मुफ्त साइट विजिट बुक करें</p>
+            <p className="text-xl text-light mb-6">{t.howItWorks.cta}</p>
             <WhatsAppCTA
               variant="primary"
               size="lg"
@@ -1208,10 +1210,14 @@ function Home() {
             className="text-center mb-6 max-w-3xl mx-auto"
           >
             <h2 className="text-[calc(1.1*1.25rem)] md:text-[calc(1.1*1.25rem)] lg:text-[calc(1.1*2rem)] font-bold text-light mb-2">
-              अपनी सोलर <span className="text-primary">बचत</span> की गणना करें
+              {t.calculator.title.split(' ').map((word, index) => 
+                word === 'बचत' ? <span key={index} className="text-primary">बचत</span> : 
+                word === 'Savings' ? <span key={index} className="text-primary">Savings</span> :
+                word + (index < t.calculator.title.split(' ').length - 1 ? ' ' : '')
+              )}
             </h2>
             <p className="text-base text-light/70 max-w-2xl mx-auto">
-              देखें कि आप अपने घर या व्यवसाय के लिए रूफटॉप सोलर ऊर्जा से कितनी बचत कर सकते हैं।
+              {t.calculator.subtitle}
             </p>
           </motion.div>
 
