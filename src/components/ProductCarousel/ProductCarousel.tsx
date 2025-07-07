@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ArrowRight, MessageCircle } from 'lucide-react';
+import { ArrowRight, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { products, Product } from '../../data/products';
 
@@ -73,14 +73,6 @@ export const ProductCarousel: React.FC = () => {
     setCurrentSlide(index);
   };
 
-  const goToPrevious = () => {
-    setCurrentSlide((prev) => (prev - 1 + featuredProducts.length) % featuredProducts.length);
-  };
-
-  const goToNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % featuredProducts.length);
-  };
-
   const currentProduct = featuredProducts[currentSlide];
 
   return (
@@ -89,131 +81,92 @@ export const ProductCarousel: React.FC = () => {
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
-      {/* Background Images */}
-      <AnimatePresence mode="wait">
+      {/* Single AnimatePresence for all slide content */}
+      <AnimatePresence>
         <motion.div
           key={currentSlide}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
+          initial={{ x: '100%' }}
+          animate={{ x: 0 }}
+          exit={{ x: '-100%' }}
+          transition={{ 
+            duration: 0.8, 
+            ease: [0.25, 0.1, 0.25, 1]
+          }}
           className="absolute inset-0"
         >
-          <img
-            src={currentProduct.image}
-            alt={currentProduct.name}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              // Fallback to a default solar image if product image fails
-              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80';
-            }}
-          />
-          {/* Gradient overlay for better text readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-        </motion.div>
-      </AnimatePresence>
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            <motion.img
+              src={currentProduct.image}
+              alt={currentProduct.name}
+              className="w-full h-full object-cover"
+              initial={{ scale: 1.05 }}
+              animate={{ scale: 1 }}
+              transition={{ 
+                duration: 0.8, 
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
+              onError={(e) => {
+                // Fallback to a default solar image if product image fails
+                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80';
+              }}
+            />
+            {/* Gradient overlay for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+          </div>
 
-      {/* Category Badge - Top Left */}
-      <div className="absolute top-4 left-4 z-30">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="inline-flex items-center px-3 py-2 rounded-full bg-black/40 backdrop-blur-lg border border-primary/40"
-          >
-            <span className="text-primary font-semibold text-sm">{currentProduct.category}</span>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+          {/* Category Badge - Top Left */}
+          <div className="absolute top-4 left-4 z-30">
+            <div className="inline-flex items-center px-3 py-2 rounded-full bg-black/40 backdrop-blur-lg border border-primary/40">
+              <span className="text-primary font-semibold text-sm">{currentProduct.category}</span>
+            </div>
+          </div>
 
-      {/* Navigation Arrows */}
-      <button
-        onClick={goToPrevious}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 text-white hover:bg-white/30 transition-all duration-200"
-      >
-        <ChevronLeft className="w-5 h-5" />
-      </button>
-
-      <button
-        onClick={goToNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/20 text-white hover:bg-white/30 transition-all duration-200"
-      >
-        <ChevronRight className="w-5 h-5" />
-      </button>
-
-      {/* Product Information Overlay - Bottom */}
-      <div className="absolute bottom-0 left-0 right-0 z-20">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="p-4 md:p-6"
-          >
-            {/* Well-structured Product Card */}
-            <div className="bg-black/40 backdrop-blur-xl rounded-2xl border border-white/10 p-6 shadow-2xl">
-              <div className="space-y-4">
-                
-                {/* Product Title & Description - Same line */}
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-white font-semibold text-xl leading-tight">
+          {/* Product Information Overlay - Bottom */}
+          <div className="absolute bottom-0 left-0 right-0 z-20">
+            <div className="p-4 md:p-6">
+              {/* Ultra Clean Product Card */}
+              <div className="bg-black/40 backdrop-blur-xl rounded-2xl border border-white/10 p-5 shadow-2xl max-w-lg mx-auto">
+                <div className="space-y-4">
+                  
+                  {/* Product Title Only */}
+                  <div className="text-center">
+                    <h3 className="text-white font-semibold text-xl md:text-2xl leading-tight">
                       {currentProduct.name}
                     </h3>
-                    <p className="text-white/60 text-sm">
-                      {currentProduct.keyBenefit}
-                    </p>
                   </div>
-                  
-                  {/* Price Section - Right side with real data */}
-                  <div className="text-right">
-                    <div className="text-white/50 text-xs line-through mb-1">{currentProduct.originalPrice}</div>
-                    <div className="text-white font-bold text-3xl mb-1">
-                      {currentProduct.startingPrice}
-                    </div>
-                    <div className="text-green-400 text-xs">
-                      Includes {currentProduct.subsidyAmount} govt. subsidy
-                    </div>
-                  </div>
-                </div>
 
-                {/* Bottom Section - Stats and CTA with real data */}
-                <div className="flex justify-between items-end pt-2">
-                  {/* Left: Stats */}
-                  <div className="grid grid-cols-2 gap-6">
-                    <div>
-                      <div className="text-white/50 text-xs mb-1">Monthly Savings</div>
-                      <div className="text-green-400 font-semibold text-lg">
-                        {currentProduct.monthlySavings}
+                  {/* Stats & CTA Row */}
+                  <div className="flex justify-between items-center pt-2">
+                    <div className="grid grid-cols-2 gap-6 flex-1">
+                      <div>
+                        <div className="text-white/50 text-xs mb-1">Monthly Savings</div>
+                        <div className="text-green-400 font-semibold text-base">
+                          {currentProduct.monthlySavings}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-white/50 text-xs mb-1">Warranty</div>
+                        <div className="text-white font-semibold text-base">
+                          {currentProduct.warrantyYears} Years
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <div className="text-white/50 text-xs mb-1">Warranty</div>
-                      <div className="text-white font-semibold text-lg">
-                        {currentProduct.warrantyYears} Years
-                      </div>
-                    </div>
+                    
+                    <Link
+                      to={currentProduct.route}
+                      className="ml-6 bg-white/10 hover:bg-white/20 text-white font-medium px-4 py-2 rounded-lg transition-all duration-300 text-sm flex items-center gap-2"
+                    >
+                      Details
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
                   </div>
-                  
-                  {/* Right: Single CTA */}
-                  <Link
-                    to={currentProduct.route}
-                    className="bg-white/10 hover:bg-white/20 text-white font-medium px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 text-sm"
-                  >
-                    Details
-                    <ArrowRight className="w-3 h-3" />
-                  </Link>
                 </div>
               </div>
             </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
 
       {/* Auto-play progress indicator */}
       <div className="absolute top-4 right-4 z-30">

@@ -5,9 +5,10 @@ import { Footer } from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
 import TaskWorkflowManager from './components/TaskMasterWebGUI/TaskWorkflowManager';
 import WhatsAppCTA from './components/WhatsAppCTA';
+import { LanguageProvider } from './contexts/LanguageContext';
 
-// Import custom Google Translate styles
-import './styles/google-translate.css';
+// Import custom styles (removed Google Translate styles)
+// import './styles/google-translate.css'; // Removed as we're not using Google Translate
 
 // Import test components
 import PasswordStrengthTest from './components/PasswordStrengthTest';
@@ -39,14 +40,15 @@ const Layout = () => (
 );
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <React.Suspense fallback={
-          <div className="min-h-screen bg-dark flex items-center justify-center">
-            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
-          </div>
-        }>
-          <ErrorBoundary>
+    <LanguageProvider>
+      <Router>
+        <div className="App">
+          <React.Suspense fallback={
+            <div className="min-h-screen bg-dark flex items-center justify-center">
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+            </div>
+          }>
+            <ErrorBoundary>
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
@@ -73,6 +75,7 @@ function App() {
         analyticsEvent="floating_whatsapp_click" 
       />
     </Router>
+    </LanguageProvider>
   );
 }
 

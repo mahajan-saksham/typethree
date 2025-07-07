@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 // import CountUp from 'react-countup';
@@ -36,6 +36,8 @@ import { Link } from "react-router-dom"; // Fix the Link import to resolve the l
 import { supabase } from "../lib/supabaseClient";
 import OurSitesShowcase from "../components/OurSitesShowcase";
 import WhatsAppCTA from "../components/WhatsAppCTA";
+import { useLanguage } from "../contexts/LanguageContext";
+import { ScrollIndicator } from "../components/ScrollIndicator";
 
 // Configuration: Set to true to use the enhanced carousel
 const USE_ENHANCED_CAROUSEL = false;
@@ -88,6 +90,7 @@ const fallbackProducts: Product[] = [
 ];
 
 function Home() {
+  const { t } = useLanguage(); // Add language hook
   const [roofSize, setRoofSize] = useState<number>(5);
   const [products, setProducts] = useState<Product[]>(staticProducts);
   const [recommendedProduct, setRecommendedProduct] = useState<Product | null>(
@@ -96,6 +99,10 @@ function Home() {
   const [isSiteVisitModalOpen, setIsSiteVisitModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Refs for scroll indicators
+  const productsScrollRef = useRef<HTMLDivElement>(null);
+  const benefitsScrollRef = useRef<HTMLDivElement>(null);
 
   // Initialize products from static data (same as Products page)
   useEffect(() => {
@@ -194,7 +201,7 @@ function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section: Rooftop Solar */}
-      <section className="relative min-h-[80vh] flex items-center py-8 md:py-12 lg:py-16">
+      <section className="relative min-h-[calc(80vh+200px)] sm:min-h-[80vh] flex items-center py-8 md:py-12 lg:py-16">
         {/* Video Background with Enhanced Overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           {/* Enhanced gradient overlay for better text contrast */}
@@ -276,13 +283,13 @@ function Home() {
           transition={{ duration: 0.8 }}
           className="relative z-10 container mx-auto px-6 max-w-6xl pt-8 md:pt-16"
         >
-          {/* ImageCarousel for mobile (top) */}
+          {/* ImageCarousel for mobile (top) - Enhanced height for mobile */}
           <div className="block md:hidden mb-8 mt-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="relative h-56 xs:h-72 sm:h-80 rounded-2xl overflow-hidden flex items-center"
+              className="relative h-[364px] xs:h-[372px] sm:h-80 rounded-2xl overflow-hidden flex items-center"
             >
               <div className="absolute inset-0 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl shadow-black/5">
                 <div className="absolute inset-0 rounded-2xl p-[2px] overflow-hidden">
@@ -296,7 +303,6 @@ function Home() {
                     }}
                   ></div>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-b from-dark/70 via-dark/70 to-dark" />
                 <div className="absolute inset-0 z-0">
                   {USE_ENHANCED_CAROUSEL ? <EnhancedProductCarousel /> : <ProductCarousel />}
                 </div>
@@ -322,19 +328,18 @@ function Home() {
                 <div className="text-left">
                   {/* Mobile-optimized heading with better line height and letter spacing */}
                   <div className="mb-6">
-                    <h1 className="text-[3.6rem] sm:text-[3.36rem] md:text-[3.6rem] lg:text-6xl font-extrabold text-primary mb-2 font-heading leading-[1.2] tracking-tight mt-[2.5vh] sm:mt-0">
-                      अपनी छत को बनाएं कमाई का ज़रिया
+                    <h1 className="hero-title-mobile font-extrabold text-primary mb-2 font-heading tracking-tight mt-[2.5vh] sm:mt-0">
+                      {t.hero.title}
                     </h1>
-                    <p className="text-lg sm:text-lg md:text-xl text-light/90 mb-0 leading-[1.65] max-w-[95%]">
-                      सोलर प्रोडक्ट्स से 90% तक बिजली बिल बचाएं और ग्रिड को
-                      बिजली देकर पैसे कमाएँ
+                    <p className="text-base sm:text-lg md:text-xl text-light/90 mb-0 leading-[1.5] max-w-[95%]">
+                      {t.hero.subtitle}
                     </p>
                   </div>
 
                   {/* Grouped content: feature cards, description, and CTA buttons */}
-                  <div className="space-y-[calc(1.5rem+10px)] mt-[12%] sm:mt-[20%] md:mt-[10%]">
+                  <div className="space-y-4 mt-6 sm:mt-[20%] md:mt-[10%]">
                     {/* Installation highlights - Enhanced for mobile */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {/* Mobile-optimized feature cards with hover effects */}
                       <motion.div
                         whileHover={{ y: -3, transition: { duration: 0.2 } }}
@@ -356,7 +361,7 @@ function Home() {
                           </svg>
                         </div>
                         <div className="text-base font-medium text-light/90">
-                          15% तक सालाना रिटर्न्स
+                          {t.hero.features.returns}
                         </div>
                       </motion.div>
 
@@ -387,8 +392,7 @@ function Home() {
                           </svg>
                         </div>
                         <div className="text-base font-medium text-light/90">
-                          {" "}
-                          25+ साल की वारंटी
+                          {t.hero.features.warranty}
                         </div>
                       </motion.div>
 
@@ -400,8 +404,7 @@ function Home() {
                           <img src="https://dtuoyawpebjcmfesgwwn.supabase.co/storage/v1/object/public/icons//emi.svg" alt="EMI Icon" className="h-6 w-6" style={{ filter: 'brightness(0) invert(1)' }} />
                         </div>
                         <div className="text-base font-medium text-light/90">
-                          {" "}
-                          आसान मासिक EMI
+                          {t.hero.features.emi}
                         </div>
                       </motion.div>
 
@@ -413,7 +416,7 @@ function Home() {
                           <Sparkles className="h-6 w-6" />
                         </div>
                         <div className="text-base font-medium text-light/90">
-                        ₹78,000 तक की सब्सिडी
+                          {t.hero.features.subsidy}
                         </div>
                       </motion.div>
                     </div>
@@ -426,7 +429,7 @@ function Home() {
                           to="/products"
                           className="flex items-center justify-between w-full bg-primary hover:bg-primary-hover active:bg-primary-active py-4 px-6 rounded-lg transition-all duration-300"
                         >
-                          <span className="text-dark font-medium text-lg">Explore Products</span>
+                          <span className="text-dark font-medium text-lg">{t.hero.cta}</span>
                           <motion.div
                             animate={{ rotate: 360 }}
                             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
@@ -470,9 +473,6 @@ function Home() {
                     ></div>
                   </div>
 
-                  {/* Inner shadow overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-dark/70 via-dark/70 to-dark" />
-
                   {/* Dynamic product carousel */}
                   <div className="absolute inset-0 z-0">
                     {USE_ENHANCED_CAROUSEL ? <EnhancedProductCarousel /> : <ProductCarousel />}
@@ -506,14 +506,57 @@ function Home() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl lg:text-4xl font-bold text-light mb-2">
-                Suggested <span className="text-primary">Products</span>
+                {t.products.title.split(' ').map((word, index) => 
+                  word === 'Products' ? <span key={index} className="text-primary">Products</span> : 
+                  index === 0 ? word + ' ' : word
+                )}
               </h2>
-              <p className="text-light/60">Tailored solutions for your solar energy needs</p>
+              <p className="text-light/60">{t.products.subtitle}</p>
             </motion.div>
           </div>
           
           {/* Product cards - horizontal scroll on mobile, grid on desktop */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          {/* Mobile: Horizontal scroll */}
+          <div className="block md:hidden">
+            <div 
+              ref={productsScrollRef}
+              className="flex overflow-x-auto hide-scrollbar smooth-scroll-x gap-4 pb-4 px-1" 
+              style={{ scrollSnapType: 'x mandatory' }}
+            >
+              {products
+                .filter(product => {
+                  const name = product.name?.toLowerCase();
+                  return !(
+                    name?.includes('1kw off-grid') || 
+                    name?.includes('1kw on-grid') || 
+                    name?.includes('100lpd solar water heater') || 
+                    name?.includes('2kw hybrid') || 
+                    name?.includes('2kw on-grid')
+                  );
+                })
+                .slice(0, 6)
+                .map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="flex-shrink-0 w-[280px]"
+                    style={{ scrollSnapAlign: 'start' }}
+                  >
+                    <ProductCard product={product} />
+                  </motion.div>
+                ))}
+            </div>
+            
+            {/* Scroll indicator for mobile products */}
+            <ScrollIndicator containerRef={productsScrollRef} />
+          </div>
+
+          {/* Desktop: Grid layout */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {products
               .filter(product => {
                 const name = product.name?.toLowerCase();
@@ -549,7 +592,7 @@ function Home() {
               className="border border-white/10 hover:border-primary/20 text-light hover:text-primary hover:bg-primary/5"
             >
               <span className="relative z-10 flex items-center justify-center">
-                View All Products
+                {t.products.viewAll}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </span>
             </Button>
@@ -604,10 +647,14 @@ function Home() {
             viewport={{ once: true, margin: "-100px" }}
             className="text-center mb-8"
           >
-            <h2 className="text-[calc(1.2*1.1*1.25rem)] md:text-[calc(1.2*1.1*1.25rem)] lg:text-[calc(1.1*2.5rem)] font-bold text-light mb-1">Get with Type 3</h2>
+            <h2 className="text-[calc(1.2*1.1*1.25rem)] md:text-[calc(1.2*1.1*1.25rem)] lg:text-[calc(1.1*2.5rem)] font-bold text-light mb-1">{t.benefits.title}</h2>
           </motion.div>
 
-          <div className="flex md:grid overflow-x-auto pb-4 md:overflow-visible md:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-6 text-center" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+          <div 
+            ref={benefitsScrollRef}
+            className="flex md:grid overflow-x-auto pb-4 md:overflow-visible md:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-6 text-center" 
+            style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}
+          >
             {/* Hide scrollbar */}
             <style dangerouslySetInnerHTML={{ __html: `
               .flex::-webkit-scrollbar {
@@ -631,8 +678,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">30+ Years</p>
-                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">experience</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">{t.benefits.items.experience.split(' ')[0]}</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">{t.benefits.items.experience.split(' ').slice(1).join(' ')}</p>
               </div>
             </motion.div>
 
@@ -653,8 +700,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">25 Years</p>
-                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">warranty</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">{t.benefits.items.warranty.split(' ')[0]}</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">{t.benefits.items.warranty.split(' ').slice(1).join(' ')}</p>
               </div>
             </motion.div>
 
@@ -790,6 +837,11 @@ function Home() {
               </div>
             </motion.div>
           </div>
+          
+          {/* Scroll indicator for benefits section */}
+          <div className="block md:hidden">
+            <ScrollIndicator containerRef={benefitsScrollRef} />
+          </div>
         </div>
       </section>
 
@@ -831,10 +883,14 @@ function Home() {
             className="text-center mb-16 max-w-3xl mx-auto"
           >
             <h2 className="text-[calc(1.2*1.1*1.25rem)] md:text-[calc(1.2*1.1*1.25rem)] lg:text-[calc(1.1*2.5rem)] font-bold text-light mb-2">
-              यह कैसे <span className="text-primary">काम करता है</span>
+              {t.howItWorks.title.split(' ').map((word, index) => 
+                word === 'काम' ? <span key={index} className="text-primary">काम</span> : 
+                word === 'Works' ? <span key={index} className="text-primary">Works</span> :
+                word + (index < t.howItWorks.title.split(' ').length - 1 ? ' ' : '')
+              )}
             </h2>
             <p className="text-lg text-light/70 max-w-xl mx-auto">
-              सोलर अपनाने के 3 आसान चरण
+              {t.howItWorks.subtitle}
             </p>
           </motion.div>
 
@@ -911,13 +967,14 @@ function Home() {
                         </div>
                       </div>
                       <div className="space-y-[2px]">
-                        <h3 className="text-3xl font-bold text-light group-hover:text-primary transition-colors duration-300">मुफ्त विजिट बुक करें</h3>
-                        <p className="text-light/70 text-sm">हम आपके घर आते हैं। बिना किसी शुल्क के। आपकी छत का निरीक्षण करके सही सोलर सिस्टम का सुझाव देते हैं।</p>
+                        <h3 className="text-3xl font-bold text-light group-hover:text-primary transition-colors duration-300">{t.howItWorks.steps.step1.title}</h3>
+                        <p className="text-light/70 text-sm">{t.howItWorks.steps.step1.description}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 flex-wrap mt-3">
-                      <span className="px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full">Free Consultation</span>
-                      <span className="px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full">At Home Visit</span>
+                      {t.howItWorks.steps.step1.tags.map((tag, index) => (
+                        <span key={index} className="px-4 py-1.5 bg-primary/10 text-primary text-sm font-semibold rounded-full">{tag}</span>
+                      ))}
                     </div>
                   </div>
                 </div>
