@@ -281,4 +281,50 @@
   50% { transform: translateX(100%); }
 }
 
+/* Enhanced animations for ProductDetail page */
+@keyframes gradientBorder {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(5px) rotate(-1deg);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px 0px rgba(204, 255, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px 5px rgba(204, 255, 0, 0.2);
+  }
+}
+
+@keyframes backgroundShift {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
 /* Responsive type scaling and vertical rhythm handled by Tailwind classes and custom utilities. */

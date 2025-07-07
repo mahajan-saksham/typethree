@@ -149,129 +149,337 @@ const ProductDetail: React.FC = () => {
         </div>
       </div>
       
-      {/* Hero Section */}
+      {/* Enhanced Hero Section with Home Page Design Elements */}
       <motion.section 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="relative overflow-hidden"
+        className="relative min-h-[calc(80vh+200px)] sm:min-h-[80vh] flex items-center py-8 md:py-12 lg:py-16 overflow-hidden"
       >
-        <div className="container mx-auto px-6 py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center min-h-[600px]">
+        {/* Enhanced Background with Animated Elements */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          {/* Enhanced gradient overlay for better visual depth */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 30% 50%, rgba(204, 255, 0, 0.2) 0%, rgba(0, 0, 0, 0) 60%)",
+              animation: "pulse 8s ease-in-out infinite",
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(circle at 70% 30%, rgba(0, 225, 255, 0.15) 0%, rgba(0, 0, 0, 0) 60%)",
+              animation: "pulse 8s ease-in-out infinite alternate",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-dark/70 via-dark/70 to-dark" />
+
+          {/* Premium background container with modern gradient */}
+          <div className="absolute inset-0 overflow-hidden">
+            {/* Decorative circle accents */}
+            <div className="absolute -right-32 -top-32 w-96 h-96 rounded-full bg-primary/10 transition-all duration-500" />
+            <div className="absolute -left-32 -bottom-32 w-96 h-96 rounded-full bg-secondary/10 transition-all duration-500" />
+
+            {/* Glass effect border overlay */}
+            <div className="absolute inset-0 border-t border-white/5 bg-[#0A0A0A]" />
+
+            {/* Modern gradient background */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background: "linear-gradient(135deg, #0A0A0A 0%, #121212 100%)",
+                backgroundSize: "400% 400%",
+              }}
+            >
+              {/* Grid pattern overlay for texture */}
+              <div
+                className="absolute inset-x-0 top-[15px] bottom-[10px]"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0)",
+                  backgroundSize: "30px 30px",
+                }}
+              />
+              {/* Animated glow spots */}
+              <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-primary/5 blur-3xl animate-pulse" />
+              <div
+                className="absolute bottom-1/4 left-1/4 w-96 h-96 rounded-full bg-secondary/5 blur-3xl animate-pulse"
+                style={{ animationDelay: "2s" }}
+              />
+            </div>
+          </div>
+
+          {/* Decorative animated elements */}
+          <motion.div
+            animate={{ opacity: [0.3, 0.5, 0.3], y: [0, -15, 0] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/3 -right-20 w-80 h-80 rounded-full border border-primary/20 opacity-20"
+          />
+          <motion.div
+            animate={{ opacity: [0.2, 0.4, 0.2], y: [0, 20, 0] }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+            className="absolute bottom-1/4 -left-40 w-96 h-96 rounded-full border border-secondary/20 opacity-20"
+          />
+        </div>
+
+        <div className="container mx-auto px-6 max-w-6xl relative z-10 pt-8 md:pt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[600px]">
             
-            {/* Product Image - Expanded */}
+            {/* Enhanced Product Image with Home Page Styling */}
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="relative bg-dark-100/40 rounded-3xl p-4 min-h-[600px] flex items-center">
-                <img 
-                  src={productImages[selectedImageIndex] || product.image_url} 
-                  alt={product.name}
-                  className="w-full h-auto max-h-[550px] object-contain mx-auto"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80';
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="relative h-[520px] rounded-2xl overflow-hidden flex items-center"
+              >
+                {/* Container with enhanced glowing border effect */}
+                <div
+                  className="absolute inset-0 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl shadow-black/5"
+                  style={{
+                    boxShadow:
+                      "0 0 40px 2px rgba(204, 255, 0, 0.1), inset 0 0 20px 0px rgba(0, 0, 0, 0.3)",
                   }}
-                />
-                
-                {/* Warranty Badge */}
-                <div className="absolute top-6 right-6 bg-primary/20 backdrop-blur-sm rounded-xl px-6 py-3">
-                  <div className="flex items-center gap-3 text-primary">
-                    <ShieldCheck className="w-6 h-6" />
-                    <span className="font-semibold text-lg">{product.warranty_years || 25} Year Warranty</span>
+                >
+                  {/* Animated gradient border */}
+                  <div className="absolute inset-0 rounded-2xl p-[2px] overflow-hidden">
+                    <div
+                      className="absolute inset-0 rounded-2xl"
+                      style={{
+                        background:
+                          "linear-gradient(45deg, rgba(204, 255, 0, 0.3) 0%, rgba(0, 225, 255, 0.15) 50%, rgba(204, 255, 0, 0.3) 100%)",
+                        backgroundSize: "200% 200%",
+                        animation: "gradientBorder 8s linear infinite",
+                      }}
+                    ></div>
                   </div>
+
+                  {/* Enhanced product image container */}
+                  <div className="absolute inset-0 z-0 bg-gradient-to-br from-dark-900/50 via-dark/40 to-dark-800/60 flex items-center justify-center p-8">
+                    <img 
+                      src={productImages[selectedImageIndex] || product.image_url} 
+                      alt={product.name}
+                      className="w-full h-auto max-h-[450px] object-contain mx-auto filter drop-shadow-2xl"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80';
+                      }}
+                    />
+                  </div>
+
+                  {/* Grid texture overlay */}
+                  <div
+                    className="absolute inset-0 z-20 pointer-events-none"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0)",
+                      backgroundSize: "20px 20px",
+                    }}
+                  ></div>
+                </div>
+                
+                {/* Enhanced Warranty Badge */}
+                <div className="absolute top-6 right-6 z-30">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    className="bg-primary/20 backdrop-blur-lg rounded-xl px-4 py-2 border border-primary/30"
+                  >
+                    <div className="flex items-center gap-2 text-primary">
+                      <ShieldCheck className="w-5 h-5" />
+                      <span className="font-semibold text-sm">{product.warranty_years || 25} Year Warranty</span>
+                    </div>
+                  </motion.div>
                 </div>
 
-                {/* Capacity Display */}
-                <div className="absolute bottom-8 left-8">
-                  <div className="bg-dark/80 backdrop-blur-sm rounded-xl px-8 py-6">
-                    <div className="text-5xl font-bold text-primary mb-2">
+                {/* Enhanced Capacity Display */}
+                <div className="absolute bottom-6 left-6 z-30">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.6 }}
+                    className="bg-black/30 backdrop-blur-xl rounded-xl px-6 py-4 border border-white/10"
+                  >
+                    <div className="text-3xl font-bold text-primary mb-1">
                       {selectedVariant?.capacity || product.capacity || '3kW'}
                     </div>
-                    <div className="text-lg text-gray-400">System Capacity</div>
-                  </div>
+                    <div className="text-sm text-gray-400">System Capacity</div>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
 
-            {/* Product Info */}
+            {/* Enhanced Product Info with Home Page Styling */}
             <motion.div 
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="space-y-8"
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="space-y-6"
             >
-              <div>
-                <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <h1 className="hero-title-mobile font-extrabold text-primary mb-3 font-heading tracking-tight leading-tight">
                   {product.name}
                 </h1>
-                <p className="text-xl text-gray-300 leading-relaxed">
+                <p className="text-lg md:text-xl text-light/90 mb-4 leading-[1.6] max-w-[95%]">
                   {product.description || 'Complete solar power system with high-efficiency panels, inverter, mounting structure, and performance warranty. Perfect for residential and commercial applications.'}
                 </p>
-              </div>
+              </motion.div>
 
-              {/* Pricing */}
-              <div className="bg-dark-100/40 rounded-2xl p-6">
-                <div className="flex items-center justify-between mb-4">
+              {/* Enhanced Stats Cards - Similar to Home Page Features */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="grid grid-cols-2 gap-3 mb-6"
+              >
+                <motion.div
+                  whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                  className="flex items-center gap-3 p-4 rounded-lg bg-dark-900/50 border border-white/5 hover:border-primary/20 transition-all duration-300"
+                >
+                  <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary">
+                    <Zap className="w-5 h-5" />
+                  </div>
+                  <div className="text-sm font-medium text-light/90">
+                    {selectedVariant?.capacity || product.capacity || '3kW'} System
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                  className="flex items-center gap-3 p-4 rounded-lg bg-dark-900/50 border border-white/5 hover:border-primary/20 transition-all duration-300"
+                >
+                  <div className="flex-shrink-0 flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div className="text-sm font-medium text-light/90">
+                    {product.installation_time || 3} Days Install
+                  </div>
+                </motion.div>
+              </motion.div>
+
+              {/* Enhanced Pricing Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="bg-black/30 backdrop-blur-xl rounded-2xl border border-white/10 p-6 shadow-2xl"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <div className="text-sm text-gray-400 line-through">
+                    <div className="text-sm text-light/40 line-through mb-1">
                       {formatCurrency(selectedVariant?.price || product.price || 0)}
                     </div>
-                    <div className="text-3xl font-bold text-white">
-                      {formatCurrency(selectedVariant?.subsidized_price || product.sale_price || 0)}
+                    <div className="flex items-baseline gap-2 mb-2">
+                      <span className="text-light/60 text-sm">from</span>
+                      <span className="text-white font-bold text-3xl">
+                        {formatCurrency(selectedVariant?.subsidized_price || product.sale_price || 0)}
+                      </span>
                     </div>
-                    <div className="text-sm text-success">
-                      After government subsidy of ₹{((selectedVariant?.price || 0) - (selectedVariant?.subsidized_price || 0)).toLocaleString()}
+                    <div className="flex items-center gap-1 text-primary text-sm">
+                      <Wallet className="w-4 h-4" />
+                      <span>Subsidy: ₹{((selectedVariant?.price || 0) - (selectedVariant?.subsidized_price || 0)).toLocaleString()}</span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-sm text-gray-400">EMI starts at</div>
-                    <div className="text-xl font-bold text-primary">
+                  <div className="text-left md:text-right">
+                    <div className="text-sm text-light/60 mb-1">EMI starts at</div>
+                    <div className="text-xl font-bold text-primary mb-1">
                       ₹{calculateEMI(selectedVariant?.subsidized_price || 0).toLocaleString()}/month
                     </div>
-                    <div className="text-xs text-gray-400">*For 5 year tenure at 8% interest rate</div>
+                    <div className="text-xs text-light/40">*5 years @ 8% interest</div>
                   </div>
                 </div>
                 
-                {/* CTA Buttons */}
-                <div className="grid grid-cols-2 gap-3">
+                {/* Enhanced CTA Buttons */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <a
                     href={generateWhatsAppLink()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-primary hover:bg-primary-hover text-dark font-bold py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
+                    className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-dark font-bold px-6 py-3 rounded-xl transition-all duration-300 group transform hover:scale-105"
                   >
-                    <MessageCircle className="w-5 h-5" />
-                    Get Quote
+                    <MessageCircle className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                    <span>Get Quote</span>
                   </a>
                   <button
                     onClick={() => setShowROICalculator(!showROICalculator)}
-                    className="border border-primary text-primary hover:bg-primary/10 font-semibold py-4 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
+                    className="inline-flex items-center justify-center gap-2 border border-primary text-primary hover:bg-primary/10 font-semibold px-6 py-3 rounded-xl transition-all duration-300 group"
                   >
-                    <Calculator className="w-5 h-5" />
-                    Calculate Savings
+                    <Calculator className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                    <span>Calculate ROI</span>
                   </button>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
       </motion.section>
 
-      {/* Features Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-              Why Choose Our Solar Systems?
+      {/* Enhanced Features Section with Home Page Design */}
+      <section className="py-12 md:py-16 relative overflow-hidden">
+        {/* Enhanced background with animated elements */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-dark to-dark-900 opacity-95" />
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 15% 50%, rgba(204, 255, 0, 0.1) 0%, rgba(0, 0, 0, 0) 45%), radial-gradient(circle at 85% 30%, rgba(0, 225, 255, 0.1) 0%, rgba(0, 0, 0, 0) 45%)",
+            }}
+          />
+          <div
+            className="absolute inset-0 z-0 opacity-10"
+            style={{backgroundImage: "repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) 1px, transparent 1px, transparent 10px)", backgroundSize: "30px 30px"}}
+          />
+          
+          {/* Animated geometric elements */}
+          <motion.div
+            animate={{ opacity: [0.1, 0.2, 0.1], boxShadow: ["0 0 15px 1px rgba(0, 225, 255, 0.08)", "0 0 25px 2px rgba(0, 225, 255, 0.12)", "0 0 15px 1px rgba(0, 225, 255, 0.08)"] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-20 left-10 w-72 h-32 bg-cyan-400/10 border border-cyan-400/10 opacity-15 rounded-md -rotate-6"
+          />
+          <motion.div
+            animate={{ opacity: [0.08, 0.16, 0.08], boxShadow: ["0 0 15px 1px rgba(204, 255, 0, 0.05)", "0 0 20px 1px rgba(204, 255, 0, 0.1)", "0 0 15px 1px rgba(204, 255, 0, 0.05)"] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
+            className="absolute top-1/3 -right-20 w-80 h-20 bg-primary/10 border border-primary/10 opacity-10 rounded-md -rotate-12"
+          />
+          
+          {/* Enhanced light beam effect */}
+          <div className="absolute top-0 left-1/4 right-1/4 h-40 bg-primary/5 blur-3xl rounded-full transform -translate-y-1/2" />
+        </div>
+
+        <div className="container mx-auto px-6 max-w-6xl relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-[calc(1.2*1.1*1.25rem)] md:text-[calc(1.2*1.1*1.25rem)] lg:text-[calc(1.1*2.5rem)] font-bold text-light mb-4">
+              Why Choose Our <span className="text-primary">Solar Systems</span>?
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-light/70 max-w-3xl mx-auto">
               Experience the future of energy with our cutting-edge solar technology, designed for maximum efficiency, durability, and savings.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {[
               {
                 icon: Sun,
@@ -308,15 +516,16 @@ const ProductDetail: React.FC = () => {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-dark-100/40 rounded-2xl p-6 hover:bg-dark-100/60 transition-all duration-300"
+                className="bg-white/5 backdrop-blur-sm border border-white/10 hover:border-primary/30 hover:bg-white/10 transition-all duration-300 rounded-2xl p-6"
               >
-                <div className="bg-primary/10 w-12 h-12 rounded-xl flex items-center justify-center mb-4">
-                  <feature.icon className="w-6 h-6 text-primary" />
+                <div className="bg-primary/10 w-14 h-14 rounded-xl flex items-center justify-center mb-4">
+                  <feature.icon className="w-7 h-7 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-                <p className="text-gray-400 leading-relaxed">{feature.description}</p>
+                <p className="text-light/70 leading-relaxed">{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -532,47 +741,105 @@ const ProductDetail: React.FC = () => {
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-6">
+      {/* Enhanced Final CTA Section with Home Page Styling */}
+      <section className="py-12 md:py-16 relative overflow-hidden">
+        {/* Enhanced background with animated elements */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-dark to-dark-900" />
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 25% 75%, rgba(204, 255, 0, 0.15) 0%, rgba(0, 0, 0, 0) 50%), radial-gradient(circle at 75% 25%, rgba(0, 225, 255, 0.1) 0%, rgba(0, 0, 0, 0) 50%)",
+            }}
+          />
+          <div
+            className="absolute inset-0 z-0 opacity-10"
+            style={{backgroundImage: "repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.08) 1px, transparent 1px, transparent 10px)", backgroundSize: "30px 30px"}}
+          />
+          
+          {/* Animated decorative elements */}
+          <motion.div
+            animate={{ opacity: [0.1, 0.3, 0.1], scale: [1, 1.05, 1] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-20 left-20 w-32 h-32 rounded-full bg-primary/10 blur-3xl"
+          />
+          <motion.div
+            animate={{ opacity: [0.1, 0.25, 0.1], scale: [1, 1.1, 1] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            className="absolute bottom-20 right-20 w-40 h-40 rounded-full bg-cyan-400/10 blur-3xl"
+          />
+        </div>
+
+        <div className="container mx-auto px-6 max-w-6xl relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 rounded-3xl p-12 text-center"
+            className="bg-black/30 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-12 text-center shadow-2xl"
           >
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-              Ready to Go Solar?
-            </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Join thousands of satisfied customers who have already made the switch to clean, renewable energy. 
-              Start saving money and the environment today.
-            </p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+                Ready to Go <span className="text-primary">Solar</span>?
+              </h2>
+              <p className="text-lg md:text-xl text-light/80 mb-8 max-w-2xl mx-auto leading-relaxed">
+                Join thousands of satisfied customers who have already made the switch to clean, renewable energy. 
+                Start saving money and the environment today.
+              </p>
+            </motion.div>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6"
+            >
               <a
                 href={generateWhatsAppLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary hover:bg-primary-hover text-dark font-bold py-4 px-8 rounded-xl transition-all duration-200 flex items-center gap-2 text-lg"
+                className="inline-flex items-center gap-3 bg-primary hover:bg-primary-hover text-dark font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 group text-lg"
               >
-                <MessageCircle className="w-5 h-5" />
-                Get Free Quote Now
+                <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span>Get Free Quote Now</span>
               </a>
               
               <a
                 href="tel:+918095508066"
-                className="border border-primary text-primary hover:bg-primary/10 font-semibold py-4 px-8 rounded-xl transition-all duration-200 flex items-center gap-2 text-lg"
+                className="inline-flex items-center gap-3 border border-primary text-primary hover:bg-primary/10 font-semibold py-4 px-8 rounded-xl transition-all duration-300 group text-lg"
               >
-                <Phone className="w-5 h-5" />
-                Call: +91 80955 08066
+                <Phone className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span>Call: +91 80955 08066</span>
               </a>
-            </div>
+            </motion.div>
             
-            <p className="text-sm text-gray-400 mt-6">
-              Free site survey • No hidden costs • 25-year warranty
-            </p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              viewport={{ once: true }}
+              className="flex items-center justify-center gap-4 text-sm text-light/60"
+            >
+              <span className="flex items-center gap-1">
+                <Check className="w-4 h-4 text-primary" />
+                Free site survey
+              </span>
+              <span className="flex items-center gap-1">
+                <Check className="w-4 h-4 text-primary" />
+                No hidden costs
+              </span>
+              <span className="flex items-center gap-1">
+                <Check className="w-4 h-4 text-primary" />
+                25-year warranty
+              </span>
+            </motion.div>
           </motion.div>
         </div>
       </section>
