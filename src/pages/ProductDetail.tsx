@@ -267,11 +267,11 @@ const ProductDetail: React.FC = () => {
                   </div>
 
                   {/* Enhanced product image container */}
-                  <div className="absolute inset-0 z-0 bg-gradient-to-br from-dark-900/50 via-dark/40 to-dark-800/60 flex items-center justify-center p-8">
+                  <div className="absolute inset-0 z-0 bg-gradient-to-br from-dark-900/50 via-dark/40 to-dark-800/60 p-4">
                     <img 
                       src={productImages[selectedImageIndex] || product.image_url} 
                       alt={product.name}
-                      className="w-full h-auto max-h-[450px] object-contain mx-auto filter drop-shadow-2xl"
+                      className="w-full h-full object-cover rounded-xl filter drop-shadow-2xl"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80';
                       }}
