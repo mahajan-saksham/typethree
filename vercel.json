@@ -12,7 +12,7 @@
   ],
   "headers": [
     {
-      "source": "/assets/(.*\\.(js|mjs))",
+      "source": "/assets/*.js",
       "headers": [
         {
           "key": "Content-Type",
@@ -25,7 +25,20 @@
       ]
     },
     {
-      "source": "/assets/(.*\\.(css))",
+      "source": "/assets/*.mjs",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/*.css",
       "headers": [
         {
           "key": "Content-Type",
@@ -38,8 +51,25 @@
       ]
     },
     {
-      "source": "/(.*\\.(js|mjs|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot))",
+      "source": "/_assets/*.js",
       "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/_assets/*.css",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/css; charset=utf-8"
+        },
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
