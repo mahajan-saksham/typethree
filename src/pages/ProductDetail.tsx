@@ -245,59 +245,33 @@ const ProductDetail: React.FC = () => {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative h-[520px] rounded-2xl overflow-hidden flex items-center"
               >
-                {/* Container with enhanced glowing border effect */}
-                <div
-                  className="absolute inset-0 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-xl shadow-black/5"
-                  style={{
-                    boxShadow:
-                      "0 0 40px 2px rgba(204, 255, 0, 0.1), inset 0 0 20px 0px rgba(0, 0, 0, 0.3)",
-                  }}
-                >
-                  {/* Animated gradient border */}
-                  <div className="absolute inset-0 rounded-2xl p-[2px] overflow-hidden">
-                    <div
-                      className="absolute inset-0 rounded-2xl"
-                      style={{
-                        background:
-                          "linear-gradient(45deg, rgba(204, 255, 0, 0.3) 0%, rgba(0, 225, 255, 0.15) 50%, rgba(204, 255, 0, 0.3) 100%)",
-                        backgroundSize: "200% 200%",
-                        animation: "gradientBorder 8s linear infinite",
-                      }}
-                    ></div>
-                  </div>
-
-                  {/* Enhanced product image container */}
-                  <div className="absolute inset-0 z-0 bg-gradient-to-br from-dark-900/50 via-dark/40 to-dark-800/60 p-4">
+                {/* Clean image container without borders */}
+                <div className="absolute inset-0 rounded-2xl overflow-hidden">
+                  {/* Enhanced product image container - no padding, no borders */}
+                  <div className="absolute inset-0 z-0">
                     <img 
                       src={productImages[selectedImageIndex] || product.image_url} 
                       alt={product.name}
-                      className="w-full h-full object-cover rounded-xl filter drop-shadow-2xl"
+                      className="w-full h-full object-cover rounded-2xl filter drop-shadow-2xl"
                       onError={(e) => {
                         (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=800&q=80';
                       }}
                     />
                   </div>
 
-                  {/* Grid texture overlay */}
-                  <div
-                    className="absolute inset-0 z-20 pointer-events-none"
-                    style={{
-                      backgroundImage:
-                        "radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0)",
-                      backgroundSize: "20px 20px",
-                    }}
-                  ></div>
+                  {/* Optional dark overlay for better text readability */}
+                  <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
                 </div>
                 
                 {/* Enhanced Warranty Badge */}
-                <div className="absolute top-6 right-6 z-30">
+                <div className="absolute top-6 right-6 z-20">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 0.4 }}
-                    className="bg-primary/20 backdrop-blur-lg rounded-xl px-4 py-2 border border-primary/30"
+                    className="bg-primary/90 backdrop-blur-lg rounded-xl px-4 py-2 border border-primary/30 shadow-xl"
                   >
-                    <div className="flex items-center gap-2 text-primary">
+                    <div className="flex items-center gap-2 text-dark">
                       <ShieldCheck className="w-5 h-5" />
                       <span className="font-semibold text-sm">{product.warranty_years || 25} Year Warranty</span>
                     </div>
@@ -305,17 +279,17 @@ const ProductDetail: React.FC = () => {
                 </div>
 
                 {/* Enhanced Capacity Display */}
-                <div className="absolute bottom-6 left-6 z-30">
+                <div className="absolute bottom-6 left-6 z-20">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.6 }}
-                    className="bg-black/30 backdrop-blur-xl rounded-xl px-6 py-4 border border-white/10"
+                    className="bg-black/80 backdrop-blur-xl rounded-xl px-6 py-4 border border-white/20 shadow-xl"
                   >
                     <div className="text-3xl font-bold text-primary mb-1">
                       {selectedVariant?.capacity || product.capacity || '3kW'}
                     </div>
-                    <div className="text-sm text-gray-400">System Capacity</div>
+                    <div className="text-sm text-gray-300">System Capacity</div>
                   </motion.div>
                 </div>
               </motion.div>
