@@ -101,16 +101,16 @@ const hindiTranslations: Translations = {
   },
   
   benefits: {
-    title: "Get with Type 3",
+    title: "Type 3 के साथ मिलता है",
     items: {
-      experience: "30+ Years experience",
-      warranty: "25 Years warranty",
-      quality: "Reliable quality",
-      finance: "Easy Finance Options",
-      service: "Lifetime Service",
-      financing: "Easy Financing",
-      weatherproof: "All Weather Proof",
-      insurance: "Insurance Cover"
+      experience: "30+ वर्षों का अनुभव",
+      warranty: "25 साल की वारंटी",
+      quality: "भरोसेमंद गुणवत्ता",
+      finance: "आसान वित्तीय विकल्प",
+      service: "जीवनभर सेवा",
+      financing: "आसान वित्तीयन",
+      weatherproof: "सभी मौसमों में सुरक्षित",
+      insurance: "बीमा कवरेज"
     }
   },
   
@@ -121,33 +121,33 @@ const hindiTranslations: Translations = {
       step1: {
         title: "मुफ्त विजिट बुक करें",
         description: "हम आपके घर आते हैं। बिना किसी शुल्क के। आपकी छत का निरीक्षण करके सही सोलर सिस्टम का सुझाव देते हैं।",
-        tags: ["Free Consultation", "At Home Visit"]
+        tags: ["मुफ्त सलाह", "घर आकर विजिट"]
       },
       step2: {
         title: "सही सिस्टम चुनें",
         description: "हम आपकी छत के आकार, आपकी बिजली की जरूरतों और बजट के हिसाब से सही सोलर सिस्टम का सुझाव देते हैं।",
-        tags: ["Custom Solutions", "Budget Friendly"]
+        tags: ["कस्टम समाधान", "बजट फ्रेंडली"]
       },
       step3: {
         title: "इंस्टॉलेशन और शुरुआत",
         description: "हमारी एक्सपर्ट टीम आपके घर पर सोलर सिस्टम इंस्टॉल करती है और आपको इसका पूरा प्रशिक्षण देती है।",
-        tags: ["Expert Installation", "Complete Training"]
+        tags: ["एक्सपर्ट इंस्टॉलेशन", "पूरा प्रशिक्षण"]
       }
     }
   },
   
   products: {
-    title: "Suggested Products",
-    subtitle: "Tailored solutions for your solar energy needs",
-    viewAll: "View All Products"
+    title: "सुझाए गए उत्पाद",
+    subtitle: "आपकी सौर ऊर्जा आवश्यकताओं के लिए अनुकूलित समाधान",
+    viewAll: "सभी उत्पाद देखें"
   },
   
   common: {
     monthlyRupees: "₹",
-    years: "Years",
-    details: "Details",
-    monthlySavings: "Monthly Savings",
-    warranty: "Warranty"
+    years: "साल",
+    details: "विवरण",
+    monthlySavings: "मासिक बचत",
+    warranty: "वारंटी"
   }
 };
 

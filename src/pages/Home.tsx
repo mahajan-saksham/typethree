@@ -722,8 +722,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">Reliable</p>
-                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">quality</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">{t.benefits.items.quality.split(' ')[0]}</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">{t.benefits.items.quality.split(' ').slice(1).join(' ')}</p>
               </div>
             </motion.div>
 
@@ -744,8 +744,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">Easy</p>
-                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">Finance Options</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">{t.benefits.items.finance.split(' ')[0]}</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">{t.benefits.items.finance.split(' ').slice(1).join(' ')}</p>
               </div>
             </motion.div>
 
@@ -766,8 +766,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">Lifetime</p>
-                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">Service</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">{t.benefits.items.service.split(' ')[0]}</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">{t.benefits.items.service.split(' ')[1]}</p>
               </div>
             </motion.div>
 
@@ -788,8 +788,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">Easy</p>
-                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">Financing</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">{t.benefits.items.financing.split(' ')[0]}</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">{t.benefits.items.financing.split(' ')[1]}</p>
               </div>
             </motion.div>
 
@@ -810,8 +810,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">All</p>
-                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">Weather Proof</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">{t.benefits.items.weatherproof.split(' ')[0]}</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">{t.benefits.items.weatherproof.split(' ').slice(1).join(' ')}</p>
               </div>
             </motion.div>
 
@@ -832,8 +832,8 @@ function Home() {
                 />
               </div>
               <div className="text-light/80 text-sm md:text-sm text-center w-full">
-                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">Insurance</p>
-                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">Cover</p>
+                <p className="font-medium text-primary text-base md:text-base lg:text-base m-0 line-clamp-1">{t.benefits.items.insurance.split(' ')[0]}</p>
+                <p className="m-0 -mt-1 text-xs md:text-xs lg:text-xs line-clamp-1">{t.benefits.items.insurance.split(' ')[1]}</p>
               </div>
             </motion.div>
           </div>
